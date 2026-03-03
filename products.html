@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Architecture Software Products</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Light and Dark section backgrounds with overlay */
+        .section-light {
+            background-color: #f8fafc;
+            color: #1e2f4f;
+            position: relative;
+        }
+        
+        .section-dark {
+            background-color: #0e3b3b;
+            color: white;
+            position: relative;
+        }
+
+        .section-with-bg {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .section-with-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14, 59, 59, 0.95) 0%, rgba(29, 74, 74, 0.9) 100%);
+            z-index: 1;
+        }
+        
+        .section-with-bg.light-bg {
+            color: #042525;
+        }
+        
+        .section-with-bg.light-bg::before {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+        }
+
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(159, 212, 212, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-light .section-badge {
+            color: #0e3b3b;
+            background: rgba(14, 59, 59, 0.1);
+        }
+        
+        .section-dark .section-badge,
+        .section-with-bg .section-badge {
+            color: #9fd4d4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .section-with-bg.light-bg .section-badge {
+            color: #0e3b3b;
+            background: rgba(14, 59, 59, 0.1);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-light .section-title {
+            color: #042525;
+        }
+        
+        .section-dark .section-title,
+        .section-with-bg .section-title {
+            color: white;
+        }
+        
+        .section-with-bg.light-bg .section-title {
+            color: #042525;
+        }
+
+        .section-title span {
+            color: #0e3b3b;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-dark .section-title span,
+        .section-with-bg .section-title span {
+            color: #9fd4d4;
+        }
+        
+        .section-with-bg.light-bg .section-title span {
+            color: #0e3b3b;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #9fd4d4;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-light, .btn-outline-dark {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #0e3b3b;
+            color: white;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-outline-dark {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #0e3b3b;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-light:before, .btn-outline-dark:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #9fd4d4;
+        }
+        
+        .btn-secondary:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-outline-light:before {
+            background: white;
+        }
+        
+        .btn-outline-dark:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-primary:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-outline-light:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+        
+        .btn-outline-dark:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-light:hover:before, .btn-outline-dark:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Hero Section */
+        /* SECTION 1: HERO WITH PARALLAX AND FLOATING CARDS - FIXED FOR MOBILE */
+.hero-products {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('A29.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 8rem 2rem 4rem; /* Increased top padding significantly */
+    margin-top: 0;
+}
+
+.hero-products::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(14,59,59,0.8) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+    margin-top: 2rem;
+}
+
+.hero-products h1 {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+    line-height: 1.2;
+}
+
+.hero-products h1 span {
+    color: #9fd4d4;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+.hero-products p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Floating Product Cards */
+.floating-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.floating-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 280px;
+    transition: all 0.4s ease;
+    animation: floatCard 3s ease-in-out infinite;
+}
+
+.floating-card:nth-child(2) { animation-delay: 0.5s; }
+.floating-card:nth-child(3) { animation-delay: 1s; }
+
+.floating-card:hover {
+    transform: translateY(-20px) scale(1.05);
+    background: rgba(255,255,255,0.2);
+    border-color: #9fd4d4;
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Section Badge */
+.hero-products .section-badge {
+    display: inline-block;
+    background: rgba(159, 212, 212, 0.2);
+    color: #9fd4d4;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(159,212,212,0.3);
+}
+
+/* ===== MOBILE-SPECIFIC FIXES ===== */
+@media screen and (max-width: 900px) {
+    .hero-products {
+        padding: 10rem 1.5rem 5rem; /* Massive top padding for tablets */
+        min-height: auto;
+    }
+    
+    .hero-products h1 {
+        font-size: 3.5rem;
+    }
+    
+    .hero-content {
+        margin-top: 2rem;
+    }
+    
+    .floating-cards {
+        margin-top: 3rem;
+    }
+    
+    .floating-card {
+        width: 260px;
+        padding: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero-products {
+        padding: 12rem 1.2rem 5rem; /* Extra large padding for mobile */
+    }
+    
+    .hero-products h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-products p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hero-products {
+        padding: 14rem 1rem 5rem; /* Huge top padding for small mobile */
+    }
+    
+    .hero-products h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-products p {
+        font-size: 1.1rem;
+    }
+    
+    .floating-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .floating-card {
+        width: 100%;
+        max-width: 300px;
+        padding: 1.5rem;
+    }
+    
+    .hero-products .section-badge {
+        margin-bottom: 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-products {
+        padding: 16rem 0.8rem 5rem; /* Maximum top padding for very small phones */
+    }
+    
+    .hero-products h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-products h1 span {
+        font-size: 1.8rem;
+    }
+    
+    .hero-products p {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .floating-card {
+        max-width: 260px;
+        padding: 1.2rem;
+    }
+    
+    .floating-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .floating-card p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 360px) {
+    .hero-products {
+        padding: 18rem 0.5rem 4rem; /* Extreme top padding */
+    }
+    
+    .hero-products h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-products h1 span {
+        font-size: 1.5rem;
+    }
+}
+
+        /* Diagonal Split Section - Light/Dark combined */
+        .diagonal-split {
+            background: linear-gradient(135deg, #f8fafc 50%, #0e3b3b 50%);
+            padding: 0;
+        }
+        
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+        
+        .split-content {
+            padding: 5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .split-content:first-child {
+            background: url('A1.webp');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            color: white;
+        }
+        
+        .split-content:first-child::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14,59,59,0.9), rgba(0,0,0,0.7));
+        }
+        
+        .split-content:last-child {
+            background: #0e3b3b;
+            color: white;
+        }
+        
+        .split-content:last-child .section-badge {
+            color: #9fd4d4;
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Glassmorphism Cards - For dark backgrounds */
+        .glass-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .glass-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(159,212,212,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            border-color: #9fd4d4;
+        }
+        
+        .glass-card i {
+            color: #9fd4d4;
+        }
+        
+        .glass-card h3 {
+            color: white;
+        }
+        
+        .glass-card p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* White Cards - For light backgrounds */
+        .white-card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .white-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+            color: #1e2f4f;
+        }
+        
+        .white-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border-color: #0e3b3b;
+        }
+        
+        .white-card i {
+            color: #0e3b3b;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('A2.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .timeline-item {
+            text-align: center;
+            position: relative;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 50px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #9fd4d4, transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-year {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-year {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Parallax Cards */
+        .parallax-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            perspective: 1000px;
+        }
+        
+        .parallax-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .parallax-card:hover {
+            transform: translateY(-30px) rotateX(5deg) rotateY(5deg);
+            box-shadow: -30px 30px 60px rgba(0,0,0,0.2);
+        }
+        
+        .parallax-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .parallax-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Stats Showcase */
+        .stats-showcase {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-showcase-item {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            border-radius: 20px;
+            color: white;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-showcase-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(159,212,212,0.3) 0%, transparent 70%);
+            transition: all 0.6s ease;
+        }
+        
+        .stat-showcase-item:hover::before {
+            transform: scale(1.2);
+        }
+        
+        .stat-showcase-item:hover {
+            transform: translateY(-15px) scale(1.02);
+        }
+
+        /* Testimonial Masonry */
+        .testimonial-masonry {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .masonry-item {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+            color: #1e2f4f;
+        }
+        
+        .masonry-item.featured {
+            grid-row: span 2;
+            background: #0e3b3b;
+            color: white;
+        }
+        
+        .masonry-item.featured p {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .masonry-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        /* Awards Grid */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .award-item {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .award-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(14,59,59,0.2);
+            border-color: #0e3b3b;
+        }
+        
+        .award-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: all 0.4s ease;
+        }
+        
+        .award-item:hover .award-icon {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #1d4a4a, #0e3b3b);
+        }
+        
+        .award-icon i {
+            font-size: 2.5rem;
+            color: #9fd4d4;
+            transition: all 0.4s ease;
+        }
+        
+        .award-item:hover .award-icon i {
+            transform: scale(1.2) rotate(360deg);
+        }
+        
+        .award-item h3 {
+            font-size: 1.2rem;
+            color: #042525;
+            margin-bottom: 0.5rem;
+        }
+        
+        .award-item p {
+            color: #1d4a4a;
+            font-size: 0.9rem;
+        }
+
+        /* Partners Grid */
+        .partners-showcase {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            align-items: center;
+            margin: 3rem 0;
+        }
+        
+        .partner-logo-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            padding: 2rem 1rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .partner-logo-card:hover {
+            transform: translateY(-15px) scale(1.08);
+            background: rgba(255,255,255,0.2);
+            border-color: #9fd4d4;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .partner-logo-card i {
+            font-size: 3rem;
+            color: #9fd4d4;
+            margin-bottom: 0.8rem;
+            transition: all 0.5s ease;
+        }
+        
+        .partner-logo-card:hover i {
+            transform: scale(1.2) rotate(360deg);
+            color: white;
+        }
+        
+        .partner-logo-card span {
+            display: block;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .partner-logo-card:hover span {
+            color: #9fd4d4;
+        }
+
+        /* Pricing Section - Fully Responsive */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.light-card {
+            background: rgba(255,255,255,0.95);
+            color: #042525;
+            border: 1px solid #0e3b3b;
+        }
+        
+        .pricing-card.light-card .pricing-price {
+            color: #0e3b3b;
+        }
+        
+        .pricing-card.light-card .pricing-features li {
+            color: #1e2f4f;
+        }
+        
+        .pricing-card.popular {
+            border: 2px solid #9fd4d4;
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .pricing-card.light-card.popular {
+            background: white;
+        }
+        
+        .popular-badge {
+            background: #9fd4d4;
+            color: #0e3b3b;
+            padding: 0.3rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .pricing-card.light-card h3 {
+            color: #042525;
+        }
+        
+        .pricing-price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .pricing-card.light-card .pricing-price span {
+            color: #1d4a4a;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 0.8rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .pricing-features i {
+            color: #9fd4d4;
+            margin-right: 0.5rem;
+        }
+        
+        .pricing-card.light-card .pricing-features i {
+            color: #0e3b3b;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #9fd4d4;
+            background: rgba(255,255,255,0.25);
+        }
+        
+        .pricing-card.light-card:hover {
+            background: white;
+        }
+        
+        .pricing-card.popular:hover {
+            transform: translateY(-15px) scale(1.07);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('A4.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            color: white;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-products h1 {
+                font-size: 3rem;
+            }
+            
+            .split-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .glass-grid,
+            .white-card-grid,
+            .parallax-cards,
+            .awards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-showcase {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .testimonial-masonry {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial-masonry .masonry-item.featured {
+                grid-row: auto;
+            }
+            
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item::after {
+                display: none;
+            }
+            
+            .partners-showcase {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .pricing-card.popular:hover {
+                transform: translateY(-15px) scale(1.02);
+            }
+            
+            .floating-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .floating-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary, .btn-outline-light, .btn-outline-dark {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .glass-grid,
+            .white-card-grid,
+            .parallax-cards,
+            .stats-showcase,
+            .awards-grid,
+            .partners-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .split-content {
+                padding: 3rem 1.5rem;
+            }
+            
+            .pricing-grid {
+                max-width: 100%;
+            }
+            
+            .glass-card, .white-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .award-item {
+                padding: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            section {
+                padding: 4rem 1rem;
+            }
+            
+            .hero-products h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .pricing-card {
+                padding: 2rem 1rem;
+            }
+            
+            .pricing-price {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div>
+    
+    <!-- SECTION 1: HERO WITH PARALLAX AND FLOATING CARDS -->
+    <section class="hero-products">
+        <div class="hero-content">
+            <span class="section-badge" data-aos="fade-down">ARCHITECTURE PRODUCTS</span> 
+            <h1 data-aos="fade-up" data-aos-delay="100">Professional <span>BIM & Design</span><br>Tools for Architects</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Complete suite of architecture software for modeling, documentation, collaboration, and visualization.</p>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="300">
+                <a href="404.html" class="btn-outline-light">Explore Products</a>
+                <a href="404.html" class="btn-outline-light">Watch Demo →</a>
+            </div>
+            <div class="floating-cards" data-aos="fade-up" data-aos-delay="400">
+                <div class="floating-card">
+                    <i class="fas fa-cube" style="font-size:3rem; color:#9fd4d4; margin-bottom:1rem;"></i>
+                    <h3>BIM Modeler</h3>
+                    <p>Intelligent 3D modeling</p>
+                </div>
+                <div class="floating-card">
+                    <i class="fas fa-draw-polygon" style="font-size:3rem; color:#9fd4d4; margin-bottom:1rem;"></i>
+                    <h3>Documentation</h3>
+                    <p>Automated drawings</p>
+                </div>
+                <div class="floating-card">
+                    <i class="fas fa-people-arrows" style="font-size:3rem; color:#9fd4d4; margin-bottom:1rem;"></i>
+                    <h3>Collaborate</h3>
+                    <p>Team coordination</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: DIAGONAL SPLIT WITH BACKGROUND IMAGE -->
+    <section class="diagonal-split">
+        <div class="split-grid">
+            <div class="split-content" data-aos="fade-right">
+                <div style="position:relative; z-index:2; color:white;">
+                    <span class="section-badge" data-aos="fade-down">FLAGSHIP PRODUCT</span>
+                    <h2 style="font-size:3rem; font-weight:800; margin-bottom:1rem;" data-aos="fade-up" data-aos-delay="100">Stackly <span style="color:#9fd4d4;">BIM Pro</span></h2>
+                    <p style="margin-bottom:2rem;" data-aos="fade-up" data-aos-delay="200">Industry-leading Building Information Modeling software for complex architectural projects. Used by 8 of the top 10 architecture firms worldwide.</p>
+                    <div style="display:flex; gap:2rem; flex-wrap:wrap;" data-aos="fade-up" data-aos-delay="300">
+                        <div>
+                            <div style="font-size:2.5rem; font-weight:800; color:#9fd4d4;">40%</div>
+                            <p>Faster Documentation</p>
+                        </div>
+                        <div>
+                            <div style="font-size:2.5rem; font-weight:800; color:#9fd4d4;">75%</div>
+                            <p>Fewer Errors</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="split-content" data-aos="fade-left">
+                <span class="section-badge" data-aos="fade-down">KEY FEATURES</span>
+                <ul style="list-style:none; font-size:1.2rem;" data-aos="fade-up" data-aos-delay="200">
+                    <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#9fd4d4; margin-right:1rem;"></i> Parametric BIM modeling</li>
+                    <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#9fd4d4; margin-right:1rem;"></i> Automated construction documents</li>
+                    <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#9fd4d4; margin-right:1rem;"></i> Real-time team collaboration</li>
+                    <li style="margin-bottom:1rem;"><i class="fas fa-check-circle" style="color:#9fd4d4; margin-right:1rem;"></i> Quantity takeoffs & schedules</li>
+                </ul>
+                <a href="404.html" class="btn-primary" style="background:white; color:#0e3b3b; border-color:white;" data-aos="zoom-in" data-aos-delay="300">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: GLASSMORPHISM CARDS WITH DARK BG -->
+    <section class="section-with-bg" style="background-image:url('A22.webp');">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">PRODUCT ECOSYSTEM</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Complete <span>Architecture</span> Software Suite</h2>
+            <div class="glass-grid">
+                <div class="glass-card" data-aos="flip-left" data-aos-duration="1200">
+                    <i class="fas fa-cube" style="font-size:3rem; margin-bottom:1.5rem;"></i>
+                    <h3>BIM Modeler</h3>
+                    <p>Intelligent 3D modeling with parametric components</p>
+                </div>
+                <div class="glass-card" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <i class="fas fa-file-alt" style="font-size:3rem; margin-bottom:1.5rem;"></i>
+                    <h3>Documentation</h3>
+                    <p>Automated plans, sections, and elevations</p>
+                </div>
+                <div class="glass-card" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="400">
+                    <i class="fas fa-people-arrows" style="font-size:3rem; margin-bottom:1.5rem;"></i>
+                    <h3>Collaborate</h3>
+                    <p>Real-time team coordination and clash detection</p>
+                </div>
+                <div class="glass-card" data-aos="flip-left" data-aos-duration="1200" data-aos-delay="600">
+                    <i class="fas fa-brain" style="font-size:3rem; margin-bottom:1.5rem;"></i>
+                    <h3>Generative Design</h3>
+                    <p>AI-powered design exploration</p>
+                </div>
+                <div class="glass-card" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="800">
+                    <i class="fas fa-vr-cardboard" style="font-size:3rem; margin-bottom:1.5rem;"></i>
+                    <h3>Immersive VR</h3>
+                    <p>Virtual reality design reviews</p>
+                </div>
+                <div class="glass-card" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="1000">
+                    <i class="fas fa-chart-line" style="font-size:3rem; margin-bottom:1.5rem;"></i>
+                    <h3>Analytics</h3>
+                    <p>Project insights and performance metrics</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: TIMELINE WITH DARK BG -->
+    <section class="timeline-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">PRODUCT ROADMAP</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">The Evolution of "Architecture Software"</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="timeline-year">2024</div>
+                    <h3 style="margin:1rem 0;">BIM Pro 5.0</h3>
+                    <p>AI-powered generative design and automated code checking</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="timeline-year">2025</div>
+                    <h3 style="margin:1rem 0;">VR Studio</h3>
+                    <p>Immersive design review with multi-user VR collaboration</p>
+                </div>
+                <div class="timeline-item" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="timeline-year">2026</div>
+                    <h3 style="margin:1rem 0;">Sustainability Suite</h3>
+                    <p>Real-time carbon analysis and material optimization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: PARALLAX CARDS WITH LIGHT BG -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">CASE STUDIES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">How Leading Firms <span>Use Our Products</span></h2>
+            <div class="parallax-cards">
+                <div class="parallax-card" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A29.webp" alt="Foster + Partners">
+                    <div style="padding:2rem;">
+                        <h3>Foster + Partners</h3>
+                        <p>Reduced documentation time by 60% using BIM Pro for The Gherkin renovation</p>
+                        <a href="404.html" style="color:#0e3b3b; font-weight:700;">Read Case Study →</a>
+                    </div>
+                </div>
+                <div class="parallax-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A28.webp" alt="ZHA">
+                    <div style="padding:2rem;">
+                        <h3>Zaha Hadid Architects</h3>
+                        <p>Generative design tools for complex geometries on Beijing Daxing Airport</p>
+                        <a href="404.html" style="color:#0e3b3b; font-weight:700;">Read Case Study →</a>
+                    </div>
+                </div>
+                <div class="parallax-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A27.webp" alt="SOM">
+                    <div style="padding:2rem;">
+                        <h3>SOM</h3>
+                        <p>Global collaboration across 5 offices for One World Trade Center</p>
+                        <a href="404.html" style="color:#0e3b3b; font-weight:700;">Read Case Study →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: STATS SHOWCASE WITH DARK BG -->
+    <section class="section-with-bg" style="background-image:url('A26.webp');">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">BY THE NUMBERS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Trusted by <span>Architects</span> Worldwide</h2>
+            <div class="stats-showcase">
+                <div class="stat-showcase-item" data-aos="zoom-in" data-aos-duration="1200">
+                    <div style="font-size:3.5rem; font-weight:800; color:#9fd4d4;">12M+</div>
+                    <p>Architects Using Stackly</p>
+                </div>
+                <div class="stat-showcase-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                    <div style="font-size:3.5rem; font-weight:800; color:#9fd4d4;">85+</div>
+                    <p>Countries Worldwide</p>
+                </div>
+                <div class="stat-showcase-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="400">
+                    <div style="font-size:3.5rem; font-weight:800; color:#9fd4d4;">2.5B</div>
+                    <p>BIM Models Created</p>
+                </div>
+                <div class="stat-showcase-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="600">
+                    <div style="font-size:3.5rem; font-weight:800; color:#9fd4d4;">99.9%</div>
+                    <p>Software Uptime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: MASONRY TESTIMONIALS WITH LIGHT BG -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">CLIENT VOICES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">What Architects Say <span>About Our Products</span></h2>
+            <div class="testimonial-masonry">
+                <div class="masonry-item featured" data-aos="fade-right" data-aos-duration="1200">
+                    <div style="font-size:4rem; color:#9fd4d4; margin-bottom:1rem;">"</div>
+                    <p style="font-size:1.3rem; margin-bottom:2rem;">Stackly transformed our BIM workflow. The integration between modeling and documentation is seamless.</p>
+                    <div>
+                        <strong>Norman Foster</strong>
+                        <p style="color:#9fd4d4;">Founder, Foster + Partners</p>
+                    </div>
+                </div>
+                <div class="masonry-item" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div style="color:#ffd966; margin-bottom:0.5rem;">★★★★★</div>
+                    <p>"BIM Pro reduced our documentation time by 50% on residential projects."</p>
+                    <div style="margin-top:1rem;">
+                        <strong>Tabitha Walker</strong>
+                        <p style="color:#1d4a4a;">Principal, Walker Architecture</p>
+                    </div>
+                </div>
+                <div class="masonry-item" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <div style="color:#ffd966; margin-bottom:0.5rem;">★★★★★</div>
+                    <p>"The generative design tools help us explore complex geometries in minutes."</p>
+                    <div style="margin-top:1rem;">
+                        <strong>Kristen Santos</strong>
+                        <p style="color:#1d4a4a;">Design Director, Santos Studio</p>
+                    </div>
+                </div>
+                <div class="masonry-item" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600">
+                    <div style="color:#ffd966; margin-bottom:0.5rem;">★★★★★</div>
+                    <p>"Real-time collaboration across our London and Singapore offices."</p>
+                    <div style="margin-top:1rem;">
+                        <strong>Carmen Shumate</strong>
+                        <p style="color:#1d4a4a;">Partner, Shumate & Co</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: AWARDS & RECOGNITION - LIGHT BG -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">AWARDS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Industry <span>Recognition</span></h2>
+            <div class="awards-grid">
+                <div class="award-item" data-aos="flip-left" data-aos-duration="1200">
+                    <div class="award-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Best BIM Software 2024</h3>
+                    <p>AIA Technology in Architecture Awards</p>
+                </div>
+                <div class="award-item" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="award-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Innovation in Design Tools</h3>
+                    <p>RIBA Journal Architecture Awards</p>
+                </div>
+                <div class="award-item" data-aos="flip-down" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="award-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Top Rated Architecture Software</h3>
+                    <p>Architizer A+ Product Awards</p>
+                </div>
+                <div class="award-item" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="600">
+                    <div class="award-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sustainability Software Leader</h3>
+                    <p>Green Building Council Innovation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: TRUSTED PARTNERS - DARK BG WITH LOGOS -->
+    <section class="section-dark">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">TRUSTED PARTNERS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Used by <span>Leading</span> Architecture Firms</h2>
+            <div class="partners-showcase">
+                <div class="partner-logo-card" data-aos="zoom-in" data-aos-duration="1200">
+                    <i class="fas fa-building"></i>
+                    <span>Foster+</span>
+                </div>
+                <div class="partner-logo-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                    <i class="fas fa-draw-polygon"></i>
+                    <span>ZHA</span>
+                </div>
+                <div class="partner-logo-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="400">
+                    <i class="fas fa-cube"></i>
+                    <span>SOM</span>
+                </div>
+                <div class="partner-logo-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="600">
+                    <i class="fas fa-archway"></i>
+                    <span>Gensler</span>
+                </div>
+                <div class="partner-logo-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="800">
+                    <i class="fas fa-city"></i>
+                    <span>HOK</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: PRICING SECTION WITH DARK BG - FULLY RESPONSIVE -->
+    <section class="section-with-bg" style="background-image:url('A25.webp');">
+        <div class="container" style="text-align:center;">
+            <span class="section-badge" data-aos="fade-down">FLEXIBLE PLANS</span>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Choose Your <span>Software Suite</span></h2>
+            <div class="pricing-grid">
+                <div class="pricing-card" data-aos="fade-right" data-aos-duration="1200">
+                    <h3>Studio</h3>
+                    <div class="pricing-price">$49<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> BIM Modeler Basic</li>
+                        <li><i class="fas fa-check"></i> 5 team members</li>
+                        <li><i class="fas fa-check"></i> 50GB cloud storage</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light">Get Started</a>
+                </div>
+                <div class="pricing-card popular" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <h3>Enterprise</h3>
+                    <div class="pricing-price">$99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Complete BIM Suite</li>
+                        <li><i class="fas fa-check"></i> Unlimited members</li>
+                        <li><i class="fas fa-check"></i> 500GB cloud storage</li>
+                        <li><i class="fas fa-check"></i> 24/7 priority support</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light">Get Started</a>
+                </div>
+                <div class="pricing-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <h3>Ultimate</h3>
+                    <div class="pricing-price">$199<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> All Products + Generative Design</li>
+                        <li><i class="fas fa-check"></i> Dedicated server</li>
+                        <li><i class="fas fa-check"></i> Custom API integrations</li>
+                        <li><i class="fas fa-check"></i> Training & onboarding</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: CTA WITH LIGHT BG -->
+    <section class="section-light" style="text-align:center;">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-down">Ready to Transform<br><span>Your Architecture Practice?</span></h2>
+            <p style="max-width:600px; margin:0 auto 2rem;" data-aos="fade-up" data-aos-delay="100">Join 12,000+ architecture firms already using Stackly software products.</p>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="200">
+                <a href="404.html" class="btn-primary">Start Free Trial</a>
+                <a href="404.html" class="btn-secondary">Contact Sales</a>
+            </div>
+            <div style="margin-top:3rem; display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;" data-aos="fade-up" data-aos-delay="300">
+                <span><i class="fas fa-check-circle" style="color:#0e3b3b;"></i> 30-day free trial</span>
+                <span><i class="fas fa-check-circle" style="color:#0e3b3b;"></i> No credit card</span>
+                <span><i class="fas fa-check-circle" style="color:#0e3b3b;"></i> Cancel anytime</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PLACEHOLDER - Footer will load here -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        //=================================================================================
+// Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // Scroll Animation Script 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+//=================================================================================
+
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true,
+            anchorPlacement: 'top-bottom',
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+
+    </script>
+</body>
+</html>

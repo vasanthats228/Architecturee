@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Features - Architecture Software Capabilities</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Section Background Variations */
+        .section-gradient-1 {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-gradient-2 {
+            background: linear-gradient(135deg, #0e3b3b 0%, #1d4a4a 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-waves {
+            background: linear-gradient(135deg, #042525 0%, #0e3b3b 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-waves::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('A9.webp');
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+        
+        .section-diagonal-lines {
+            background: #f8fafc;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-diagonal-lines::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, rgba(14,59,59,0.02) 0px, rgba(14,59,59,0.02) 20px, transparent 20px, transparent 40px);
+            z-index: 1;
+        }
+
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(159, 212, 212, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-gradient-2 .section-badge,
+        .section-waves .section-badge {
+            color: #9fd4d4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-gradient-1 .section-title,
+        .section-diagonal-lines .section-title {
+            color: #042525;
+        }
+        
+        .section-gradient-2 .section-title,
+        .section-waves .section-title {
+            color: white;
+        }
+
+        .section-title span {
+            color: #0e3b3b;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-gradient-2 .section-title span,
+        .section-waves .section-title span {
+            color: #9fd4d4;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #9fd4d4;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-light {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #0e3b3b;
+            color: white;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-light:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #9fd4d4;
+        }
+        
+        .btn-secondary:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-outline-light:before {
+            background: white;
+        }
+        
+        .btn-primary:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-outline-light:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-light:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* ===== FEATURE-SPECIFIC DESIGNS ===== */
+        
+        /* SECTION 1: Hero with 3D Tilt Cards and Background Image */
+        /* SECTION 1: FEATURES HERO - FIXED FOR MOBILE */
+.features-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('A7.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    overflow: hidden;
+    padding: 8rem 2rem 4rem; /* Added top padding for fixed header */
+}
+
+.hero-grid-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(159,212,212,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(159,212,212,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content-center {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    max-width: 900px;
+    margin: 2rem auto 0;
+}
+
+.hero-content-center h1 {
+    font-size: 5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    line-height: 1.2;
+}
+
+.hero-content-center h1 span {
+    color: #9fd4d4;
+    position: relative;
+}
+
+.hero-content-center p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-3d-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    perspective: 1000px;
+}
+
+.hero-card-3d {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 30px;
+    padding: 2rem;
+    width: 280px;
+    text-align: center;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.hero-card-3d:hover {
+    transform: translateY(-30px) rotateX(5deg) rotateY(5deg) scale(1.05);
+    border-color: #9fd4d4;
+    background: rgba(255,255,255,0.15);
+    box-shadow: -20px 20px 60px rgba(0,0,0,0.3);
+}
+
+.hero-card-3d img {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.hero-card-3d:hover img {
+    transform: scale(1.1);
+}
+
+.hero-card-3d h3 {
+    color: white;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.hero-card-3d p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* Section Badge styling */
+.features-hero .section-badge {
+    display: inline-block;
+    background: rgba(159, 212, 212, 0.2);
+    color: #9fd4d4;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(159,212,212,0.3);
+}
+
+/* ===== MOBILE-SPECIFIC FIXES ===== */
+@media screen and (max-width: 900px) {
+    .features-hero {
+        padding: 10rem 1.5rem 5rem; /* Large top padding for tablets */
+        min-height: auto;
+    }
+    
+    .hero-content-center h1 {
+        font-size: 3.5rem;
+    }
+    
+    .hero-content-center {
+        margin-top: 2rem;
+    }
+    
+    .hero-3d-cards {
+        margin-top: 3rem;
+        gap: 1.5rem;
+    }
+    
+    .hero-card-3d {
+        width: 260px;
+        padding: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .features-hero {
+        padding: 12rem 1.2rem 5rem; /* Extra large padding for mobile */
+    }
+    
+    .hero-content-center h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-content-center p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-card-3d {
+        width: 240px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .features-hero {
+        padding: 14rem 1rem 5rem; /* Huge top padding for small mobile */
+    }
+    
+    .hero-content-center h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content-center p {
+        font-size: 1.1rem;
+    }
+    
+    .hero-3d-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .hero-card-3d {
+        width: 100%;
+        max-width: 300px;
+        padding: 1.5rem;
+    }
+    
+    .features-hero .section-badge {
+        margin-bottom: 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .features-hero {
+        padding: 16rem 0.8rem 5rem; /* Maximum top padding for very small phones */
+    }
+    
+    .hero-content-center h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content-center h1 span {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content-center p {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .hero-card-3d {
+        max-width: 260px;
+        padding: 1.2rem;
+    }
+    
+    .hero-card-3d h3 {
+        font-size: 1.2rem;
+    }
+    
+    .hero-card-3d p {
+        font-size: 0.9rem;
+    }
+    
+    .hero-card-3d img {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 360px) {
+    .features-hero {
+        padding: 18rem 0.5rem 4rem; /* Extreme top padding */
+    }
+    
+    .hero-content-center h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content-center h1 span {
+        font-size: 1.5rem;
+    }
+    
+    .hero-card-3d {
+        max-width: 220px;
+    }
+}
+
+        /* SECTION 2: Floating Feature Blocks */
+        .feature-floating-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .floating-feature {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .floating-feature:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(14,59,59,0.2);
+        }
+        
+        .floating-feature img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .floating-feature:hover img {
+            transform: scale(1.1);
+        }
+        
+        .feature-content {
+            padding: 2rem;
+        }
+        
+        .feature-content i {
+            font-size: 2.5rem;
+            color: #0e3b3b;
+            margin-bottom: 1rem;
+        }
+
+        /* SECTION 3: Interactive Comparison Cards */
+        .comparison-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .comparison-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 3rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #9fd4d4;
+        }
+        
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .comparison-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .feature-list i.fa-check {
+            color: #9fd4d4;
+        }
+        
+        .feature-list i.fa-times {
+            color: #ff6b6b;
+        }
+
+        /* SECTION 4: Hover Tilt Gallery with Content */
+        .tilt-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tilt-item {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            height: 400px;
+        }
+        
+        .tilt-item:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: -30px 30px 80px rgba(0,0,0,0.25);
+        }
+        
+        .tilt-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .tilt-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .tilt-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(14,59,59,0.95), transparent);
+            color: white;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .tilt-item:hover .tilt-overlay {
+            transform: translateY(-10px);
+        }
+        
+        .tilt-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #9fd4d4;
+        }
+        
+        .tilt-overlay p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* SECTION 5: Animated Process Steps */
+        .process-steps-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .process-step-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 100px;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 60px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .process-step-row:hover {
+            transform: translateX(20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(14,59,59,0.1);
+            border-color: #0e3b3b;
+        }
+        
+        .step-number-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #9fd4d4;
+        }
+        
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #042525;
+        }
+        
+        .step-arrow i {
+            font-size: 2rem;
+            color: #0e3b3b;
+            opacity: 0.5;
+            transition: all 0.4s ease;
+        }
+        
+        .process-step-row:hover .step-arrow i {
+            opacity: 1;
+            transform: translateX(20px);
+        }
+
+        /* SECTION 6: Expandable Feature Cards - FIXED */
+        .expandable-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .expandable-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.5s ease;
+            border: 1px solid #e2eae2;
+            cursor: pointer;
+            position: relative;
+            height: 400px;
+        }
+        
+        .expandable-card.expanded {
+            height: 500px;
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            border-color: #9fd4d4;
+        }
+        
+        .expandable-card.expanded .card-front {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        
+        .expandable-card.expanded .card-back {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .expandable-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .expandable-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .card-front {
+            transition: all 0.4s ease;
+            padding: 2rem;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-front h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.5rem;
+            color: #042525;
+        }
+        
+        .card-front p {
+            color: #1d4a4a;
+            font-size: 0.95rem;
+        }
+        
+        .card-back {
+            position: absolute;
+            top: 200px;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            color: white;
+        }
+        
+        .card-back h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #9fd4d4;
+        }
+        
+        .card-back p {
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .card-back ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-back ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-back ul li i {
+            color: #9fd4d4;
+            margin-right: 0.5rem;
+        }
+        
+        .expand-icon {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: #0e3b3b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .expandable-card.expanded .expand-icon {
+            transform: rotate(45deg);
+            background: #9fd4d4;
+            color: #0e3b3b;
+        }
+
+        /* SECTION 7: Metrics Dashboard with Counter Animation */
+        .metrics-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .metric-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            color: white;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #9fd4d4;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .metric-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            margin-bottom: 0.5rem;
+        }
+
+        /* SECTION 8: Sliding Testimonials */
+        .testimonials-slider {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            margin-top: 3rem;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .testimonials-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .testimonial-slide {
+            min-width: 350px;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            scroll-snap-align: start;
+        }
+        
+        .testimonial-slide:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+        }
+        
+        .testimonial-slide img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .testimonial-content {
+            padding: 2rem;
+        }
+        
+        .testimonial-quote {
+            font-size: 2rem;
+            color: #9fd4d4;
+            margin-bottom: 1rem;
+        }
+
+        /* SECTION 9: Feature Grid with Icons - WITH CONTENT */
+        .feature-grid-advanced {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-advanced-item {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+            position: relative;
+            overflow: hidden;
+            color: #042525;
+        }
+        
+        .feature-advanced-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: #0e3b3b;
+            color: white;
+        }
+        
+        .feature-advanced-item:hover i {
+            color: #9fd4d4;
+        }
+        
+        .feature-advanced-item:hover p {
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .feature-advanced-item i {
+            font-size: 2.5rem;
+            color: #0e3b3b;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-advanced-item h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .feature-advanced-item p {
+            color: #1d4a4a;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        /* SECTION 10: CTA with Parallax */
+        .cta-parallax {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('A8.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content-center h1 {
+                font-size: 3rem;
+            }
+            
+            .feature-floating-grid,
+            .tilt-gallery,
+            .expandable-grid,
+            .feature-grid-advanced {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .comparison-showcase,
+            .process-step-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .process-step-row {
+                border-radius: 30px;
+                padding: 2rem;
+            }
+            
+            .step-number-large {
+                margin: 0 auto;
+            }
+            
+            .step-arrow {
+                display: none;
+            }
+            
+            .metrics-dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-3d-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-card-3d {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary, .btn-outline-light {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .feature-floating-grid,
+            .tilt-gallery,
+            .expandable-grid,
+            .feature-grid-advanced,
+            .metrics-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials-slider {
+                flex-direction: column;
+            }
+            
+            .testimonial-slide {
+                min-width: 100%;
+            }
+            
+            .hero-content-center h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            section {
+                padding: 4rem 1rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .comparison-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div>
+
+<body>
+    <!-- SECTION 1: Hero with 3D Tilt Cards and Background Image -->
+    <section class="features-hero">
+        <div class="hero-grid-bg"></div>
+        <div class="container hero-content-center">
+            <span class="section-badge" data-aos="fade-down" style="background:rgba(255,255,255,0.2); color:#9fd4d4;">ARCHITECTURE FEATURES</span>
+            <h1 data-aos="fade-up" data-aos-delay="100">Powerful <span>Features</span> for<br>Modern Architects</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Discover the capabilities that make Stackly the preferred choice for architecture firms worldwide.</p>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="300">
+                <a href="404.html" class="btn-outline-light">Explore All Features</a>
+                <a href="404.html" class="btn-outline-light">Watch Demo →</a>
+            </div>
+            <div class="hero-3d-cards" data-aos="fade-up" data-aos-delay="400">
+                <div class="hero-card-3d">
+                    <img src="A21.webp" alt="BIM Modeling">
+                    <h3>BIM Modeling</h3>
+                    <p>Intelligent 3D modeling</p>
+                </div>
+                <div class="hero-card-3d">
+                    <img src="A22.webp" alt="Collaboration">
+                    <h3>Collaboration</h3>
+                    <p>Real-time team coordination</p>
+                </div>
+                <div class="hero-card-3d">
+                    <img src="ai.webp" alt="AI Generative">
+                    <h3>AI Generative</h3>
+                    <p>AI-powered design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Floating Feature Blocks -->
+    <section class="section-gradient-1">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">CORE CAPABILITIES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Essential <span>Features</span> for Every Project</h2>
+            <div class="feature-floating-grid">
+                <div class="floating-feature" data-aos="flip-left" data-aos-duration="1200">
+                    <img src="A24.webp" alt="Parametric BIM">
+                    <div class="feature-content">
+                        <i class="fas fa-cube"></i>
+                        <h3>Parametric BIM</h3>
+                        <p>Create intelligent building models with automated updates across all views.</p>
+                        <a href="404.html" class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="floating-feature" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A25.webp" alt="Automated Docs">
+                    <div class="feature-content">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Automated Docs</h3>
+                        <p>Generate plans, sections, and elevations directly from your model.</p>
+                        <a href="404.html" class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="floating-feature" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A26.webp" alt="Collaboration">
+                    <div class="feature-content">
+                        <i class="fas fa-people-arrows"></i>
+                        <h3>Real-time Collaboration</h3>
+                        <p>Work simultaneously with team members across the globe.</p>
+                        <a href="404.html" class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Interactive Comparison Cards -->
+    <section class="section-waves">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">COMPARE</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Stackly vs <span>Traditional BIM</span></h2>
+            <div class="comparison-showcase">
+                <div class="comparison-card" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="comparison-header">
+                        <img src="A27.webp" alt="Stackly">
+                        <h3>Stackly BIM</h3>
+                    </div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Real-time cloud synchronization</li>
+                        <li><i class="fas fa-check"></i> AI-powered generative design</li>
+                        <li><i class="fas fa-check"></i> Automated clash detection</li>
+                        <li><i class="fas fa-check"></i> VR/AR integration</li>
+                        <li><i class="fas fa-check"></i> Unlimited collaborators</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light" style="margin-top:2rem;">Learn More</a>
+                </div>
+                <div class="comparison-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="comparison-header">
+                        <img src="A28.webp" alt="Traditional">
+                        <h3>Traditional BIM</h3>
+                    </div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-times"></i> File-based synchronization</li>
+                        <li><i class="fas fa-times"></i> Manual design exploration</li>
+                        <li><i class="fas fa-check"></i> Basic clash detection</li>
+                        <li><i class="fas fa-times"></i> No VR support</li>
+                        <li><i class="fas fa-check"></i> Limited collaborators</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light" style="margin-top:2rem;">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Hover Tilt Gallery with Content -->
+    <section class="section-gradient-1">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">VISUALIZATION</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Stunning <span>Visualization</span> Tools</h2>
+            <div class="tilt-gallery">
+                <div class="tilt-item" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A29.webp" alt="Real-time Rendering">
+                    <div class="tilt-overlay">
+                        <h3>Real-time Rendering</h3>
+                        <p>Create photorealistic renderings instantly with our advanced ray tracing engine. See materials, lighting, and textures come to life in real-time.</p>
+                        <a href="404.html" style="color:#9fd4d4;">Learn More →</a>
+                    </div>
+                </div>
+                <div class="tilt-item" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A30.webp" alt="VR Integration">
+                    <div class="tilt-overlay">
+                        <h3>VR Integration</h3>
+                        <p>Immerse yourself and clients in full-scale virtual reality walkthroughs. Experience spaces before they're built with our seamless VR integration.</p>
+                        <a href="404.html" style="color:#9fd4d4;">Learn More →</a>
+                    </div>
+                </div>
+                <div class="tilt-item" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A20.webp" alt="AR on Site">
+                    <div class="tilt-overlay">
+                        <h3>AR on Site</h3>
+                        <p>Overlay BIM models directly onto construction sites using augmented reality. Verify placements, identify clashes, and improve on-site coordination.</p>
+                        <a href="404.html" style="color:#9fd4d4;">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: Animated Process Steps -->
+    <section class="section-diagonal-lines">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">WORKFLOW</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Streamlined <span>Design Process</span></h2>
+            <div class="process-steps-vertical">
+                <div class="process-step-row" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="step-number-large">01</div>
+                    <div class="step-content">
+                        <h3>Concept Modeling</h3>
+                        <p>Create massing studies and conceptual designs with intelligent tools.</p>
+                    </div>
+                    <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="process-step-row" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="step-number-large">02</div>
+                    <div class="step-content">
+                        <h3>Design Development</h3>
+                        <p>Add details, materials, and parametric components to your model.</p>
+                    </div>
+                    <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="process-step-row" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="step-number-large">03</div>
+                    <div class="step-content">
+                        <h3>Documentation</h3>
+                        <p>Generate construction documents and schedules automatically.</p>
+                    </div>
+                    <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: Expandable Feature Cards - FIXED with working + symbol -->
+    <section class="section-gradient-2">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ADVANCED TOOLS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Click to <span>Explore</span> Features</h2>
+            <div class="expandable-grid">
+                <div class="expandable-card" data-aos="flip-left" data-aos-duration="1200">
+                    <img src="A19.webp" alt="AI Design">
+                    <div class="card-front">
+                        <h3>AI Design Assistant</h3>
+                        <p>Generate design alternatives based on your parameters.</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>AI Design Assistant</h3>
+                        <p>Our AI analyzes thousands of designs</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Site constraints & sunlight</li>
+                            <li><i class="fas fa-check"></i> Material optimization</li>
+                            <li><i class="fas fa-check"></i> Energy performance</li>
+                            <!-- <li><i class="fas fa-check"></i> Budget requirements</li> -->
+                        </ul>
+                        <a href="404.html" style="color:#9fd4d4;">Learn More →</a>
+                    </div>
+                    <div class="expand-icon"><i class="fas fa-plus"></i></div>
+                </div>
+                <div class="expandable-card" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A18.webp" alt="Climate Analysis">
+                    <div class="card-front">
+                        <h3>Climate Analysis</h3>
+                        <p>Analyze sunlight, wind patterns, and energy performance.</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>Climate Analysis</h3>
+                        <p>Comprehensive environmental tools</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Solar radiation studies</li>
+                            <li><i class="fas fa-check"></i> Wind flow simulation</li>
+                            <li><i class="fas fa-check"></i> Energy consumption</li>
+                            <!-- <li><i class="fas fa-check"></i> LEED certification</li> -->
+                        </ul>
+                        <a href="404.html" style="color:#9fd4d4;">Learn More →</a>
+                    </div>
+                    <div class="expand-icon"><i class="fas fa-plus"></i></div>
+                </div>
+                <div class="expandable-card" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A17.webp" alt="Quantity Takeoffs">
+                    <div class="card-front">
+                        <h3>Quantity Takeoffs</h3>
+                        <p>Automatic material quantities and cost estimates.</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>Quantity Takeoffs</h3>
+                        <p>Automated material quantification</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Real-time material lists</li>
+                            <li><i class="fas fa-check"></i> Cost estimation</li>
+                            <li><i class="fas fa-check"></i> Supplier integration</li>
+                            <!-- <li><i class="fas fa-check"></i> Waste reduction</li> -->
+                        </ul>
+                        <a href="404.html" style="color:#9fd4d4;">Learn More →</a>
+                    </div>
+                    <div class="expand-icon"><i class="fas fa-plus"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: Metrics Dashboard with Counter Animation -->
+    <section class="section-waves">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">PERFORMANCE</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Features <span>By The Numbers</span></h2>
+            <div class="metrics-dashboard">
+                <div class="metric-card" data-aos="zoom-in" data-aos-duration="1200">
+                    <div class="metric-value" id="counter1">40%</div>
+                    <div class="metric-label">Faster Documentation</div>
+                </div>
+                <div class="metric-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="metric-value" id="counter2">75%</div>
+                    <div class="metric-label">Fewer Coordination Errors</div>
+                </div>
+                <div class="metric-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="metric-value" id="counter3">60%</div>
+                    <div class="metric-label">Time Saved on Revisions</div>
+                </div>
+                <div class="metric-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="600">
+                    <div class="metric-value" id="counter4">100%</div>
+                    <div class="metric-label">Cloud Accessibility</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: Sliding Testimonials -->
+    <section class="section-gradient-1">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">TESTIMONIALS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">What Architects Say <span>About Features</span></h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-slide" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A16.webp" alt="Architect">
+                    <div class="testimonial-content">
+                        <div class="testimonial-quote">"</div>
+                        <p>The parametric modeling features saved us weeks on complex geometries.</p>
+                        <strong>- James Davidson</strong>
+                    </div>
+                </div>
+                <div class="testimonial-slide" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A15.webp" alt="Architect">
+                    <div class="testimonial-content">
+                        <div class="testimonial-quote">"</div>
+                        <p>Real-time collaboration transformed how our global teams work.</p>
+                        <strong>- Maria Lopez</strong>
+                    </div>
+                </div>
+                <div class="testimonial-slide" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A14.webp" alt="Architect">
+                    <div class="testimonial-content">
+                        <div class="testimonial-quote">"</div>
+                        <p>The VR review feature helped clients understand spaces before construction.</p>
+                        <strong>- Robert Kim</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: Feature Grid with Icons - WITH CONTENT -->
+    <section class="section-gradient-2">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ALL FEATURES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Everything You <span>Need</span> in One Platform</h2>
+            <div class="feature-grid-advanced">
+                <div class="feature-advanced-item" data-aos="flip-left" data-aos-duration="1200">
+                    <i class="fas fa-cube"></i>
+                    <h3>Parametric Modeling</h3>
+                    <p>Intelligent 3D modeling with automatic updates across all views.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Automated Documentation</h3>
+                    <p>Generate plans, sections, and elevations instantly from your model.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-down" data-aos-duration="1200" data-aos-delay="400">
+                    <i class="fas fa-people-arrows"></i>
+                    <h3>Team Collaboration</h3>
+                    <p>Real-time coordination with team members anywhere in the world.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="600">
+                    <i class="fas fa-brain"></i>
+                    <h3>Generative Design</h3>
+                    <p>AI-powered design exploration with thousands of options.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-left" data-aos-duration="1200" data-aos-delay="800">
+                    <i class="fas fa-vr-cardboard"></i>
+                    <h3>VR/AR Integration</h3>
+                    <p>Immersive design reviews in virtual and augmented reality.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="1000">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h3>Climate Analysis</h3>
+                    <p>Sunlight, wind, and energy performance analysis tools.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-down" data-aos-duration="1200" data-aos-delay="1200">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Quantity Takeoffs</h3>
+                    <p>Automatic material quantities and cost estimation.</p>
+                </div>
+                <div class="feature-advanced-item" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="1400">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Version Control</h3>
+                    <p>Complete project history with easy rollback and branching.</p>
+                </div>
+            </div>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="1600">
+                <a href="404.html" class="btn-outline-light">View All Features</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: CTA with Parallax -->
+    <section class="cta-parallax">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-down" style="color:white;">Ready to Experience<br><span style="color:#9fd4d4;">These Features?</span></h2>
+            <p style="max-width:600px; margin:0 auto 2rem;" data-aos="fade-up" data-aos-delay="100">Start your free trial today and explore all the powerful features Stackly offers.</p>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="200">
+                <a href="404.html" class="btn-outline-light">Start Free Trial</a>
+                <a href="404.html" class="btn-outline-light">Schedule Demo</a>
+            </div>
+            <div style="margin-top:3rem; display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;" data-aos="fade-up" data-aos-delay="300">
+                <span><i class="fas fa-check-circle" style="color:#9fd4d4;"></i> 30-day free trial</span>
+                <span><i class="fas fa-check-circle" style="color:#9fd4d4;"></i> No credit card</span>
+                <span><i class="fas fa-check-circle" style="color:#9fd4d4;"></i> Full access</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PLACEHOLDER - Footer will load here -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+//=================================================================================
+
+        // Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // Scroll Animation Script 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+//==============================================================================================
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true,
+            anchorPlacement: 'top-bottom',
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+
+        // Expandable cards functionality - FIXED
+        document.querySelectorAll('.expandable-card').forEach(card => {
+            const expandIcon = card.querySelector('.expand-icon');
+            
+            expandIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                card.classList.toggle('expanded');
+                
+                // Change icon
+                const icon = this.querySelector('i');
+                if (card.classList.contains('expanded')) {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                } else {
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                }
+            });
+        });
+
+        // Counter animation for metrics
+        function animateCounter(element, start, end, duration, suffix) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.innerText = value + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Counter values that change continuously
+        const counters = [
+            { element: document.getElementById('counter1'), values: [40, 42, 45, 43, 40], suffix: '%', index: 0 },
+            { element: document.getElementById('counter2'), values: [75, 78, 80, 77, 75], suffix: '%', index: 0 },
+            { element: document.getElementById('counter3'), values: [60, 62, 65, 63, 60], suffix: '%', index: 0 },
+            { element: document.getElementById('counter4'), values: [100, 100, 100, 100, 100], suffix: '%', index: 0 }
+        ];
+
+        function updateCounters() {
+            counters.forEach(counter => {
+                counter.index = (counter.index + 1) % counter.values.length;
+                counter.element.innerText = counter.values[counter.index] + counter.suffix;
+            });
+        }
+
+        // Change counter values every 3 seconds
+        setInterval(updateCounters, 3000);
+    </script>
+</body>
+</html>

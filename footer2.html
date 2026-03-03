@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Stackly • Architecture Software Footer</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* RESET & BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    /* ========== FOOTER STYLES (matching header - slate blue #2c3e50) ========== */
+    .footer {
+      background: #2c3e50;  /* Slate blue matching new header */
+      color: rgba(255,255,255,0.9);
+      padding: 3rem 2.5rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .footer-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+      gap: 2.5rem;
+      width: 100%;
+    }
+
+    /* Footer Logo & Bio */
+    .footer-logo img {
+      height: 48px; /* Matching header logo size */
+      width: auto;
+      display: block;
+      margin-bottom: 1.2rem;
+      border-radius: 8px;
+      transition: opacity 0.2s;
+      filter: brightness(0) invert(1); /* Makes logo white for dark background */
+      max-width: 100%;
+    }
+    .footer-logo img:hover {
+      opacity: 0.9;
+    }
+
+    .footer-logo p {
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+
+    /* Social Icons in Footer */
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-social a {
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.1);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 1.1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+
+    .footer-social a:hover {
+      background: #ffd700; /* Gold matching header login button */
+      color: #2c3e50;
+      transform: translateY(-3px);
+      border-color: #ffd700;
+    }
+
+    /* Footer Headings */
+    .footer h3 {
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.2px;
+      word-wrap: break-word;
+    }
+
+    /* Footer Links */
+    .footer-links ul,
+    .footer-resources ul,
+    .footer-company ul {
+      list-style: none;
+    }
+
+    .footer-links li,
+    .footer-resources li,
+    .footer-company li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-links a,
+    .footer-resources a,
+    .footer-company a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: inline-block;
+      word-wrap: break-word;
+      max-width: 100%;
+    }
+
+    .footer-links a:hover,
+    .footer-resources a:hover,
+    .footer-company a:hover {
+      color: #ffd700; /* Gold hover effect */
+      transform: translateX(5px);
+    }
+
+    /* Newsletter */
+    .footer-newsletter p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      width: 100%;
+    }
+
+    .newsletter-input {
+      padding: 0.9rem 1.2rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .newsletter-input::placeholder {
+      color: rgba(255,255,255,0.5);
+      font-weight: 400;
+    }
+
+    .newsletter-input:focus {
+      border-color: #ffd700;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .newsletter-button {
+      background: #ffd700; /* Gold matching login button */
+      color: #2c3e50;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+      max-width: 100%;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    .newsletter-button:hover {
+      background: #ffed4a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(255,215,0,0.3);
+    }
+
+    .newsletter-button i {
+      margin-left: 5px;
+    }
+
+    /* Copyright Bottom */
+    .footer-bottom {
+      max-width: 1300px;
+      margin: 2.5rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .footer-bottom p {
+      word-wrap: break-word;
+      padding: 0 0.5rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media screen and (max-width: 1000px) {
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .footer-logo {
+        grid-column: span 2;
+      }
+      .footer-logo p {
+        max-width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .footer {
+        padding: 2rem 1.5rem 1rem;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .footer-logo {
+        grid-column: span 1;
+      }
+      .footer-logo p {
+        max-width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .footer {
+        padding: 2rem 1rem 1rem;
+      }
+      .footer-container {
+        gap: 1.5rem;
+      }
+      .footer-social {
+        gap: 0.8rem;
+      }
+      .footer-social a {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+      }
+      .footer h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+      .footer-links li,
+      .footer-resources li,
+      .footer-company li {
+        margin-bottom: 0.6rem;
+      }
+    }
+
+    @media screen and (max-width: 360px) {
+      .footer {
+        padding: 1.5rem 0.8rem 1rem;
+      }
+      .footer-social {
+        gap: 0.5rem;
+      }
+      .footer-social a {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+      }
+      .newsletter-input,
+      .newsletter-button {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- ===== FOOTER (matching header with slate blue and gold accents) ===== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Logo + Architecture Software description + social -->
+      <div class="footer-logo">
+        <a href="home2.html">
+          <img src="Stacklylogo.webp" alt="Stackly" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'160\' height=\'48\' viewBox=\'0 0 160 48\'%3E%3Crect width=\'160\' height=\'48\' fill=\'%232c3e50\' rx=\'8\'/%3E%3Ctext x=\'30\' y=\'32\' font-family=\'Arial\' font-size=\'26\' fill=\'white\' font-weight=\'bold\'%3ESTACKLY%3C/text%3E%3C/svg%3E'">
+        </a>
+        <p>Advanced architecture software for modern design, 3D modeling, BIM collaboration, and project management. Empowering architects worldwide.</p>
+        <div class="footer-social">
+          <a href="4042.html" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="4042.html" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="4042.html" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="4042.html" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+
+      <!-- Company - Your 5 navigation buttons from header -->
+      <div class="footer-company">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="home2.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="login2.html">Login</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources - Architecture Software focused -->
+      <div class="footer-resources">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="4042.html">Documentation</a></li>
+          <li><a href="4042.html">API Reference</a></li>
+          <li><a href="4042.html">Tutorials</a></li>
+          <li><a href="4042.html">Webinars</a></li>
+          <li><a href="4042.html">Community</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p>Subscribe for architecture software updates, new features, and industry insights.</p>
+        <form class="newsletter-form" action="4042.html" method="GET">
+          <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+          <button type="submit" class="newsletter-button">Subscribe <i class="fas fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Stackly Architecture. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- No JavaScript needed - form submits directly to 4042.html -->
+</body>
+</html>

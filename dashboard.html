@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Architecture Dashboard</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #0e3b3b 0%, #1d4a4a 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            transition: all 0.3s ease;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar-header .logo-link {
+            display: block;
+        }
+
+        .sidebar-header .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-header .logo-img:hover {
+            opacity: 0.9;
+        }
+
+        .close-sidebar {
+            display: none;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-sidebar:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(159, 212, 212, 0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: #9fd4d4;
+            color: #0e3b3b;
+            font-weight: 700;
+        }
+
+        .nav-link i {
+            width: 24px;
+            font-size: 1.2rem;
+        }
+
+        .home-link {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            width: calc(100% - 280px);
+        }
+
+        /* Top Bar - No hamburger on desktop */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        .page-title h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #042525;
+        }
+
+        .page-title p {
+            color: #1d4a4a;
+            font-size: 0.95rem;
+        }
+
+        .date-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .date-selector i {
+            color: #0e3b3b;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #e2eae2;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(14,59,59,0.15);
+            border-color: #0e3b3b;
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(14,59,59,0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0e3b3b;
+            font-size: 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #042525;
+        }
+
+        .stat-label {
+            color: #1d4a4a;
+            font-size: 0.9rem;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .stat-change.positive {
+            color: #10b981;
+        }
+
+        .stat-change.negative {
+            color: #ef4444;
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            border: 1px solid #e2eae2;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .chart-header h3 {
+            font-size: 1.2rem;
+            color: #042525;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Spending Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            border: 1px solid #e2eae2;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 8px;
+        }
+
+        .category-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-name {
+            font-weight: 500;
+            color: #042525;
+        }
+
+        .category-amount {
+            font-weight: 700;
+            color: #0e3b3b;
+        }
+
+        .category-bar {
+            flex: 1;
+            height: 8px;
+            background: #e2eae2;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .category-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        /* Recent Activities */
+        .activities-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+            border: 1px solid #e2eae2;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e2eae2;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(14,59,59,0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0e3b3b;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-name {
+            font-weight: 700;
+            color: #042525;
+        }
+
+        .activity-project {
+            font-size: 0.85rem;
+            color: #1d4a4a;
+        }
+
+        .activity-status {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .activity-status.completed {
+            color: #10b981;
+        }
+
+        .activity-status.in-progress {
+            color: #f59e0b;
+        }
+
+        .activity-status.pending {
+            color: #ef4444;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media screen and (min-width: 901px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-280px);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .close-sidebar {
+                display: flex;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+                background: #0e3b3b;
+                border: none;
+                color: white;
+                width: 48px;
+                height: 48px;
+                border-radius: 12px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .mobile-menu-toggle:hover {
+                background: #1d4a4a;
+            }
+            
+            .top-bar {
+                flex-wrap: wrap;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .charts-grid,
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .date-selector {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .page-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo-link">
+                    <img src="Stacklylogo.webp" alt="Stackly" class="logo-img" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'160\' height=\'48\' viewBox=\'0 0 160 48\'%3E%3Crect width=\'160\' height=\'48\' fill=\'%23306767\' rx=\'16\'/%3E%3Ctext x=\'30\' y=\'33\' font-family=\'Arial\' font-size=\'26\' fill=\'%23ffffff\' font-weight=\'bold\'%3ESTACKLY%3C/text%3E%3C/svg%3E'">
+                </a>
+                <button class="close-sidebar" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link active">
+                        <i class="fas fa-chart-pie"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="404.html" class="nav-link">
+                        <i class="fas fa-building"></i>
+                        Projects
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="404.html" class="nav-link">
+                        <i class="fas fa-draw-polygon"></i>
+                        Designs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="404.html" class="nav-link">
+                        <i class="fas fa-file-alt"></i>
+                        Documents
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="404.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        Team
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="404.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item home-link">
+                    <a href="home1.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content" id="mainContent">
+            <div class="top-bar">
+                <button class="mobile-menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="page-title">
+                    <h1>Architecture Dashboard</h1>
+                    <p>Real-time insights for your architecture firm</p>
+                </div>
+                
+                <div class="date-selector">
+                    <i class="fas fa-calendar"></i>
+                    <span>March 2025</span>
+                </div>
+            </div>
+
+            <!-- Stats Cards - Architecture Software Focused -->
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <span class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 12%
+                        </span>
+                    </div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Active BIM Projects</div>
+                </div>
+                
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 8%
+                        </span>
+                    </div>
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">Architects & Designers</div>
+                </div>
+                
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <span class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> 15%
+                        </span>
+                    </div>
+                    <div class="stat-value">60%</div>
+                    <div class="stat-label">Avg. Documentation Speed</div>
+                </div>
+                
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <span class="stat-change negative">
+                            <i class="fas fa-arrow-down"></i> 75%
+                        </span>
+                    </div>
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Clashes Resolved</div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <!-- Line Chart - BIM Project Revenue -->
+                <div class="chart-card" data-aos="fade-right">
+                    <div class="chart-header">
+                        <h3>Project Revenue (BIM Projects)</h3>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background:#0e3b3b;"></div>
+                                <span>Commercial</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background:#f59e0b;"></div>
+                                <span>Residential</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Bar Chart - BIM Software Usage -->
+                <div class="chart-card" data-aos="fade-left">
+                    <div class="chart-header">
+                        <h3>BIM Software Usage by Phase</h3>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background:#0e3b3b;"></div>
+                                <span>Modeling</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background:#9fd4d4;"></div>
+                                <span>Documentation</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background:#ef4444;"></div>
+                                <span>Coordination</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="bimUsageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories and Pie Chart Grid -->
+            <div class="categories-grid">
+                <!-- Pie Chart - Project Types Distribution -->
+                <div class="chart-card" data-aos="fade-right">
+                    <div class="chart-header">
+                        <h3>Architecture Project Types</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="projectTypeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Resource Allocation - BIM Hours -->
+                <div class="category-card" data-aos="fade-left">
+                    <div class="chart-header">
+                        <h3>BIM Hours by Phase</h3>
+                    </div>
+                    <div class="category-list">
+                        <div class="category-item">
+                            <div class="category-color" style="background:#0e3b3b;"></div>
+                            <div class="category-info">
+                                <span class="category-name">Concept Design</span>
+                                <span class="category-amount">320 hrs</span>
+                            </div>
+                            <div class="category-bar">
+                                <div class="category-bar-fill" style="width:75%; background:#0e3b3b;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-color" style="background:#9fd4d4;"></div>
+                            <div class="category-info">
+                                <span class="category-name">Design Development</span>
+                                <span class="category-amount">450 hrs</span>
+                            </div>
+                            <div class="category-bar">
+                                <div class="category-bar-fill" style="width:90%; background:#9fd4d4;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-color" style="background:#f59e0b;"></div>
+                            <div class="category-info">
+                                <span class="category-name">Documentation</span>
+                                <span class="category-amount">380 hrs</span>
+                            </div>
+                            <div class="category-bar">
+                                <div class="category-bar-fill" style="width:80%; background:#f59e0b;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-color" style="background:#ef4444;"></div>
+                            <div class="category-info">
+                                <span class="category-name">Coordination</span>
+                                <span class="category-amount">220 hrs</span>
+                            </div>
+                            <div class="category-bar">
+                                <div class="category-bar-fill" style="width:55%; background:#ef4444;"></div>
+                            </div>
+                        </div>
+                        <div class="category-item">
+                            <div class="category-color" style="background:#10b981;"></div>
+                            <div class="category-info">
+                                <span class="category-name">Site Reviews</span>
+                                <span class="category-amount">120 hrs</span>
+                            </div>
+                            <div class="category-bar">
+                                <div class="category-bar-fill" style="width:30%; background:#10b981;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent BIM Activities -->
+            <div class="activities-card" data-aos="fade-up">
+                <div class="chart-header">
+                    <h3>Recent BIM Activities</h3>
+                    <a href="404.html" style="color:#0e3b3b; text-decoration:none;">View All →</a>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-name">BIM Model Update</div>
+                        <div class="activity-project">Commercial Tower • Structural coordination</div>
+                    </div>
+                    <div class="activity-status completed">Completed</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-draw-polygon"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-name">Clash Detection</div>
+                        <div class="activity-project">Hillside Residence • MEP vs Structure</div>
+                    </div>
+                    <div class="activity-status in-progress">12 clashes found</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-name">Document Generation</div>
+                        <div class="activity-project">Museum of Art • 45 sheets created</div>
+                    </div>
+                    <div class="activity-status completed">Completed</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-name">Team Collaboration</div>
+                        <div class="activity-project">Mixed-Use • 8 users online</div>
+                    </div>
+                    <div class="activity-status in-progress">Active</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-name">VR Model Review</div>
+                        <div class="activity-project">Client presentation • 3 models</div>
+                    </div>
+                    <div class="activity-status pending">Scheduled</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Sidebar Toggle - Mobile only
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 900) {
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // Revenue Chart (Line Chart) - Architecture Focused
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Commercial Projects',
+                    data: [420000, 480000, 510000, 490000, 550000, 620000],
+                    borderColor: '#0e3b3b',
+                    backgroundColor: 'rgba(14,59,59,0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Residential Projects',
+                    data: [310000, 350000, 380000, 420000, 400000, 450000],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245,158,11,0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e2eae2'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + (value/1000) + 'k';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // BIM Usage Chart (Bar Chart) - Multiple colors
+        new Chart(document.getElementById('bimUsageChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Concept', 'Schematic', 'Design Dev', 'Documentation', 'Coordination'],
+                datasets: [
+                    {
+                        label: 'Modeling',
+                        data: [85, 92, 88, 45, 30],
+                        backgroundColor: '#0e3b3b',
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'Documentation',
+                        data: [20, 35, 65, 95, 40],
+                        backgroundColor: '#9fd4d4',
+                        borderRadius: 6
+                    },
+                    {
+                        label: 'Coordination',
+                        data: [15, 25, 45, 55, 90],
+                        backgroundColor: '#ef4444',
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: '#e2eae2'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Project Type Chart (Pie Chart) - Different colors
+        new Chart(document.getElementById('projectTypeChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Commercial', 'Residential', 'Cultural', 'Mixed-Use', 'Institutional'],
+                datasets: [{
+                    data: [38, 32, 15, 10, 5],
+                    backgroundColor: [
+                        '#0e3b3b',
+                        '#9fd4d4',
+                        '#f59e0b',
+                        '#ef4444',
+                        '#10b981'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

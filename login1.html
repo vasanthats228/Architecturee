@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Architect Login</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 140px; /* Add padding for fixed header */
+        }
+
+        /* Subtle Background */
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(14, 59, 59, 0.03);
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(14,59,59,0.05) 0%, transparent 70%);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            background: radial-gradient(circle, rgba(14,59,59,0.05) 0%, transparent 70%);
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            top: 40%;
+            left: 10%;
+            background: radial-gradient(circle, rgba(14,59,59,0.03) 0%, transparent 70%);
+        }
+
+        .shape-4 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            right: 15%;
+            background: radial-gradient(circle, rgba(14,59,59,0.03) 0%, transparent 70%);
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(14,59,59,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14,59,59,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Main Container */
+        .login-container {
+            min-height: calc(100vh - 140px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+        }
+
+        /* Split Card Layout */
+        .login-card {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Left Side - Architectural Visual */
+        .login-visual {
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            padding: 4rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .floating-building {
+            position: relative;
+            height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .building-layer {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: rgba(159,212,212,0.1);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+        }
+
+        .building-layer:nth-child(1) {
+            width: 180px;
+            height: 180px;
+            background: rgba(159,212,212,0.15);
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        .building-layer:nth-child(2) {
+            width: 140px;
+            height: 140px;
+            background: rgba(159,212,212,0.2);
+            transform: translateX(-50%) translateY(-40px);
+        }
+
+        .building-layer:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: rgba(159,212,212,0.25);
+            transform: translateX(-50%) translateY(-60px);
+        }
+
+        .visual-content h2 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .visual-content h2 span {
+            color: #9fd4d4;
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .visual-quote {
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+            border-left: 3px solid #9fd4d4;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .visual-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #9fd4d4;
+        }
+
+        .stat .label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Right Side - Login Form */
+        .login-form {
+            background: white;
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-header .logo img {
+            height: 35px;
+            width: auto;
+        }
+
+        .form-header h1 {
+            font-size: 1.8rem;
+            color: #042525;
+            margin-bottom: 0.3rem;
+        }
+
+        .form-header p {
+            color: #1d4a4a;
+            font-size: 0.95rem;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #042525;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            color: #0e3b3b;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border: 2px solid #e2eae2;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #0e3b3b;
+            box-shadow: 0 0 0 4px rgba(14,59,59,0.1);
+        }
+
+        .input-wrapper input.valid {
+            border-color: #10b981;
+        }
+
+        .input-wrapper input.invalid {
+            border-color: #ef4444;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            color: #1d4a4a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #0e3b3b;
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            font-size: 0.8rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+            color: #1d4a4a;
+        }
+
+        .requirement:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement i {
+            width: 16px;
+            font-size: 0.85rem;
+        }
+
+        .requirement.valid i {
+            color: #10b981;
+        }
+
+        .requirement.invalid i {
+            color: #ef4444;
+        }
+
+        /* Form Options */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1rem 0;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1d4a4a;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #0e3b3b;
+        }
+
+        .forgot-link {
+            color: #0e3b3b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: #9fd4d4;
+        }
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(14,59,59,0.3);
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            border-radius: 10px;
+            padding: 0.7rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ef4444;
+            font-size: 0.85rem;
+        }
+
+        .error-message i {
+            font-size: 0.9rem;
+        }
+
+        /* Sign Up Section */
+        .signup-section {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #e2eae2;
+            text-align: center;
+        }
+
+        .signup-text {
+            color: #1d4a4a;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .signup-link {
+            color: #0e3b3b;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: rgba(14,59,59,0.05);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link:hover {
+            background: #0e3b3b;
+            color: white;
+            gap: 0.8rem;
+        }
+
+        .signup-link i {
+            font-size: 0.85rem;
+        }
+
+        /* Header and Footer Placeholders */
+        #header-placeholder, #footer-placeholder {
+            position: relative;
+            z-index: 100;
+            width: 100%;
+        }
+
+        /* Ensure footer is clickable */
+        #footer-placeholder a,
+        #footer-placeholder button {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            position: relative;
+            z-index: 101;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            body {
+                padding-top: 120px;
+            }
+            
+            .login-container {
+                min-height: calc(100vh - 120px);
+                padding: 1.5rem;
+            }
+            
+            .login-card {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            
+            .login-visual {
+                padding: 2.5rem 2rem;
+            }
+            
+            .floating-building {
+                height: 150px;
+            }
+            
+            .visual-content h2 {
+                font-size: 2rem;
+            }
+            
+            .login-form {
+                padding: 2.5rem 2rem;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding-top: 100px;
+            }
+            
+            .login-container {
+                min-height: calc(100vh - 100px);
+                padding: 1rem;
+            }
+            
+            .login-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            
+            .visual-stats {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+            
+            .stat {
+                flex: 1;
+                min-width: 70px;
+            }
+            
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .login-visual {
+                padding: 2rem 1.5rem;
+            }
+            
+            .login-form {
+                padding: 1.5rem 1.2rem;
+            }
+            
+            .floating-building {
+                height: 120px;
+            }
+            
+            .building-layer {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .visual-quote {
+                font-size: 0.9rem;
+                margin: 1rem 0;
+            }
+            
+            .stat .number {
+                font-size: 1.5rem;
+            }
+            
+            .stat .label {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div> 
+
+    <!-- Subtle Background -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Left Side - Architectural Visual -->
+            <div class="login-visual">
+                <div class="visual-content">
+                    <div class="floating-building">
+                        <div class="building-layer"></div>
+                        <div class="building-layer"></div>
+                        <div class="building-layer"></div>
+                    </div>
+                    
+                    <h2>Welcome Back<span>to Stackly</span></h2>
+                    
+                    <div class="visual-quote">
+                        "Architecture is the learned game, correct and magnificent, of forms assembled in the light."
+                    </div>
+                    
+                    <div class="visual-stats">
+                        <div class="stat">
+                            <div class="number">12M+</div>
+                            <div class="label">Architects</div>
+                        </div>
+                        <div class="stat">
+                            <div class="number">85+</div>
+                            <div class="label">Countries</div>
+                        </div>
+                        <div class="stat">
+                            <div class="number">2.5B</div>
+                            <div class="label">Models</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login Form -->
+            <div class="login-form">
+                <div class="form-header">
+                    <div class="logo">
+                        <img src="Stacklylogo.webp" alt="Stackly" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'160\' height=\'48\' viewBox=\'0 0 160 48\'%3E%3Crect width=\'160\' height=\'48\' fill=\'%23306767\' rx=\'16\'/%3E%3Ctext x=\'30\' y=\'33\' font-family=\'Arial\' font-size=\'26\' fill=\'%23ffffff\' font-weight=\'bold\'%3ESTACKLY%3C/text%3E%3C/svg%3E'">
+                    </div>
+                    <h1>Architect Login</h1>
+                    <p>Access your BIM workspace</p>
+                </div>
+
+                <!-- Error Message (hidden by default) -->
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" onsubmit="return validateLogin(event)">
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" placeholder="architect@firm.com" required>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                            <i class="fas fa-eye toggle-password" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+                        </div>
+                    </div>
+
+                    <!-- Password Requirements -->
+                    <div class="password-requirements" id="passwordRequirements">
+                        <div class="requirement" id="reqLength">
+                            <i class="fas fa-circle"></i>
+                            <span>At least 8 characters</span>
+                        </div>
+                        <div class="requirement" id="reqUppercase">
+                            <i class="fas fa-circle"></i>
+                            <span>One uppercase letter</span>
+                        </div>
+                        <div class="requirement" id="reqLowercase">
+                            <i class="fas fa-circle"></i>
+                            <span>One lowercase letter</span>
+                        </div>
+                        <div class="requirement" id="reqNumber">
+                            <i class="fas fa-circle"></i>
+                            <span>One number</span>
+                        </div>
+                        <div class="requirement" id="reqSpecial">
+                            <i class="fas fa-circle"></i>
+                            <span>One special character (@$!%*?&)</span>
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember"> Remember me
+                        </label>
+                        <a href="404.html" class="forgot-link">Forgot Password?</a>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="login-btn">
+                        Login
+                    </button>
+
+                    <!-- Sign Up Section -->
+                    <div class="signup-section">
+                        <div class="signup-text">Don't have an account?</div>
+                        <a href="signup.html" class="signup-link">
+                            Sign Up <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        //=================================================================================
+        // Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                    setTimeout(attachFooterClickEvents, 100);
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Attach click events to footer links
+        function attachFooterClickEvents() {
+            const footerLinks = document.querySelectorAll('#footer-placeholder a');
+            footerLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('Footer link clicked:', this.href);
+                });
+                link.style.pointerEvents = 'auto';
+                link.style.position = 'relative';
+                link.style.zIndex = '100';
+            });
+            
+            const footerButtons = document.querySelectorAll('#footer-placeholder button');
+            footerButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    console.log('Footer button clicked');
+                });
+                button.style.pointerEvents = 'auto';
+                button.style.position = 'relative';
+                button.style.zIndex = '100';
+            });
+        }
+
+        // Initialize header interactions
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            document.addEventListener('click', function(e) {
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        parentItem.classList.toggle('open');
+                    }
+                    return;
+                }
+                
+                if (e.target.closest('.dropdown-content')) return;
+                
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+        //=================================================================================
+
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePassword');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Password Validation
+        const passwordInput = document.getElementById('password');
+        const reqLength = document.getElementById('reqLength');
+        const reqUppercase = document.getElementById('reqUppercase');
+        const reqLowercase = document.getElementById('reqLowercase');
+        const reqNumber = document.getElementById('reqNumber');
+        const reqSpecial = document.getElementById('reqSpecial');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            
+            if (password.length >= 8) {
+                reqLength.classList.add('valid');
+                reqLength.classList.remove('invalid');
+                reqLength.querySelector('i').classList.remove('fa-circle');
+                reqLength.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                reqLength.classList.remove('valid');
+                reqLength.classList.add('invalid');
+                reqLength.querySelector('i').classList.remove('fa-check-circle');
+                reqLength.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[A-Z]/.test(password)) {
+                reqUppercase.classList.add('valid');
+                reqUppercase.classList.remove('invalid');
+                reqUppercase.querySelector('i').classList.remove('fa-circle');
+                reqUppercase.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                reqUppercase.classList.remove('valid');
+                reqUppercase.classList.add('invalid');
+                reqUppercase.querySelector('i').classList.remove('fa-check-circle');
+                reqUppercase.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[a-z]/.test(password)) {
+                reqLowercase.classList.add('valid');
+                reqLowercase.classList.remove('invalid');
+                reqLowercase.querySelector('i').classList.remove('fa-circle');
+                reqLowercase.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                reqLowercase.classList.remove('valid');
+                reqLowercase.classList.add('invalid');
+                reqLowercase.querySelector('i').classList.remove('fa-check-circle');
+                reqLowercase.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[0-9]/.test(password)) {
+                reqNumber.classList.add('valid');
+                reqNumber.classList.remove('invalid');
+                reqNumber.querySelector('i').classList.remove('fa-circle');
+                reqNumber.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                reqNumber.classList.remove('valid');
+                reqNumber.classList.add('invalid');
+                reqNumber.querySelector('i').classList.remove('fa-check-circle');
+                reqNumber.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[@$!%*?&]/.test(password)) {
+                reqSpecial.classList.add('valid');
+                reqSpecial.classList.remove('invalid');
+                reqSpecial.querySelector('i').classList.remove('fa-circle');
+                reqSpecial.querySelector('i').classList.add('fa-check-circle');
+            } else {
+                reqSpecial.classList.remove('valid');
+                reqSpecial.classList.add('invalid');
+                reqSpecial.querySelector('i').classList.remove('fa-check-circle');
+                reqSpecial.querySelector('i').classList.add('fa-circle');
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8 && 
+                   /[A-Z]/.test(password) && 
+                   /[a-z]/.test(password) && 
+                   /[0-9]/.test(password) && 
+                   /[@$!%*?&]/.test(password);
+        }
+
+        function validateLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            
+            errorMessage.style.display = 'none';
+            
+            if (!validateEmail(email)) {
+                errorText.textContent = 'Please enter a valid email address';
+                errorMessage.style.display = 'flex';
+                document.getElementById('email').classList.add('invalid');
+                return false;
+            } else {
+                document.getElementById('email').classList.remove('invalid');
+                document.getElementById('email').classList.add('valid');
+            }
+            
+            if (!validatePassword(password)) {
+                errorText.textContent = 'Password does not meet all requirements';
+                errorMessage.style.display = 'flex';
+                return false;
+            }
+            
+            if (document.getElementById('remember').checked) {
+                localStorage.setItem('rememberedEmail', email);
+            }
+            
+            window.location.href = '404.html';
+            return false;
+        }
+
+        window.addEventListener('load', function() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                document.getElementById('remember').checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

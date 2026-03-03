@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Circular Percentage Loader with Logo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0e3b3b;  /* HEADER/FOOTER COLOR - dark teal */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', system-ui, sans-serif;
+      padding: 1rem;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* LOADER CONTAINER - fully responsive, perfectly centered */
+    .loader-container {
+      background: transparent;
+      width: 100%;
+      max-width: 550px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Inner wrapper for circle and sentence */
+    .loader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* CIRCULAR PROGRESS LOADER - responsive sizing */
+    .progress-circle {
+      position: relative;
+      width: min(300px, 70vw);
+      height: min(300px, 70vw);
+      border-radius: 50%;
+      background: #1d4a4a;  /* Slightly lighter teal for contrast */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Inner circle - matches body background */
+    .progress-circle::before {
+      content: '';
+      position: absolute;
+      width: 82%;
+      height: 82%;
+      border-radius: 50%;
+      background: #0e3b3b;  /* Matches body background */
+      z-index: 1;
+    }
+
+    /* The colored progress ring */
+    .progress-ring {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(
+        #5ca0a0 0deg,
+        #9fd4d4 90deg,
+        #5ca0a0 180deg,
+        #9fd4d4 270deg,
+        #5ca0a0 360deg
+      );
+      mask: radial-gradient(farthest-side, transparent calc(100% - min(12px, 3vw)), black calc(100% - min(12px, 3vw)));
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - min(12px, 3vw)), black calc(100% - min(12px, 3vw)));
+      animation: rotateRing 1.8s linear infinite;
+    }
+
+    @keyframes rotateRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Inner content container (logo + percentage) */
+    .inner-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Logo inside the circle (not at the top) */
+    .logo-inside {
+      width: min(90px, 25%);
+      height: min(90px, 25%);
+      min-width: 60px;
+      min-height: 60px;
+      background: white;
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .logo-inside img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    /* Percentage display below the logo */
+    .percentage {
+      color: white;
+      font-size: clamp(2rem, 8vw, 2.8rem);
+      font-weight: 800;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      line-height: 1.2;
+    }
+
+    /* Sentence below the circle */
+    .loader-sentence {
+      margin-top: clamp(1.5rem, 5vw, 2.5rem);
+      color: #c9e3e3;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      font-weight: 400;
+      text-align: center;
+      letter-spacing: 0.5px;
+      max-width: 280px;
+      line-height: 1.5;
+    }
+
+    /* Extra small devices */
+    @media screen and (max-width: 380px) {
+      .logo-inside {
+        min-width: 50px;
+        min-height: 50px;
+      }
+      .loader-sentence {
+        max-width: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loader-container">
+    <div class="loader-content">
+      <!-- Circular loader with logo inside and percentage below -->
+      <div class="progress-circle">
+        <!-- Animated progress ring -->
+        <div class="progress-ring"></div>
+        
+        <!-- Inner content: logo + percentage -->
+        <div class="inner-content">
+          <div class="logo-inside">
+            <img src="Stacklylogo.webp" alt="Stackly" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'28\' fill=\'%23306767\' stroke=\'%239fd4d4\' stroke-width=\'2\'/%3E%3Ctext x=\'30\' y=\'40\' font-size=\'18\' text-anchor=\'middle\' fill=\'%23ffffff\' font-weight=\'bold\'%3EST%3C/text%3E%3C/svg%3E'">
+          </div>
+          <span class="percentage" id="percentage">0%</span>
+        </div>
+      </div>
+      
+      <!-- Sentence below the circle -->
+      <p class="loader-sentence" id="sentence">Loading...</p>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Get elements
+      const percentageEl = document.getElementById('percentage');
+      const sentenceEl = document.getElementById('sentence');
+      let percent = 0;
+      
+      function updatePercentage() {
+        if (percent < 100) {
+          percent++;
+          percentageEl.textContent = percent + '%';
+          
+          // Update sentence based on percentage
+          if (percent < 30) {
+            sentenceEl.textContent = 'Loading...';
+          } else if (percent < 60) {
+            sentenceEl.textContent = 'Almost there...';
+          } else if (percent < 90) {
+            sentenceEl.textContent = 'Still loading...';
+          } else {
+            sentenceEl.textContent = 'Finishing up...';
+          }
+          
+          // 15ms * 100 = 1.5 seconds to reach 100%
+          setTimeout(updatePercentage, 15);
+        } else {
+          // When 100% reached
+          percentageEl.textContent = '100%';
+          sentenceEl.textContent = 'Loading completed!';
+          
+          // Redirect after 0.5 seconds
+          setTimeout(function() {
+            window.location.href = 'home1.html';
+          }, 500);
+        }
+      }
+      
+      // Start loading animation with 0 delay
+      setTimeout(updatePercentage, 0);
+      
+      // Fallback redirect at 2 seconds
+      setTimeout(function() {
+        if (percent < 100) {
+          window.location.href = 'home1.html';
+        }
+      }, 2000);
+    })();
+  </script>
+</body>
+</html>

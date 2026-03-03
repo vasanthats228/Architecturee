@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Case Studies - Architecture Software Success Stories</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Section Background Variations */
+        .section-light {
+            background: #f8fafc;
+            position: relative;
+        }
+        
+        .section-dark {
+            background: linear-gradient(135deg, #0e3b3b 0%, #1d4a4a 100%);
+            color: white;
+            position: relative;
+        }
+        
+        .section-charcoal {
+            background: #1a2a2a;
+            color: white;
+            position: relative;
+        }
+        
+        .section-with-bg {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .section-with-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14, 59, 59, 0.95) 0%, rgba(29, 74, 74, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(159, 212, 212, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-dark .section-badge,
+        .section-charcoal .section-badge,
+        .section-with-bg .section-badge {
+            color: #9fd4d4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .section-light .section-badge {
+            color: #0e3b3b;
+            background: rgba(14, 59, 59, 0.1);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-light .section-title {
+            color: #042525;
+        }
+        
+        .section-dark .section-title,
+        .section-charcoal .section-title,
+        .section-with-bg .section-title {
+            color: white;
+        }
+
+        .section-title span {
+            color: #0e3b3b;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-dark .section-title span,
+        .section-charcoal .section-title span,
+        .section-with-bg .section-title span {
+            color: #9fd4d4;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #9fd4d4;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-light, .btn-outline-dark {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #0e3b3b;
+            color: white;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-outline-dark {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #0e3b3b;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-light:before, .btn-outline-dark:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #9fd4d4;
+        }
+        
+        .btn-secondary:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-outline-light:before {
+            background: white;
+        }
+        
+        .btn-outline-dark:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-primary:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-outline-light:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+        
+        .btn-outline-dark:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-light:hover:before, .btn-outline-dark:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* ===== CASE STUDIES UNIQUE DESIGNS ===== */
+        
+        /* SECTION 1: REDESIGNED CASE STUDIES HERO - STACKED LAYOUT (NO OVERLAP) */
+.case-studies-hero-new {
+    padding: 10rem 2rem 5rem; /* Large top padding to clear fixed header */
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.case-studies-hero-new .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+/* Content Side */
+.hero-content-new {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.hero-content-new .section-badge {
+    display: inline-block;
+    background: rgba(14, 59, 59, 0.1);
+    color: #0e3b3b;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+.hero-content-new h1 {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #042525;
+    margin: 0;
+}
+
+.hero-content-new h1 span {
+    color: #0e3b3b;
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #1d4a4a;
+    margin: 1rem 0;
+}
+
+/* Stats */
+.hero-stats-new {
+    display: flex;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.stat-item-new {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0e3b3b;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #1d4a4a;
+    margin-top: 0.3rem;
+}
+
+/* Project Highlight */
+.project-highlight {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 1.2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #e2eae2;
+    margin: 1rem 0;
+}
+
+.project-highlight i {
+    font-size: 2rem;
+    color: #0e3b3b;
+    background: rgba(14,59,59,0.1);
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.project-highlight strong {
+    font-size: 1.1rem;
+    color: #042525;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.project-highlight p {
+    font-size: 0.9rem;
+    color: #1d4a4a;
+    margin: 0;
+}
+
+/* Button Group */
+.button-group-new {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background: #0e3b3b;
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid #0e3b3b;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #1d4a4a;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(14,59,59,0.2);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #0e3b3b;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid #0e3b3b;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #0e3b3b;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(14,59,59,0.2);
+}
+
+/* Image Side */
+.hero-image-new {
+    position: relative;
+}
+
+.hero-image-new img {
+    width: 100%;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    display: block;
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0e3b3b;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+@media screen and (max-width: 900px) {
+    .case-studies-hero-new {
+        padding: 8rem 1.5rem 4rem;
+    }
+    
+    .case-studies-hero-new .container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .hero-content-new h1 {
+        font-size: 2.8rem;
+    }
+    
+    .hero-content-new h1 span {
+        font-size: 2rem;
+    }
+    
+    .hero-image-new {
+        order: -1;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .case-studies-hero-new {
+        padding: 7rem 1rem 3rem;
+    }
+    
+    .hero-content-new h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-content-new h1 span {
+        font-size: 1.6rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .hero-stats-new {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    
+    .stat-item-new {
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+    }
+    
+    .project-highlight {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .button-group-new {
+        flex-direction: column;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .case-studies-hero-new {
+        padding: 6rem 0.8rem 2.5rem;
+    }
+    
+    .hero-content-new h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content-new h1 span {
+        font-size: 1.4rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+    }
+    
+    .image-caption {
+        bottom: 10px;
+        left: 10px;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+        /* SECTION 2: Stats Counter */
+        .case-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .case-stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .case-stat-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #0e3b3b;
+            box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+        }
+        
+        .case-stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #0e3b3b;
+            margin-bottom: 0.5rem;
+        }
+
+        /* SECTION 3: Masonry Case Study Grid */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .masonry-item {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            height: 300px;
+        }
+        
+        .masonry-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            height: 620px;
+        }
+        
+        .masonry-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+        
+        .masonry-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .masonry-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(14,59,59,0.95), transparent);
+            color: white;
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .masonry-item:hover .masonry-overlay {
+            transform: translateY(-10px);
+        }
+
+        /* SECTION 4: Timeline Case Studies */
+        .timeline-case-studies {
+            position: relative;
+            margin-top: 4rem;
+        }
+        
+        .timeline-case-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .timeline-case-item:hover {
+            transform: translateX(20px) scale(1.01);
+            border-color: #0e3b3b;
+            box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+        }
+        
+        .timeline-year {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            text-align: right;
+            padding-right: 2rem;
+            border-right: 4px solid #0e3b3b;
+        }
+        
+        .timeline-content {
+            padding-left: 2rem;
+        }
+
+        /* SECTION 5: Flip Cards Gallery - Fixed Version */
+
+.flip-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    perspective: 1500px;
+}
+
+.flip-case-card {
+    height: 400px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+    /* Remove transform-style from here */
+}
+
+.flip-case-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.flip-case-card:hover .flip-case-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back sides */
+.flip-case-front, .flip-case-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* Safari support */
+    border-radius: 30px;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+/* Front side - Image */
+.flip-case-front {
+    background: white;
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+.flip-case-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.flip-case-card:hover .flip-case-front img {
+    transform: scale(1.05);
+}
+
+/* Back side - Content */
+.flip-case-back {
+    background: linear-gradient(135deg, #0e3b3b 0%, #1d4a4a 100%);
+    color: white;
+    transform: rotateY(180deg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.flip-case-back h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(159, 212, 212, 0.3);
+    padding-bottom: 0.5rem;
+    width: 100%;
+}
+
+.flip-case-back p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.flip-case-back p strong {
+    color: #9fd4d4;
+    font-weight: 600;
+}
+
+/* Case Study Link */
+.case-study-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(159, 212, 212, 0.15);
+    color: #9fd4d4;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 50px;
+    border: 1px solid rgba(159, 212, 212, 0.3);
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    backdrop-filter: blur(5px);
+}
+
+.case-study-link:hover {
+    background: #9fd4d4;
+    color: #0e3b3b;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: #9fd4d4;
+}
+
+/* Optional: Add overlay on front image */
+.flip-case-front::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.flip-case-card:hover .flip-case-front::after {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .flip-cases-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .flip-cases-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .flip-case-card {
+        height: 380px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .flip-case-card {
+        height: 350px;
+    }
+    
+    .flip-case-back {
+        padding: 1.5rem;
+    }
+    
+    .flip-case-back h3 {
+        font-size: 1.3rem;
+    }
+    
+    .flip-case-back p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Optional: Add a small hint that cards are clickable */
+.flip-case-card::after {
+    content: '↻';
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: white;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.flip-case-card:hover::after {
+    opacity: 0;
+}
+
+/* Ensure text is readable */
+.flip-case-back * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Fix for Firefox */
+@-moz-document url-prefix() {
+    .flip-case-front, .flip-case-back {
+        backface-visibility: hidden;
+    }
+}
+
+/* Accessibility - reduce motion if preferred */
+@media (prefers-reduced-motion: reduce) {
+    .flip-case-inner {
+        transition: none;
+    }
+    
+    .flip-case-card:hover .flip-case-inner {
+        transform: none;
+    }
+    
+    .flip-case-card {
+        cursor: default;
+    }
+}
+
+        /* SECTION 6: Regional Case Studies */
+        .regional-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .regional-card {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+            display: flex;
+        }
+        
+        .regional-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #0e3b3b;
+            box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+        }
+        
+        .regional-flag {
+            width: 120px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .regional-content {
+            padding: 2rem;
+            flex: 1;
+        }
+
+        /* SECTION 7: Impact Showcase */
+        .impact-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .impact-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            color: white;
+        }
+        
+        .impact-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            border-color: #9fd4d4;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .impact-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(159,212,212,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .impact-icon i {
+            font-size: 2.5rem;
+            color: #9fd4d4;
+        }
+        
+        .impact-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            margin-bottom: 0.5rem;
+        }
+
+        /* SECTION 8: Video Case Studies */
+        /* Video Showcase Styles */
+.video-showcase {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.video-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    aspect-ratio: 16/9;
+    background: #000;
+}
+
+.video-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.video-preview.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    background: rgba(159, 212, 212, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0e3b3b;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.play-button:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: #9fd4d4;
+}
+
+.video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    background: #000;
+}
+
+.video-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    z-index: 4;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 1.5rem 1rem 1rem;
+    pointer-events: none;
+}
+
+.video-caption h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    color: #9fd4d4;
+}
+
+.video-caption p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+    .video-showcase {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .play-button {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .play-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .video-caption h4 {
+        font-size: 1rem;
+    }
+    
+    .video-caption p {
+        font-size: 0.8rem;
+    }
+}
+
+        /* SECTION 9: Client Logos */
+        .client-logos {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .client-logo-item {
+            background: white;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .client-logo-item:hover {
+            transform: translateY(-15px) scale(1.1);
+            box-shadow: 0 30px 60px rgba(14,59,59,0.2);
+        }
+        
+        .client-logo-item i {
+            font-size: 3rem;
+            color: #0e3b3b;
+        }
+
+        /* SECTION 10: Download Reports */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .report-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .report-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #0e3b3b;
+            box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+        }
+        
+        .report-icon {
+            font-size: 3rem;
+            color: #0e3b3b;
+            margin-bottom: 1rem;
+        }
+
+        /* SECTION 11: CTA */
+        .case-cta {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('A18.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            color: white;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .case-stats-grid,
+            .impact-showcase,
+            .reports-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .masonry-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .masonry-item.large {
+                grid-column: auto;
+                grid-row: auto;
+                height: 300px;
+            }
+            
+            .flip-cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .regional-grid,
+            .video-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-case-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .timeline-year {
+                text-align: left;
+                border-right: none;
+                border-bottom: 4px solid #0e3b3b;
+                padding-right: 0;
+                padding-bottom: 1rem;
+            }
+            
+            .timeline-content {
+                padding-left: 0;
+                padding-top: 1rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary, .btn-outline-light, .btn-outline-dark {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .case-stats-grid,
+            .masonry-grid,
+            .flip-cases-grid,
+            .impact-showcase,
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .regional-card {
+                flex-direction: column;
+            }
+            
+            .regional-flag {
+                width: 100%;
+                height: 150px;
+            }
+            
+            .client-logos {
+                gap: 1.5rem;
+            }
+            
+            .client-logo-item {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .client-logo-item i {
+                font-size: 2.5rem;
+            }
+            
+            .video-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-card {
+                height: 250px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            section {
+                padding: 4rem 1rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .case-stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .flip-case-card {
+                height: 350px;
+            }
+            
+            .impact-number {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div> 
+
+    <!-- SECTION 1: Hero with Featured Architecture Case Study - COMPLETE -->
+<section class="case-studies-hero-new">
+    <div class="container">
+        <div class="hero-content-new" data-aos="fade-up">
+            <span class="section-badge">FEATURED CASE STUDY</span>
+            <h1>Foster + Partners <span>Transforms BIM Workflow with Stackly</span></h1>
+            <p class="hero-description">How one of the world's leading architecture firms reduced documentation time by 60% and improved global collaboration using Stackly's cloud-based BIM platform across 12 international offices.</p>
+            
+            <div class="hero-stats-new">
+                <div class="stat-item-new">
+                    <div class="stat-value">60%</div>
+                    <div class="stat-label">Faster Documentation</div>
+                </div>
+                <div class="stat-item-new">
+                    <div class="stat-value">75%</div>
+                    <div class="stat-label">Fewer Errors</div>
+                </div>
+                <div class="stat-item-new">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Offices</div>
+                </div>
+            </div>
+            
+            <div class="project-highlight">
+                <i class="fas fa-building"></i>
+                <div>
+                    <strong>30 St Mary Axe (The Gherkin), London</strong>
+                    <p>Iconic skyscraper project completed with Stackly BIM</p>
+                </div>
+            </div>
+            
+            <div class="button-group-new">
+                <a href="404.html" class="btn-primary">Read Full Case Study</a>
+                <a href="404.html" class="btn-secondary">Watch Video Story →</a>
+            </div>
+        </div>
+        
+        <div class="hero-image-new" data-aos="fade-left" data-aos-delay="200">
+            <img src="A11.webp" alt="Foster + Partners Gherkin Building">
+            <div class="image-caption">
+                <span>The Gherkin, London</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- SECTION 2: Stats Counter - Architecture Software Impact -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE SOFTWARE IMPACT</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Proven Results for <span>Architecture Firms</span></h2>
+            <div class="case-stats-grid">
+                <div class="case-stat-item" data-aos="flip-left" data-aos-duration="1200">
+                    <div class="case-stat-number" id="stat1">250+</div>
+                    <p>Architecture Firms Using Stackly</p>
+                </div>
+                <div class="case-stat-item" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="case-stat-number" id="stat2">1.2k+</div>
+                    <p>Major Building Projects Delivered</p>
+                </div>
+                <div class="case-stat-item" data-aos="flip-down" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="case-stat-number" id="stat3">45+</div>
+                    <p>Countries with Architecture Projects</p>
+                </div>
+                <div class="case-stat-item" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="600">
+                    <div class="case-stat-number" id="stat4">60%</div>
+                    <p>Average BIM Documentation Time Saved</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Masonry Case Study Grid - Architecture Projects -->
+    <section class="section-dark">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">FEATURED ARCHITECTURE PROJECTS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Iconic <span>Buildings</span> Designed with Stackly</h2>
+            <div class="masonry-grid">
+                <div class="masonry-item large" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A4.webp" alt="ZHA Beijing Daxing Airport">
+                    <div class="masonry-overlay">
+                        <h3>Beijing Daxing International Airport</h3>
+                        <p>Zaha Hadid Architects • Generative Design for Complex Geometry</p>
+                        <a href="404.html" style="color:#9fd4d4;">Read Case Study →</a>
+                    </div>
+                </div>
+                <div class="masonry-item" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A5.webp" alt="SOM One World Trade">
+                    <div class="masonry-overlay">
+                        <h3>One World Trade Center</h3>
+                        <p>SOM • Global Collaboration Across 5 Offices</p>
+                        <a href="404.html" style="color:#9fd4d4;">Read Case Study →</a>
+                    </div>
+                </div>
+                <div class="masonry-item" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A6.webp" alt="Gensler Shanghai Tower">
+                    <div class="masonry-overlay">
+                        <h3>Shanghai Tower</h3>
+                        <p>Gensler • BIM Coordination for 128-Story Supertall</p>
+                        <a href="404.html" style="color:#9fd4d4;">Read Case Study →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Timeline Case Studies - Architecture Software Evolution -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE PROJECT TIMELINE</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Evolution of <span>BIM Excellence</span> in Architecture</h2>
+            <div class="timeline-case-studies">
+                <div class="timeline-case-item" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3>Museum of Modern Art Expansion</h3>
+                        <p><strong>Architecture Firm:</strong> Diller Scofidio + Renfro<br>
+                        <strong>Challenge:</strong> Complex geometry coordination with existing structure<br>
+                        <strong>Solution:</strong> Stackly BIM reduced clashes by 75% using real-time clash detection</p>
+                        <a href="404.html" class="btn-secondary">Read Case Study</a>
+                    </div>
+                </div>
+                <div class="timeline-case-item" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-content">
+                        <h3>Apple Park Campus</h3>
+                        <p><strong>Architecture Firm:</strong> Foster + Partners<br>
+                        <strong>Challenge:</strong> Coordinating with 40+ consultants across time zones<br>
+                        <strong>Solution:</strong> Stackly's cloud platform enabled real-time collaboration</p>
+                        <a href="404.html" class="btn-secondary">Read Case Study</a>
+                    </div>
+                </div>
+                <div class="timeline-case-item" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3>Louvre Abu Dhabi</h3>
+                        <p><strong>Architecture Firm:</strong> Jean Nouvel<br>
+                        <strong>Challenge:</strong> Optimizing complex geometric dome structure<br>
+                        <strong>Solution:</strong> Generative design created 500+ options in hours</p>
+                        <a href="404.html" class="btn-secondary">Read Case Study</a>
+                    </div>
+                </div>
+                <div class="timeline-case-item" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="600">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>The Spiral, Hudson Yards</h3>
+                        <p><strong>Architecture Firm:</strong> BIG (Bjarke Ingels Group)<br>
+                        <strong>Challenge:</strong> Tight 6-month accelerated schedule<br>
+                        <strong>Solution:</strong> Stackly BIM automated documentation saved 40% time</p>
+                        <a href="404.html" class="btn-secondary">Read Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: Flip Cards Gallery - Architecture Project Types -->
+<section class="section-charcoal">
+    <div class="container">
+        <span class="section-badge" data-aos="fade-right">PROJECT TYPES</span>
+        <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Diverse <span>Architecture</span> Projects</h2>
+        
+        <div class="flip-cases-grid">
+            <!-- Card 1 -->
+            <div class="flip-case-card">
+                <div class="flip-case-inner">
+                    <div class="flip-case-front">
+                        <img src="A7.webp" alt="Mixed-Use Development">
+                    </div>
+                    <div class="flip-case-back">
+                        <h3>Mixed-Use Development</h3>
+                        <p><strong>Architect:</strong> Studio Gang</p>
+                        <p><strong>Result:</strong> 60% faster documentation for 12-building complex</p>
+                        <a href="4042.html" class="case-study-link">View Case Study →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="flip-case-card">
+                <div class="flip-case-inner">
+                    <div class="flip-case-front">
+                        <img src="A8.webp" alt="Commercial Tower">
+                    </div>
+                    <div class="flip-case-back">
+                        <h3>Commercial Tower</h3>
+                        <p><strong>Architect:</strong> KPF</p>
+                        <p><strong>Result:</strong> Zero coordination errors in 50-story structure</p>
+                        <a href="4042.html" class="case-study-link">View Case Study →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="flip-case-card">
+                <div class="flip-case-inner">
+                    <div class="flip-case-front">
+                        <img src="A9.webp" alt="Cultural Center">
+                    </div>
+                    <div class="flip-case-back">
+                        <h3>Cultural Center</h3>
+                        <p><strong>Architect:</strong> Frank Gehry Partners</p>
+                        <p><strong>Result:</strong> Generative design created 100+ options in hours</p>
+                        <a href="4042.html" class="case-study-link">View Case Study →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- SECTION 6: Regional Case Studies - Architecture Firms by Region -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">GLOBAL ARCHITECTURE</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Regional <span>Architecture</span> Success Stories</h2>
+            <div class="regional-grid">
+                <div class="regional-card" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="regional-flag" style="background-image: url('A10.webp')"></div>
+                    <div class="regional-content">
+                        <h3>North America</h3>
+                        <p><strong>45+ firms:</strong> SOM, Gensler, HOK, Perkins&Will</p>
+                        <p>Average 55% BIM efficiency gain</p>
+                        <a href="404.html">View Case Studies →</a>
+                    </div>
+                </div>
+                <div class="regional-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="regional-flag" style="background-image: url('A11.webp')"></div>
+                    <div class="regional-content">
+                        <h3>Europe</h3>
+                        <p><strong>60+ firms:</strong> Foster + Partners, ZHA, BIG, Rogers Stirk Harbour</p>
+                        <p>60% faster documentation</p>
+                        <a href="404.html">View Case Studies →</a>
+                    </div>
+                </div>
+                <div class="regional-card" data-aos="fade-right" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="regional-flag" style="background-image: url('A12.webp')"></div>
+                    <div class="regional-content">
+                        <h3>Asia Pacific</h3>
+                        <p><strong>35+ firms:</strong> KPF, Nikken Sekkei, WOHA, P&T Group</p>
+                        <p>80% reduction in coordination errors</p>
+                        <a href="404.html">View Case Studies →</a>
+                    </div>
+                </div>
+                <div class="regional-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="600">
+                    <div class="regional-flag" style="background-image: url('A13.webp')"></div>
+                    <div class="regional-content">
+                        <h3>Middle East</h3>
+                        <p><strong>20+ firms:</strong> Adrian Smith + Gordon Gill, Aedas, AREP</p>
+                        <p>Generative design for desert climate</p>
+                        <a href="404.html">View Case Studies →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: Impact Showcase - Architecture Software Benefits -->
+    <section class="section-with-bg" style="background-image:url('A14.webp');">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE SOFTWARE IMPACT</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Measurable <span>Results</span> for Architects</h2>
+            <div class="impact-showcase">
+                <div class="impact-card" data-aos="zoom-in" data-aos-duration="1200">
+                    <div class="impact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="impact-number">60%</div>
+                    <p>Faster Construction Documentation</p>
+                </div>
+                <div class="impact-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="impact-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="impact-number">75%</div>
+                    <p>Fewer BIM Coordination Errors</p>
+                </div>
+                <div class="impact-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="impact-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="impact-number">40%</div>
+                    <p>Project Cost Savings</p>
+                </div>
+                <div class="impact-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="600">
+                    <div class="impact-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="impact-number">85+</div>
+                    <p>Countries with Stackly Projects</p>
+                </div>
+                <div class="impact-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="800">
+                    <div class="impact-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="impact-number">12k+</div>
+                    <p>Architects Using Stackly</p>
+                </div>
+                <div class="impact-card" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="1000">
+                    <div class="impact-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="impact-number">2.5B</div>
+                    <p>sq.ft of Architecture Designed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- SECTION 8: Video Case Studies - Architect Interviews -->
+<section class="section-light">
+    <div class="container">
+        <span class="section-badge" data-aos="fade-right">VIDEO CASE STUDIES</span>
+        <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Hear from <span>Leading Architects</span></h2>
+        <div class="video-showcase">
+            <!-- Video Card 1 - Norman Foster -->
+            <div class="video-card" data-aos="fade-right" data-aos-duration="1200">
+                <div class="video-preview" style="background-image: url('A15.webp');">
+                    <div class="play-button" onclick="playVideo(this)">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <video class="video-player" id="video1" style="display: none;">
+                    <source src="vid1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-caption">
+                    <h4>Norman Foster</h4>
+                    <p>BIM Workflow Transformation at Foster + Partners</p>
+                </div>
+            </div>
+
+            <!-- Video Card 2 - Patrik Schumacher -->
+            <div class="video-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                <div class="video-preview" style="background-image: url('A16.webp');">
+                    <div class="play-button" onclick="playVideo(this)">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <video class="video-player" id="video2" style="display: none;">
+                    <source src="vid2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-caption">
+                    <h4>Patrik Schumacher</h4>
+                    <p>Generative Design at Zaha Hadid Architects</p>
+                </div>
+            </div>
+        </div>
+        <div class="button-group" data-aos="fade-up" data-aos-delay="300">
+            <a href="404.html" class="btn-secondary">Watch All Architect Interviews</a>
+        </div>
+    </div>
+</section>
+    <!-- SECTION 9: Client Logos - Architecture Firms -->
+    <section class="section-dark">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">TRUSTED BY</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">World's Leading <span>Architecture</span> Firms</h2>
+            <div class="client-logos">
+                <div class="client-logo-item" data-aos="zoom-in" data-aos-duration="1200">
+                    <i class="fas fa-building"></i>
+                    <span style="display:block; font-size:0.8rem; margin-top:0.5rem;">Foster+</span>
+                </div>
+                <div class="client-logo-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                    <i class="fas fa-draw-polygon"></i>
+                    <span style="display:block; font-size:0.8rem; margin-top:0.5rem;">ZHA</span>
+                </div>
+                <div class="client-logo-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="400">
+                    <i class="fas fa-cube"></i>
+                    <span style="display:block; font-size:0.8rem; margin-top:0.5rem;">SOM</span>
+                </div>
+                <div class="client-logo-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="600">
+                    <i class="fas fa-archway"></i>
+                    <span style="display:block; font-size:0.8rem; margin-top:0.5rem;">Gensler</span>
+                </div>
+                <div class="client-logo-item" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="800">
+                    <i class="fas fa-city"></i>
+                    <span style="display:block; font-size:0.8rem; margin-top:0.5rem;">HOK</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: Download Reports - Architecture Case Studies -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">RESOURCES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Download <span>Architecture</span> Case Studies</h2>
+            <div class="reports-grid">
+                <div class="report-card" data-aos="flip-left" data-aos-duration="1200">
+                    <div class="report-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>BIM ROI Report</h3>
+                    <p>Analysis of 50+ architecture firms using Stackly</p>
+                    <a href="404.html" class="btn-secondary">Download PDF</a>
+                </div>
+                <div class="report-card" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="report-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>Generative Design Study</h3>
+                    <p>How AI is transforming architectural design</p>
+                    <a href="404.html" class="btn-secondary">Download PDF</a>
+                </div>
+                <div class="report-card" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="400">
+                    <div class="report-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>Sustainable Architecture</h3>
+                    <p>Carbon reduction through BIM optimization</p>
+                    <a href="404.html" class="btn-secondary">Download PDF</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: CTA - Architecture Firms -->
+    <section class="case-cta">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-down" style="color:white;">Ready to Transform Your<br><span style="color:#9fd4d4;">Architecture Practice?</span></h2>
+            <p style="max-width:600px; margin:0 auto 2rem;" data-aos="fade-up" data-aos-delay="100">Join 250+ leading architecture firms already using Stackly to deliver exceptional buildings.</p>
+            <div class="button-group" data-aos="zoom-in" data-aos-delay="200">
+                <a href="404.html" class="btn-outline-light">Read More Case Studies</a>
+                <a href="404.html" class="btn-outline-light">Contact Our Architecture Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+        //=================================================================================
+// Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+//=================================================================================
+
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true,
+            anchorPlacement: 'top-bottom',
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+
+        // Counter animation
+        function animateCounter(element, start, end, duration, suffix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.innerText = value + suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Start counters when they come into view
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target.querySelector('.case-stat-number');
+                    if (statNumber) {
+                        const value = statNumber.innerText.replace(/[^0-9]/g, '');
+                        animateCounter(statNumber, 0, parseInt(value), 2000, '+');
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.case-stat-item').forEach(item => {
+            observer.observe(item);
+        });
+
+// Video Play Function
+function playVideo(button) {
+    // Get the parent video card
+    const videoCard = button.closest('.video-card');
+    const preview = videoCard.querySelector('.video-preview');
+    const video = videoCard.querySelector('.video-player');
+    
+    // Hide preview
+    preview.classList.add('hide');
+    
+    // Show and play video
+    video.style.display = 'block';
+    video.play();
+    
+    // When video ends, show preview again
+    video.onended = function() {
+        video.style.display = 'none';
+        preview.classList.remove('hide');
+        video.currentTime = 0; // Reset video to beginning
+    };
+    
+    // Optional: Pause if user clicks outside (you can remove this if not needed)
+    video.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
+}
+
+// Optional: Pause all videos when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.video-card')) {
+        document.querySelectorAll('.video-player').forEach(video => {
+            if (!video.paused) {
+                video.pause();
+                const videoCard = video.closest('.video-card');
+                const preview = videoCard.querySelector('.video-preview');
+                video.style.display = 'none';
+                preview.classList.remove('hide');
+            }
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

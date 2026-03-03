@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • 404 - Page Not Found</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2eae2 100%);
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Subtle Background Pattern - matching slate blue */
+        .pattern-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(44, 62, 80, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(44, 62, 80, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+
+        /* Main Container */
+        .error-container {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+            width: 90%;
+            margin: 2rem;
+            text-align: center;
+        }
+
+        /* Error Card */
+        .error-card {
+            background: white;
+            border-radius: 40px;
+            padding: 4rem 3rem;
+            box-shadow: 0 30px 60px rgba(44, 62, 80, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative Line - slate blue to gold gradient */
+        .decorative-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #2c3e50, #ffd700, #2c3e50);
+        }
+
+        /* Error Number - slate blue */
+        .error-number {
+            font-size: 10rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            text-shadow: 4px 4px 0 rgba(255, 215, 0, 0.2);
+            letter-spacing: -5px;
+        }
+
+        /* Error Title */
+        .error-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e2f4f;
+            margin-bottom: 1rem;
+        }
+
+        .error-title span {
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+
+        .error-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #ffd700;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Error Message */
+        .error-message {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Home Button - slate blue to gold gradient */
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-width: 200px;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(44, 62, 80, 0.3);
+            border-color: #ffd700;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+
+        .home-btn i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .home-btn:hover i {
+            transform: translateX(-5px);
+        }
+
+        /* Architectural Element - gold */
+        .arch-element {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1;
+            color: #ffd700;
+            font-size: 4rem;
+            transform: rotate(10deg);
+        }
+
+        /* Gold accent for any additional elements */
+        .gold-accent {
+            color: #ffd700;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .error-card {
+                padding: 3rem 2rem;
+            }
+
+            .error-number {
+                font-size: 7rem;
+                letter-spacing: -3px;
+            }
+
+            .error-title {
+                font-size: 1.6rem;
+            }
+
+            .error-message {
+                font-size: 1rem;
+            }
+
+            .home-btn {
+                padding: 0.9rem 2rem;
+                min-width: 180px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .error-card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .error-number {
+                font-size: 5rem;
+                letter-spacing: -2px;
+            }
+
+            .error-title {
+                font-size: 1.4rem;
+            }
+
+            .arch-element {
+                font-size: 3rem;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="pattern-bg"></div>
+
+    <!-- Error Container -->
+    <div class="error-container">
+
+        <!-- Error Card -->
+        <div class="error-card" data-aos="zoom-in" data-aos-duration="800">
+            <!-- Decorative Line -->
+            <div class="decorative-line"></div>
+
+            <!-- Error Number -->
+            <div class="error-number" data-aos="fade-up" data-aos-delay="100">404</div>
+
+            <!-- Error Title -->
+            <h1 class="error-title" data-aos="fade-up" data-aos-delay="200">
+                Page <span>Not Found</span>
+            </h1>
+
+            <!-- Error Message -->
+            <p class="error-message" data-aos="fade-up" data-aos-delay="300">
+                The page you are looking for doesn't exist or has been moved.
+            </p>
+
+            <!-- Home Button - returns to index.html -->
+            <a href="home2.html" class="home-btn" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+
+            <!-- Architectural Element - gold cube -->
+            <div class="arch-element">
+                <i class="fas fa-cube"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Architect Sign Up</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f5f7fa;
+            overflow-x: hidden;
+            position: relative;
+            padding-top: 140px; /* Add padding for fixed header */
+        }
+
+        /* Subtle Background */
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.3;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(14, 59, 59, 0.03);
+            border-radius: 50%;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(14,59,59,0.05) 0%, transparent 70%);
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            background: radial-gradient(circle, rgba(14,59,59,0.05) 0%, transparent 70%);
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            top: 40%;
+            left: 10%;
+            background: radial-gradient(circle, rgba(14,59,59,0.03) 0%, transparent 70%);
+        }
+
+        .shape-4 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            right: 15%;
+            background: radial-gradient(circle, rgba(14,59,59,0.03) 0%, transparent 70%);
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(14,59,59,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14,59,59,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Main Container */
+        .signup-container {
+            min-height: calc(100vh - 140px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            padding: 1.5rem;
+        }
+
+        /* Split Card Layout */
+        .signup-card {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Left Side - Architectural Visual */
+        .signup-visual {
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .floating-building {
+            position: relative;
+            height: 120px;
+            margin-bottom: 1.2rem;
+        }
+
+        .building-layer {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 140px;
+            background: rgba(159,212,212,0.1);
+            clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+        }
+
+        .building-layer:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            background: rgba(159,212,212,0.15);
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        .building-layer:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            background: rgba(159,212,212,0.2);
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        .building-layer:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            background: rgba(159,212,212,0.25);
+            transform: translateX(-50%) translateY(-30px);
+        }
+
+        .visual-content h2 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        .visual-content h2 span {
+            color: #9fd4d4;
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .feature-list {
+            margin: 1.2rem 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.7rem;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+        }
+
+        .feature-item i {
+            color: #9fd4d4;
+            font-size: 1rem;
+            width: 20px;
+        }
+
+        .visual-stats {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat .number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #9fd4d4;
+        }
+
+        .stat .label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Right Side - Sign Up Form */
+        .signup-form {
+            background: white;
+            padding: 1.8rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar */
+        .signup-form::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .signup-form::-webkit-scrollbar-track {
+            background: #e2eae2;
+            border-radius: 10px;
+        }
+
+        .signup-form::-webkit-scrollbar-thumb {
+            background: #0e3b3b;
+            border-radius: 10px;
+        }
+
+        .form-header {
+            margin-bottom: 1rem;
+        }
+
+        .form-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .form-header .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .form-header h1 {
+            font-size: 1.8rem;
+            color: #042525;
+            margin-bottom: 0.2rem;
+        }
+
+        .form-header p {
+            color: #1d4a4a;
+            font-size: 0.9rem;
+        }
+
+        /* Form Grid - 2 columns */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.2rem;
+            color: #042525;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 0.8rem;
+            color: #0e3b3b;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input,
+        .input-wrapper select {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.4rem;
+            border: 2px solid #e2eae2;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-wrapper select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230e3b3b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            background-size: 14px;
+        }
+
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
+            outline: none;
+            border-color: #0e3b3b;
+            box-shadow: 0 0 0 4px rgba(14,59,59,0.1);
+        }
+
+        .input-wrapper input.valid {
+            border-color: #10b981;
+        }
+
+        .input-wrapper input.invalid {
+            border-color: #ef4444;
+        }
+
+        .input-wrapper input.error {
+            border-color: #ef4444;
+        }
+
+        /* Error message below input */
+        .field-error {
+            color: #ef4444;
+            font-size: 0.65rem;
+            margin-top: 0.2rem;
+            display: none;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        /* Password Requirements */
+        .password-requirements {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 0.6rem;
+            margin: 0.5rem 0;
+            font-size: 0.7rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.3rem;
+            color: #1d4a4a;
+        }
+
+        .requirement:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement i {
+            width: 14px;
+            font-size: 0.7rem;
+        }
+
+        .requirement.valid i {
+            color: #10b981;
+        }
+
+        .requirement.invalid i {
+            color: #ef4444;
+        }
+
+        /* Terms Checkbox */
+        .terms-group {
+            margin: 0.5rem 0;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1d4a4a;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #0e3b3b;
+        }
+
+        .terms-checkbox a {
+            color: #0e3b3b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-checkbox a:hover {
+            color: #9fd4d4;
+        }
+
+        /* Sign Up Button */
+        .signup-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.3rem 0;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(14,59,59,0.3);
+        }
+
+        .signup-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            border-radius: 10px;
+            padding: 0.6rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ef4444;
+            font-size: 0.8rem;
+        }
+
+        .error-message i {
+            font-size: 0.9rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            border-radius: 10px;
+            padding: 0.6rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #047857;
+            font-size: 0.8rem;
+        }
+
+        .success-message i {
+            font-size: 0.9rem;
+            color: #10b981;
+        }
+
+        /* Login Link */
+        .login-section {
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #e2eae2;
+            text-align: center;
+        }
+
+        .login-text {
+            color: #1d4a4a;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .login-link {
+            color: #0e3b3b;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.2rem;
+            background: rgba(14,59,59,0.05);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .login-link:hover {
+            background: #0e3b3b;
+            color: white;
+            gap: 0.8rem;
+        }
+
+        .login-link i {
+            font-size: 0.8rem;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: #e2eae2;
+            border-radius: 2px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0e3b3b, #9fd4d4);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Header and Footer Placeholders */
+        #header-placeholder, #footer-placeholder {
+            position: relative;
+            z-index: 100;
+            width: 100%;
+        }
+
+        /* Ensure footer is clickable */
+        #footer-placeholder a,
+        #footer-placeholder button {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            position: relative;
+            z-index: 101;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            body {
+                padding-top: 120px;
+            }
+            
+            .signup-container {
+                min-height: calc(100vh - 120px);
+                padding: 1rem;
+            }
+            
+            .signup-card {
+                grid-template-columns: 1fr;
+                max-width: 550px;
+            }
+            
+            .signup-visual {
+                padding: 1.8rem 1.5rem;
+            }
+            
+            .floating-building {
+                height: 100px;
+            }
+            
+            .visual-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .signup-form {
+                padding: 1.5rem;
+                max-height: none;
+                overflow-y: visible;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding-top: 100px;
+            }
+            
+            .signup-container {
+                min-height: calc(100vh - 100px);
+                padding: 0.8rem;
+            }
+            
+            .signup-form {
+                padding: 1.2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .visual-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+            
+            .stat {
+                flex: 1;
+                min-width: 60px;
+            }
+            
+            .feature-item {
+                font-size: 0.8rem;
+            }
+            
+            .signup-form {
+                max-height: 70vh;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding-top: 80px;
+            }
+            
+            .signup-container {
+                min-height: calc(100vh - 80px);
+            }
+            
+            .signup-form {
+                padding: 1rem;
+            }
+            
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .terms-checkbox {
+                font-size: 0.75rem;
+            }
+            
+            .building-layer {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div> 
+    
+    <!-- Subtle Background -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <!-- Sign Up Container -->
+    <div class="signup-container">
+        <div class="signup-card">
+            <!-- Left Side - Architectural Visual -->
+            <div class="signup-visual">
+                <div class="visual-content">
+                    <div class="floating-building">
+                        <div class="building-layer"></div>
+                        <div class="building-layer"></div>
+                        <div class="building-layer"></div>
+                    </div>
+                    
+                    <h2>Join Stackly<span>Architecture Platform</span></h2>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <i class="fas fa-cube"></i>
+                            <span>Cloud-based BIM modeling</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-users"></i>
+                            <span>Real-time team collaboration</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Automated documentation</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-vr-cardboard"></i>
+                            <span>VR design reviews</span>
+                        </div>
+                    </div>
+                    
+                    <div class="visual-stats">
+                        <div class="stat">
+                            <div class="number">12M+</div>
+                            <div class="label">Architects</div>
+                        </div>
+                        <div class="stat">
+                            <div class="number">85+</div>
+                            <div class="label">Countries</div>
+                        </div>
+                        <div class="stat">
+                            <div class="number">2.5B</div>
+                            <div class="label">Models</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Sign Up Form -->
+            <div class="signup-form">
+                <div class="form-header">
+                    <div class="logo">
+                        <img src="Stacklylogo.webp" alt="Stackly" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'32\' viewBox=\'0 0 120 32\'%3E%3Crect width=\'120\' height=\'32\' fill=\'%23306767\' rx=\'8\'/%3E%3Ctext x=\'20\' y=\'22\' font-family=\'Arial\' font-size=\'16\' fill=\'%23ffffff\' font-weight=\'bold\'%3ESTACKLY%3C/text%3E%3C/svg%3E'">
+                    </div>
+                    <h1>Create Account</h1>
+                    <p>Join 12M+ architects worldwide</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <!-- Messages -->
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <div id="successMessage" class="success-message" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Account created successfully! Redirecting...</span>
+                </div>
+
+                <!-- Sign Up Form -->
+                <form id="signupForm" onsubmit="return validateSignUp(event)">
+                    <div class="form-grid">
+                        <!-- First Name -->
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="firstName" placeholder="Punarv" required>
+                            </div>
+                            <div id="firstNameError" class="field-error">Only letters allowed</div>
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="lastName" placeholder="Gowda" required>
+                            </div>
+                            <div id="lastNameError" class="field-error">Only letters allowed</div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group full-width">
+                            <label for="email">Email Address *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" id="email" placeholder="architect@firm.com" required>
+                            </div>
+                            <div id="emailError" class="field-error">Enter a valid email address</div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="form-group full-width">
+                            <label for="phone">Phone Number * (10 digits)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input type="tel" id="phone" placeholder="9876543210" maxlength="10" required>
+                            </div>
+                            <div id="phoneError" class="field-error">Enter exactly 10 digits</div>
+                        </div>
+
+                        <!-- Firm Name -->
+                        <div class="form-group full-width">
+                            <label for="firm">Architecture Firm</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-building input-icon"></i>
+                                <input type="text" id="firm" placeholder="Firm name (optional)">
+                            </div>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="form-group">
+                            <label for="role">Role *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-briefcase input-icon"></i>
+                                <select id="role" required>
+                                    <option value="">Select role</option>
+                                    <option value="architect">Architect</option>
+                                    <option value="designer">Designer</option>
+                                    <option value="principal">Principal</option>
+                                    <option value="student">Student</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div id="roleError" class="field-error">Please select a role</div>
+                        </div>
+
+                        <!-- Firm Size -->
+                        <div class="form-group">
+                            <label for="firmSize">Firm Size *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-users input-icon"></i>
+                                <select id="firmSize" required>
+                                    <option value="">Select size</option>
+                                    <option value="1-5">1-5 architects</option>
+                                    <option value="6-20">6-20 architects</option>
+                                    <option value="21-50">21-50 architects</option>
+                                    <option value="51+">51+ architects</option>
+                                </select>
+                            </div>
+                            <div id="firmSizeError" class="field-error">Please select firm size</div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group full-width">
+                            <label for="password">Password *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="password" placeholder="Create password" required>
+                                <i class="fas fa-eye toggle-password" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="form-group full-width">
+                            <label for="confirmPassword">Confirm Password *</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                            </div>
+                            <div id="confirmPasswordError" class="field-error">Passwords do not match</div>
+                        </div>
+                    </div>
+
+                    <!-- Password Requirements -->
+                    <div class="password-requirements" id="passwordRequirements">
+                        <div class="requirement" id="reqLength">
+                            <i class="fas fa-circle"></i>
+                            <span>At least 8 characters</span>
+                        </div>
+                        <div class="requirement" id="reqUppercase">
+                            <i class="fas fa-circle"></i>
+                            <span>One uppercase letter</span>
+                        </div>
+                        <div class="requirement" id="reqLowercase">
+                            <i class="fas fa-circle"></i>
+                            <span>One lowercase letter</span>
+                        </div>
+                        <div class="requirement" id="reqNumber">
+                            <i class="fas fa-circle"></i>
+                            <span>One number</span>
+                        </div>
+                        <div class="requirement" id="reqSpecial">
+                            <i class="fas fa-circle"></i>
+                            <span>One special character (@$!%*?&)</span>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="terms-group">
+                        <label class="terms-checkbox">
+                            <input type="checkbox" id="terms" required>
+                            I agree to the <a href="404.html">Terms of Service</a> and <a href="404.html">Privacy Policy</a> *
+                        </label>
+                        <div id="termsError" class="field-error">You must agree to the terms</div>
+                    </div>
+
+                    <!-- Sign Up Button -->
+                    <button type="submit" class="signup-btn" id="signupBtn">
+                        Create Account
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="login-section">
+                        <div class="login-text">Already have an account?</div>
+                        <a href="login1.html" class="login-link">
+                            Back to Login <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        //=================================================================================
+        // Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                    setTimeout(attachFooterClickEvents, 100);
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Attach click events to footer links
+        function attachFooterClickEvents() {
+            const footerLinks = document.querySelectorAll('#footer-placeholder a');
+            footerLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('Footer link clicked:', this.href);
+                });
+                link.style.pointerEvents = 'auto';
+                link.style.position = 'relative';
+                link.style.zIndex = '100';
+            });
+            
+            const footerButtons = document.querySelectorAll('#footer-placeholder button');
+            footerButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    console.log('Footer button clicked');
+                });
+                button.style.pointerEvents = 'auto';
+                button.style.position = 'relative';
+                button.style.zIndex = '100';
+            });
+        }
+
+        // Initialize header interactions
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            document.addEventListener('click', function(e) {
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        parentItem.classList.toggle('open');
+                    }
+                    return;
+                }
+                
+                if (e.target.closest('.dropdown-content')) return;
+                
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // AOS initialization
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePassword');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Name Validation - Only letters
+        function validateName(name) {
+            return /^[A-Za-z]+$/.test(name);
+        }
+
+        // Phone Validation - Exactly 10 digits
+        function validatePhone(phone) {
+            return /^[0-9]{10}$/.test(phone);
+        }
+
+        // Email Validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Password Validation
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const reqLength = document.getElementById('reqLength');
+        const reqUppercase = document.getElementById('reqUppercase');
+        const reqLowercase = document.getElementById('reqLowercase');
+        const reqNumber = document.getElementById('reqNumber');
+        const reqSpecial = document.getElementById('reqSpecial');
+        const progressFill = document.getElementById('progressFill');
+
+        function validatePasswordStrength() {
+            const password = passwordInput.value;
+            let strength = 0;
+            
+            if (password.length >= 8) {
+                reqLength.classList.add('valid');
+                reqLength.classList.remove('invalid');
+                reqLength.querySelector('i').classList.remove('fa-circle');
+                reqLength.querySelector('i').classList.add('fa-check-circle');
+                strength++;
+            } else {
+                reqLength.classList.remove('valid');
+                reqLength.classList.add('invalid');
+                reqLength.querySelector('i').classList.remove('fa-check-circle');
+                reqLength.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[A-Z]/.test(password)) {
+                reqUppercase.classList.add('valid');
+                reqUppercase.classList.remove('invalid');
+                reqUppercase.querySelector('i').classList.remove('fa-circle');
+                reqUppercase.querySelector('i').classList.add('fa-check-circle');
+                strength++;
+            } else {
+                reqUppercase.classList.remove('valid');
+                reqUppercase.classList.add('invalid');
+                reqUppercase.querySelector('i').classList.remove('fa-check-circle');
+                reqUppercase.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[a-z]/.test(password)) {
+                reqLowercase.classList.add('valid');
+                reqLowercase.classList.remove('invalid');
+                reqLowercase.querySelector('i').classList.remove('fa-circle');
+                reqLowercase.querySelector('i').classList.add('fa-check-circle');
+                strength++;
+            } else {
+                reqLowercase.classList.remove('valid');
+                reqLowercase.classList.add('invalid');
+                reqLowercase.querySelector('i').classList.remove('fa-check-circle');
+                reqLowercase.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[0-9]/.test(password)) {
+                reqNumber.classList.add('valid');
+                reqNumber.classList.remove('invalid');
+                reqNumber.querySelector('i').classList.remove('fa-circle');
+                reqNumber.querySelector('i').classList.add('fa-check-circle');
+                strength++;
+            } else {
+                reqNumber.classList.remove('valid');
+                reqNumber.classList.add('invalid');
+                reqNumber.querySelector('i').classList.remove('fa-check-circle');
+                reqNumber.querySelector('i').classList.add('fa-circle');
+            }
+            
+            if (/[@$!%*?&]/.test(password)) {
+                reqSpecial.classList.add('valid');
+                reqSpecial.classList.remove('invalid');
+                reqSpecial.querySelector('i').classList.remove('fa-circle');
+                reqSpecial.querySelector('i').classList.add('fa-check-circle');
+                strength++;
+            } else {
+                reqSpecial.classList.remove('valid');
+                reqSpecial.classList.add('invalid');
+                reqSpecial.querySelector('i').classList.remove('fa-check-circle');
+                reqSpecial.querySelector('i').classList.add('fa-circle');
+            }
+            
+            const progress = (strength / 5) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        passwordInput.addEventListener('input', validatePasswordStrength);
+
+        document.getElementById('phone').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('firstName').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^A-Za-z]/g, '');
+        });
+
+        document.getElementById('lastName').addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^A-Za-z]/g, '');
+        });
+
+        function validateSignUp(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const role = document.getElementById('role').value;
+            const firmSize = document.getElementById('firmSize').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const successMessage = document.getElementById('successMessage');
+            
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            
+            document.querySelectorAll('.field-error').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('input, select').forEach(el => el.classList.remove('error'));
+
+            let isValid = true;
+
+            if (!firstName) {
+                showError('firstNameError', 'First name is required');
+                document.getElementById('firstName').classList.add('error');
+                isValid = false;
+            } else if (!validateName(firstName)) {
+                showError('firstNameError', 'Only letters allowed');
+                document.getElementById('firstName').classList.add('error');
+                isValid = false;
+            }
+
+            if (!lastName) {
+                showError('lastNameError', 'Last name is required');
+                document.getElementById('lastName').classList.add('error');
+                isValid = false;
+            } else if (!validateName(lastName)) {
+                showError('lastNameError', 'Only letters allowed');
+                document.getElementById('lastName').classList.add('error');
+                isValid = false;
+            }
+
+            if (!email) {
+                showError('emailError', 'Email is required');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError('emailError', 'Enter a valid email address');
+                document.getElementById('email').classList.add('error');
+                isValid = false;
+            }
+
+            if (!phone) {
+                showError('phoneError', 'Phone number is required');
+                document.getElementById('phone').classList.add('error');
+                isValid = false;
+            } else if (!validatePhone(phone)) {
+                showError('phoneError', 'Enter exactly 10 digits');
+                document.getElementById('phone').classList.add('error');
+                isValid = false;
+            }
+
+            if (!role) {
+                showError('roleError', 'Please select a role');
+                document.getElementById('role').classList.add('error');
+                isValid = false;
+            }
+
+            if (!firmSize) {
+                showError('firmSizeError', 'Please select firm size');
+                document.getElementById('firmSize').classList.add('error');
+                isValid = false;
+            }
+
+            if (!password) {
+                errorText.textContent = 'Password is required';
+                errorMessage.style.display = 'flex';
+                isValid = false;
+            } else if (password.length < 8 || 
+                !/[A-Z]/.test(password) || 
+                !/[a-z]/.test(password) || 
+                !/[0-9]/.test(password) || 
+                !/[@$!%*?&]/.test(password)) {
+                errorText.textContent = 'Password does not meet all requirements';
+                errorMessage.style.display = 'flex';
+                isValid = false;
+            }
+
+            if (!confirmPassword) {
+                errorText.textContent = 'Please confirm your password';
+                errorMessage.style.display = 'flex';
+                isValid = false;
+            } else if (password !== confirmPassword) {
+                showError('confirmPasswordError', 'Passwords do not match');
+                document.getElementById('confirmPassword').classList.add('error');
+                isValid = false;
+            }
+
+            if (!terms) {
+                showError('termsError', 'You must agree to the terms');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                return false;
+            }
+            
+            successMessage.style.display = 'flex';
+            document.getElementById('signupBtn').disabled = true;
+            
+            setTimeout(() => {
+                window.location.href = '404.html';
+            }, 2000);
+            
+            return false;
+        }
+
+        function showError(elementId, message) {
+            const errorEl = document.getElementById(elementId);
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Pricing - Architecture Software Plans</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Section Background Variations */
+        .section-light {
+            background: #f8fafc;
+            position: relative;
+        }
+        
+        .section-dark {
+            background: linear-gradient(135deg, #0e3b3b 0%, #1d4a4a 100%);
+            color: white;
+            position: relative;
+        }
+        
+        .section-with-bg {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+        
+        .section-with-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14, 59, 59, 0.95) 0%, rgba(29, 74, 74, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(159, 212, 212, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-dark .section-badge,
+        .section-with-bg .section-badge {
+            color: #9fd4d4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .section-light .section-badge {
+            color: #0e3b3b;
+            background: rgba(14, 59, 59, 0.1);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-light .section-title {
+            color: #042525;
+        }
+        
+        .section-dark .section-title,
+        .section-with-bg .section-title {
+            color: white;
+        }
+
+        .section-title span {
+            color: #0e3b3b;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-dark .section-title span,
+        .section-with-bg .section-title span {
+            color: #9fd4d4;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #9fd4d4;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-light, .btn-outline-dark {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #0e3b3b;
+            color: white;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-outline-dark {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #0e3b3b;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-light:before, .btn-outline-dark:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #9fd4d4;
+        }
+        
+        .btn-secondary:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-outline-light:before {
+            background: white;
+        }
+        
+        .btn-outline-dark:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-primary:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-outline-light:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+        
+        .btn-outline-dark:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-light:hover:before, .btn-outline-dark:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* ===== PRICING PAGE UNIQUE DESIGNS ===== */
+        
+        /* SECTION 1: Hero with Price Tabs - FIXED FOR HEADER */
+.pricing-hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('A3.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    padding: 8rem 2rem 4rem; /* Increased top padding for fixed header */
+    margin-top: 0;
+}
+
+.pricing-hero-content {
+    max-width: 700px;
+    margin-top: 2rem; /* Additional spacing */
+}
+
+.pricing-hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.pricing-hero-content h1 span {
+    color: #9fd4d4;
+}
+
+.pricing-hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.billing-toggle {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    background: rgba(255,255,255,0.1);
+    padding: 0.5rem;
+    border-radius: 60px;
+    backdrop-filter: blur(10px);
+    width: fit-content;
+}
+
+.toggle-option {
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.toggle-option.active {
+    background: #9fd4d4;
+    color: #0e3b3b;
+    font-weight: 700;
+}
+
+.save-badge {
+    background: #9fd4d4;
+    color: #0e3b3b;
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 0.5rem;
+}
+
+/* Section Badge styling */
+.pricing-hero .section-badge {
+    display: inline-block;
+    background: rgba(159, 212, 212, 0.2);
+    color: #9fd4d4;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(159,212,212,0.3);
+}
+
+/* Button styling */
+.pricing-hero .btn-outline-light {
+    padding: 1rem 2.5rem;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.pricing-hero .btn-outline-light:hover {
+    background: white;
+    color: #0e3b3b;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ===== RESPONSIVE FIXES ===== */
+@media screen and (max-width: 900px) {
+    .pricing-hero {
+        padding: 10rem 2rem 5rem; /* More padding for tablets */
+        min-height: auto;
+    }
+    
+    .pricing-hero-content h1 {
+        font-size: 3.5rem;
+    }
+    
+    .pricing-hero-content p {
+        font-size: 1.1rem;
+    }
+    
+    .billing-toggle {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .pricing-hero {
+        padding: 12rem 1.5rem 5rem; /* Extra padding for mobile */
+    }
+    
+    .pricing-hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .pricing-hero-content {
+        margin-top: 1rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .pricing-hero {
+        padding: 14rem 1.2rem 5rem; /* Huge padding for small mobile */
+    }
+    
+    .pricing-hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .pricing-hero-content p {
+        font-size: 1rem;
+    }
+    
+    .billing-toggle {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    .toggle-option {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .pricing-hero .btn-outline-light {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .pricing-hero {
+        padding: 16rem 1rem 5rem; /* Maximum padding for very small phones */
+    }
+    
+    .pricing-hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .pricing-hero-content h1 span {
+        font-size: 1.8rem;
+    }
+    
+    .billing-toggle {
+        padding: 0.3rem;
+    }
+    
+    .toggle-option {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .pricing-hero {
+        padding: 18rem 0.8rem 4rem; /* Extreme padding */
+    }
+    
+    .pricing-hero-content h1 {
+        font-size: 1.8rem;
+    }
+}
+
+        /* SECTION 2: Pricing Cards - Architecture Focused */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 40px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid #e2eae2;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.popular {
+            transform: scale(1.05);
+            border-color: #0e3b3b;
+            box-shadow: 0 30px 60px rgba(14,59,59,0.2);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #9fd4d4;
+            box-shadow: 0 40px 80px rgba(14,59,59,0.2);
+        }
+        
+        .pricing-card.popular:hover {
+            transform: translateY(-15px) scale(1.07);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: #0e3b3b;
+            color: #9fd4d4;
+            padding: 0.5rem 3rem;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .pricing-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+        
+        .pricing-card:hover img {
+            transform: scale(1.2) rotate(5deg);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #042525;
+        }
+        
+        .price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #0e3b3b;
+            margin-bottom: 1rem;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #1d4a4a;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .pricing-features i.fa-check {
+            color: #0e3b3b;
+        }
+        
+        .pricing-features i.fa-times {
+            color: #ff6b6b;
+        }
+
+        /* SECTION 3: Feature Comparison Table - Architecture Focused */
+        .comparison-table {
+            background: rgb(157, 203, 220);
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            margin-top: 3rem;
+        }
+        
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            border-bottom: 1px solid #e2eae2;
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-row:hover {
+            background: #2c6b6b;
+            transform: scale(1.01);
+        }
+        
+        .comparison-row.header {
+            background: #0e3b3b;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .comparison-row.header:hover {
+            background: #0e3b3b;
+            transform: none;
+        }
+        
+        .comparison-cell {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .comparison-cell i.fa-check {
+            color: #0e3b3b;
+            font-size: 1.2rem;
+        }
+        
+        .comparison-cell i.fa-times {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+
+        /* SECTION 4: Team Pricing Cards - Architecture Focused */
+        .team-pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+            color: white;
+            overflow: hidden;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #9fd4d4;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        
+        .team-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            transition: all 0.5s ease;
+        }
+        
+        .team-card:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        /* SECTION 5: Enterprise Solutions - Architecture Focused */
+        .enterprise-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        .enterprise-content {
+            padding-right: 3rem;
+        }
+        
+        .enterprise-image {
+            overflow: hidden;
+            border-radius: 30px;
+        }
+        
+        .enterprise-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .enterprise-image:hover img {
+            transform: scale(1.1) rotate(1deg);
+        }
+        
+        .enterprise-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .enterprise-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .enterprise-feature:hover {
+            transform: translateX(10px);
+            color: #9fd4d4;
+        }
+
+        /* SECTION 6: Add-on Modules - Architecture Focused */
+        .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.addon-card {
+    background: white;
+    border-radius: 30px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    border: 1px solid #e2eae2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.addon-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: #0e3b3b;
+    box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+}
+
+.addon-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.addon-card:hover img {
+    transform: scale(1.2) rotate(360deg);
+}
+
+.addon-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.addon-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0e3b3b;
+    margin: 1rem 0;
+}
+
+.addon-card p {
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.addon-card .btn-secondary {
+    margin-top: auto;
+    align-self: center;
+    width: fit-content;
+}
+
+        /* SECTION 7: Volume Discounts - Architecture Focused */
+        .volume-discounts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .volume-tier {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .volume-tier:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #0e3b3b;
+            box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+        }
+        
+        .discount-badge {
+            background: #0e3b3b;
+            color: #9fd4d4;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* SECTION 8: ROI Calculator - Fully Responsive */
+        .roi-calculator {
+            background: white;
+            border-radius: 40px;
+            padding: 3rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .roi-calculator:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(14,59,59,0.2);
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .calculator-slider {
+            width: 100%;
+            margin: 1rem 0;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #0e3b3b, #9fd4d4);
+            outline: none;
+        }
+        
+        .calculator-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0e3b3b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .calculator-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #9fd4d4;
+        }
+        
+        .roi-result {
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            color: white;
+            padding: 2rem;
+            border-radius: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        
+        .roi-result:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .roi-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        /* ===== RESPONSIVE STYLES FOR MOBILE ===== */
+        @media screen and (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .pricing-hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .pricing-grid,
+            .addons-grid,
+            .volume-discounts,
+            .testimonials-pricing {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .team-pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .enterprise-showcase {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .comparison-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .comparison-row.header {
+                display: none;
+            }
+            
+            .comparison-cell {
+                justify-content: center;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary, .btn-outline-light, .btn-outline-dark {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .pricing-grid,
+            .addons-grid,
+            .volume-discounts,
+            .testimonials-pricing {
+                grid-template-columns: 1fr;
+            }
+            
+            .billing-toggle {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .enterprise-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            section {
+                padding: 4rem 1rem;
+            }
+            
+            .pricing-hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .guarantee-section {
+                padding: 2rem;
+            }
+        }
+
+        /* Mobile Responsive for ROI Calculator */
+        @media screen and (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .roi-calculator {
+                padding: 2rem;
+            }
+            
+            .roi-number {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .roi-calculator {
+                padding: 1.5rem;
+                border-radius: 30px;
+            }
+            
+            .calculator-grid {
+                gap: 1.5rem;
+            }
+            
+            .roi-result {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            
+            .roi-number {
+                font-size: 3rem;
+            }
+            
+            .calculator-slider {
+                height: 6px;
+            }
+            
+            .calculator-slider::-webkit-slider-thumb {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .roi-calculator {
+                padding: 1.2rem;
+                border-radius: 25px;
+            }
+            
+            .roi-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* SECTION 9: Testimonials - Fully Responsive */
+.testimonials-pricing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.testimonial-pricing-card {
+    background: white;
+    border-radius: 30px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+    border: 1px solid #e2eae2;
+    height: fit-content;
+}
+
+.testimonial-pricing-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(14,59,59,0.15);
+    border-color: #0e3b3b;
+}
+
+.testimonial-pricing-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    transition: all 0.4s ease;
+}
+
+.testimonial-pricing-card:hover img {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.testimonial-pricing-card .stars {
+    color: #ffd966;
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.testimonial-pricing-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: #1e2f4f;
+}
+
+.testimonial-pricing-card strong {
+    display: block;
+    color: #042525;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+
+.testimonial-pricing-card .position {
+    color: #1d4a4a;
+    font-size: 0.9rem;
+}
+
+/* ===== RESPONSIVE STYLES FOR CLIENT STORIES ===== */
+
+/* Large Tablets and Small Desktops */
+@media screen and (max-width: 900px) {
+    .testimonials-pricing {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .testimonial-pricing-card {
+        padding: 1.8rem;
+    }
+    
+    .testimonial-pricing-card p {
+        font-size: 0.95rem;
+    }
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 600px) {
+    .testimonials-pricing {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .testimonial-pricing-card {
+        padding: 2rem;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .testimonial-pricing-card img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .testimonial-pricing-card .stars {
+        font-size: 1rem;
+    }
+    
+    .testimonial-pricing-card p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 1.2rem;
+    }
+    
+    .testimonial-pricing-card strong {
+        font-size: 1.1rem;
+    }
+    
+    .testimonial-pricing-card .position {
+        font-size: 0.9rem;
+    }
+}
+
+/* Small Mobile Devices */
+@media screen and (max-width: 480px) {
+    .testimonials-pricing {
+        max-width: 100%;
+        gap: 1.2rem;
+    }
+    
+    .testimonial-pricing-card {
+        padding: 1.5rem;
+    }
+    
+    .testimonial-pricing-card img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .testimonial-pricing-card p {
+        font-size: 0.95rem;
+    }
+    
+    .testimonial-pricing-card strong {
+        font-size: 1rem;
+    }
+}
+
+/* Extra Small Devices */
+@media screen and (max-width: 360px) {
+    .testimonial-pricing-card {
+        padding: 1.2rem;
+    }
+    
+    .testimonial-pricing-card img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .testimonial-pricing-card p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Landscape Mode for Mobile */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    .testimonials-pricing {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .testimonial-pricing-card {
+        padding: 1.5rem;
+    }
+}
+
+/* High-resolution devices */
+@media screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .testimonial-pricing-card {
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .testimonial-pricing-card {
+        background: #1a1a1a;
+        border-color: #333;
+    }
+    
+    .testimonial-pricing-card p {
+        color: #e0e0e0;
+    }
+    
+    .testimonial-pricing-card strong {
+        color: #ffffff;
+    }
+    
+    .testimonial-pricing-card .position {
+        color: #9fd4d4;
+    }
+}
+
+/* Ensure text doesn't overflow */
+.testimonial-pricing-card p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Improve spacing on mobile */
+@media screen and (max-width: 600px) {
+    .section-light {
+        padding: 3rem 1rem;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+/* Touch-friendly hover states for mobile */
+@media (hover: none) and (pointer: coarse) {
+    .testimonial-pricing-card:hover {
+        transform: none;
+    }
+    
+    .testimonial-pricing-card:hover img {
+        transform: none;
+    }
+    
+    .testimonial-pricing-card:active {
+        transform: scale(0.98);
+        transition: transform 0.2s ease;
+    }
+}
+
+/* Grid gap adjustments for very small screens */
+@media screen and (max-width: 320px) {
+    .testimonials-pricing {
+        gap: 1rem;
+    }
+}
+
+/* Ensure cards don't overflow container */
+.testimonials-pricing {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Smooth transitions */
+.testimonial-pricing-card {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Fix for Firefox */
+@-moz-document url-prefix() {
+    .testimonial-pricing-card {
+        background: white;
+        border: 1px solid #e2eae2;
+    }
+}
+
+/* Print styles */
+@media print {
+    .testimonial-pricing-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .testimonial-pricing-card:hover {
+        transform: none;
+    }
+}
+
+/* Center alignment for mobile */
+@media screen and (max-width: 600px) {
+    .testimonials-pricing {
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .testimonial-pricing-card {
+        text-align: center;
+    }
+    
+    .testimonial-pricing-card img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Optional: Add a subtle animation for mobile */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .testimonial-pricing-card {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+    
+    .testimonial-pricing-card:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+    
+    .testimonial-pricing-card:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+}
+
+        /* SECTION 10: FAQ Accordion - Architecture Focused */
+        .faq-pricing {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e2eae2;
+        }
+        
+        .faq-item:hover {
+            transform: translateX(10px);
+            border-color: #0e3b3b;
+            box-shadow: 0 10px 30px rgba(14,59,59,0.1);
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: #042525;
+        }
+        
+        .faq-answer {
+            margin-top: 1rem;
+            display: none;
+            color: #1d4a4a;
+        }
+        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* SECTION 11: Money Back Guarantee with BG Image */
+        .guarantee-section {
+            text-align: center;
+            background: linear-gradient(rgba(14,59,59,0.95), rgba(29,74,74,0.95)), url('A11.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            border-radius: 60px;
+            padding: 4rem;
+            color: white;
+        }
+        
+        .guarantee-badge {
+            font-size: 5rem;
+            color: #9fd4d4;
+            margin-bottom: 1rem;
+            transition: all 0.4s ease;
+        }
+        
+        .guarantee-section:hover .guarantee-badge {
+            transform: scale(1.2) rotate(360deg);
+        }
+    </style>
+</head>
+<!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div> 
+<body>
+    <!-- SECTION 1: Hero with Price Tabs and Button -->
+    <section class="pricing-hero">
+        <div class="container">
+            <div class="pricing-hero-content" data-aos="fade-right">
+                <span class="section-badge" style="background:rgba(255,255,255,0.2); color:#9fd4d4;">ARCHITECTURE PRICING</span>
+                <h1 data-aos="fade-up" data-aos-delay="100">Choose the Perfect <span>Plan</span> for Your Architecture Firm</h1>
+                <p data-aos="fade-up" data-aos-delay="200">Flexible pricing options designed for architecture firms of all sizes. From solo practitioners to global enterprises.</p>
+                
+                <div class="billing-toggle" data-aos="zoom-in" data-aos-delay="300">
+                    <span class="toggle-option active">Monthly Billing</span>
+                    <span class="toggle-option">Annual Billing <span class="save-badge">Save 20%</span></span>
+                </div>
+                
+                <a href="404.html" class="btn-outline-light" data-aos="fade-up" data-aos-delay="400">Compare Architecture Plans →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Main Pricing Cards - Architecture Focused -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE PLANS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Pricing for <span>Architecture Firms</span> of All Sizes</h2>
+            
+            <div class="pricing-grid">
+                <!-- Studio Plan - For Solo Architects -->
+                <div class="pricing-card" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A15.webp" alt="Solo Architect Plan">
+                    <h3>Studio</h3>
+                    <div class="price">$49<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> BIM Modeling for 1 project</li>
+                        <li><i class="fas fa-check"></i> 5 Architects/Designers</li>
+                        <li><i class="fas fa-check"></i> 50GB BIM Cloud Storage</li>
+                        <li><i class="fas fa-check"></i> 10 Active Building Projects</li>
+                        <li><i class="fas fa-check"></i> Construction Documentation</li>
+                        <li><i class="fas fa-times"></i> Generative Design AI</li>
+                        <li><i class="fas fa-times"></i> VR Client Presentations</li>
+                    </ul>
+                    <a href="404.html" class="btn-secondary">Start Free Trial</a>
+                </div>
+
+                <!-- Professional Plan - For Architecture Firms - Popular -->
+                <div class="pricing-card popular" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <img src="A16.webp" alt="Architecture Firm Plan">
+                    <h3>Professional</h3>
+                    <div class="price">$99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Complete BIM Suite</li>
+                        <li><i class="fas fa-check"></i> 25 Architects & Engineers</li>
+                        <li><i class="fas fa-check"></i> 200GB BIM Cloud Storage</li>
+                        <li><i class="fas fa-check"></i> Unlimited Building Projects</li>
+                        <li><i class="fas fa-check"></i> Automated Construction Docs</li>
+                        <li><i class="fas fa-check"></i> Generative Design AI</li>
+                        <li><i class="fas fa-times"></i> VR/AR Integration</li>
+                    </ul>
+                    <a href="404.html" class="btn-primary">Start Free Trial</a>
+                </div>
+
+                <!-- Enterprise Plan - For Global Architecture Firms -->
+                <div class="pricing-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A17.webp" alt="Global Architecture Enterprise">
+                    <h3>Enterprise</h3>
+                    <div class="price">$199<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Everything in Professional</li>
+                        <li><i class="fas fa-check"></i> Unlimited Architects/Engineers</li>
+                        <li><i class="fas fa-check"></i> 1TB BIM Cloud Storage</li>
+                        <li><i class="fas fa-check"></i> VR/AR Client Presentations</li>
+                        <li><i class="fas fa-check"></i> Real-time Global Collaboration</li>
+                        <li><i class="fas fa-check"></i> Custom API for BIM Integration</li>
+                        <li><i class="fas fa-check"></i> Dedicated Architecture Support</li>
+                    </ul>
+                    <a href="404.html" class="btn-secondary">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Feature Comparison Table - Architecture Focused -->
+    <section class="section-dark">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">COMPARE ARCHITECTURE PLANS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Detailed <span>BIM Feature</span> Comparison</h2>
+            
+            <div class="comparison-table" data-aos="fade-up" data-aos-delay="200">
+                <div class="comparison-row header">
+                    <div class="comparison-cell">Architecture Features</div>
+                    <div class="comparison-cell">Studio</div>
+                    <div class="comparison-cell">Professional</div>
+                    <div class="comparison-cell">Enterprise</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-cube"></i> BIM Modeling</div>
+                    <div class="comparison-cell">Basic</div>
+                    <div class="comparison-cell">Advanced</div>
+                    <div class="comparison-cell">Premium</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-draw-polygon"></i> Architectural Documentation</div>
+                    <div class="comparison-cell"><i class="fas fa-check"></i></div>
+                    <div class="comparison-cell"><i class="fas fa-check"></i></div>
+                    <div class="comparison-cell"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-people-arrows"></i> Architect Collaboration</div>
+                    <div class="comparison-cell">5 architects</div>
+                    <div class="comparison-cell">25 architects</div>
+                    <div class="comparison-cell">Unlimited</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-brain"></i> Generative Design for Architecture</div>
+                    <div class="comparison-cell"><i class="fas fa-times"></i></div>
+                    <div class="comparison-cell"><i class="fas fa-check"></i></div>
+                    <div class="comparison-cell"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-vr-cardboard"></i> VR Architectural Walkthroughs</div>
+                    <div class="comparison-cell"><i class="fas fa-times"></i></div>
+                    <div class="comparison-cell"><i class="fas fa-times"></i></div>
+                    <div class="comparison-cell"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-cloud"></i> BIM Cloud Storage</div>
+                    <div class="comparison-cell">50GB</div>
+                    <div class="comparison-cell">200GB</div>
+                    <div class="comparison-cell">1TB</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-code"></i> BIM API Access</div>
+                    <div class="comparison-cell"><i class="fas fa-times"></i></div>
+                    <div class="comparison-cell">Basic</div>
+                    <div class="comparison-cell">Custom</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-headset"></i> Architect Support</div>
+                    <div class="comparison-cell">Email</div>
+                    <div class="comparison-cell">Priority</div>
+                    <div class="comparison-cell">24/7 Dedicated</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-chart-line"></i> Project Analytics</div>
+                    <div class="comparison-cell">Basic</div>
+                    <div class="comparison-cell">Advanced</div>
+                    <div class="comparison-cell">Premium</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-cell"><i class="fas fa-shield-alt"></i> BIM Security</div>
+                    <div class="comparison-cell">Standard</div>
+                    <div class="comparison-cell">Enhanced</div>
+                    <div class="comparison-cell">Enterprise</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Team Pricing - Architecture Focused -->
+    <section class="section-with-bg" style="background-image:url('A18.webp');">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE TEAM PLANS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Pricing for <span>Architecture Teams</span></h2>
+            
+            <div class="team-pricing-grid">
+                <div class="team-card" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A19.webp" alt="Small Architecture Studio">
+                    <h3>Small Architecture Studio (5-25)</h3>
+                    <div class="price" style="color:#9fd4d4;">$79<span style="color:white;">/architect/month</span></div>
+                    <p>Perfect for growing architectural practices</p>
+                    <ul style="list-style:none; margin:2rem 0; text-align:left;">
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Volume discount for architects</li>
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Multi-disciplinary team management</li>
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Shared BIM component libraries</li>
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Collaborative design reviews</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light">Get Started</a>
+                </div>
+                <div class="team-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A20.webp" alt="Large Architecture Firm">
+                    <h3>Large Architecture Firm (25-100)</h3>
+                    <div class="price" style="color:#9fd4d4;">$69<span style="color:white;">/architect/month</span></div>
+                    <p>For established architectural enterprises</p>
+                    <ul style="list-style:none; margin:2rem 0; text-align:left;">
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Advanced firm-wide discounts</li>
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Project-based architect groups</li>
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Enterprise-grade BIM security</li>
+                        <li><i class="fas fa-check" style="color:#9fd4d4;"></i> Multi-office synchronization</li>
+                    </ul>
+                    <a href="404.html" class="btn-outline-light">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: Enterprise Solutions - Architecture Focused -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ENTERPRISE ARCHITECTURE</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Custom <span>Enterprise</span> Solutions for Global Firms</h2>
+            
+            <div class="enterprise-showcase">
+                <div class="enterprise-content" data-aos="fade-right">
+                    <p style="font-size:1.2rem; margin-bottom:2rem;">For global architecture firms with complex needs, we offer fully customized enterprise solutions with dedicated infrastructure.</p>
+                    
+                    <div class="enterprise-features">
+                        <div class="enterprise-feature">
+                            <i class="fas fa-check-circle" style="color:#0e3b3b;"></i>
+                            <span>Dedicated BIM Server</span>
+                        </div>
+                        <div class="enterprise-feature">
+                            <i class="fas fa-check-circle" style="color:#0e3b3b;"></i>
+                            <span>Custom BIM Integrations</span>
+                        </div>
+                        <div class="enterprise-feature">
+                            <i class="fas fa-check-circle" style="color:#0e3b3b;"></i>
+                            <span>SLA for Architecture Firms</span>
+                        </div>
+                        <div class="enterprise-feature">
+                            <i class="fas fa-check-circle" style="color:#0e3b3b;"></i>
+                            <span>24/7 Architect Support</span>
+                        </div>
+                        <div class="enterprise-feature">
+                            <i class="fas fa-check-circle" style="color:#0e3b3b;"></i>
+                            <span>On-premise BIM Option</span>
+                        </div>
+                        <div class="enterprise-feature">
+                            <i class="fas fa-check-circle" style="color:#0e3b3b;"></i>
+                            <span>Architect Training Program</span>
+                        </div>
+                    </div>
+                    
+                    <a href="404.html" class="btn-primary">Contact Enterprise Sales</a>
+                    <p style="margin-top:1rem; color:#1d4a4a;">Custom pricing based on firm size and requirements</p>
+                </div>
+                <div class="enterprise-image" data-aos="fade-left">
+                    <img src="A21.webp" alt="Enterprise Architecture Firm">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: Add-on Modules - Architecture Focused -->
+    <section class="section-dark">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE ADD-ONS</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Enhance Your <span>Architecture Workflow</span></h2>
+            
+            <div class="addons-grid">
+                <div class="addon-card" data-aos="flip-left" data-aos-duration="1200">
+                    <img src="A22.webp" alt="Generative Design for Architects">
+                    <h3>Generative Design AI</h3>
+                    <div class="addon-price">+$29/mo</div>
+                    <p>AI-powered architectural design exploration</p>
+                    <a href="404.html" class="btn-secondary">Add to Plan</a>
+                </div>
+                <div class="addon-card" data-aos="flip-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A24.webp" alt="VR for Architecture">
+                    <h3>VR Architectural Studio</h3>
+                    <div class="addon-price">+$49/mo</div>
+                    <p>Virtual reality client presentations</p>
+                    <a href="404.html" class="btn-secondary">Add to Plan</a>
+                </div>
+                <div class="addon-card" data-aos="flip-down" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A25.webp" alt="Sustainability for Architecture">
+                    <h3>Sustainability Suite</h3>
+                    <div class="addon-price">+$39/mo</div>
+                    <p>Climate & energy analysis for buildings</p>
+                    <a href="404.html" class="btn-secondary">Add to Plan</a>
+                </div>
+                <div class="addon-card" data-aos="flip-right" data-aos-duration="1200" data-aos-delay="600">
+                    <img src="A26.webp" alt="Construction Documentation">
+                    <h3>Construction Documentation</h3>
+                    <div class="addon-price">+$19/mo</div>
+                    <p>Automated architectural drawing sets</p>
+                    <a href="404.html" class="btn-secondary">Add to Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: Volume Discounts - Architecture Focused -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">VOLUME PRICING</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Save More with <span>Volume</span> Discounts for Architecture Firms</h2>
+            
+            <div class="volume-discounts">
+                <div class="volume-tier" data-aos="fade-right" data-aos-duration="1200">
+                    <span class="discount-badge">10-25 ARCHITECTS</span>
+                    <h3>15% Discount</h3>
+                    <div class="price" style="font-size:2rem;">$84<span>/architect</span></div>
+                    <p>Save $15 per architect monthly</p>
+                    <a href="404.html" class="btn-secondary">Calculate Savings</a>
+                </div>
+                <div class="volume-tier" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <span class="discount-badge">26-50 ARCHITECTS</span>
+                    <h3>25% Discount</h3>
+                    <div class="price" style="font-size:2rem;">$74<span>/architect</span></div>
+                    <p>Save $25 per architect monthly</p>
+                    <a href="404.html" class="btn-secondary">Calculate Savings</a>
+                </div>
+                <div class="volume-tier" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <span class="discount-badge">50+ ARCHITECTS</span>
+                    <h3>35% Discount</h3>
+                    <div class="price" style="font-size:2rem;">$64<span>/architect</span></div>
+                    <p>Save $35 per architect monthly</p>
+                    <a href="404.html" class="btn-secondary">Calculate Savings</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: ROI Calculator with Continuous Change - Architecture Focused -->
+    <section class="section-with-bg" style="background-image:url('A27.webp');">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ROI CALCULATOR</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Calculate Your <span>Architecture Firm's</span> Savings</h2>
+            
+            <div class="roi-calculator" data-aos="zoom-in" data-aos-delay="200">
+                <div class="calculator-grid">
+                    <div>
+                        <h3>Number of Architects</h3>
+                        <input type="range" min="1" max="100" value="10" class="calculator-slider" id="teamSize">
+                        <p><span id="teamSizeValue">10</span> architects/designers</p>
+                        
+                        <h3 style="margin-top:2rem;">Building Projects per Year</h3>
+                        <input type="range" min="1" max="50" value="15" class="calculator-slider" id="projectsCount">
+                        <p><span id="projectsValue">15</span> architectural projects</p>
+                    </div>
+                    <div class="roi-result">
+                        <h3>Estimated Annual Savings</h3>
+                        <div class="roi-number" id="roiAmount">$45,000</div>
+                        <p>With Stackly Architecture Professional Plan</p>
+                        <p style="font-size:0.9rem;">Based on 40% faster BIM documentation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: Testimonials - Architecture Focused -->
+    <section class="section-light">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">CLIENT STORIES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">What <span>Architecture Firms</span> Say About Our Pricing</h2>
+            
+            <div class="testimonials-pricing">
+                <div class="testimonial-pricing-card" data-aos="fade-right" data-aos-duration="1200">
+                    <img src="A10.webp" alt="Architect">
+                    <div style="color:#ffd966; margin:0.5rem 0;">★★★★★</div>
+                    <p>"The Professional plan pays for itself with the time we save on construction documentation. Our firm cut BIM modeling time by 40%."</p>
+                    <strong>- Sarah Chen, Principal Architect</strong>
+                </div>
+                <div class="testimonial-pricing-card" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                    <img src="A9.webp" alt="Architecture Director">
+                    <div style="color:#ffd966; margin:0.5rem 0;">★★★★★</div>
+                    <p>"Enterprise support and custom BIM integration made Stackly perfect for our global architecture firm with offices in 12 countries."</p>
+                    <strong>- Michael Kim, Director of Architecture</strong>
+                </div>
+                <div class="testimonial-pricing-card" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
+                    <img src="A8.webp" alt="Design Principal">
+                    <div style="color:#ffd966; margin:0.5rem 0;">★★★★★</div>
+                    <p>"The volume discount for our 30-person architecture studio made enterprise BIM features affordable. The VR client presentations alone are worth it."</p>
+                    <strong>- Elena Rodriguez, Design Principal</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: FAQ - Architecture Focused -->
+    <section class="section-dark">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ARCHITECTURE FAQ</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Frequently Asked <span>Questions</span> from Architects</h2>
+            
+            <div class="faq-pricing">
+                <div class="faq-item active" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question">
+                        Can we export BIM models to other architecture software?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, we support IFC, RVT, DWG, DXF, and all major BIM formats used in architecture. You can export your models to Revit, ArchiCAD, SketchUp, and more.
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="faq-question">
+                        Is there a discount for architectural firms with multiple studios?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, we offer enterprise-wide licensing for architecture firms with multiple locations. Contact our enterprise sales team for custom pricing based on your firm's structure.
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="faq-question">
+                        Do you offer educational pricing for architecture schools?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, we provide 50% discounts for accredited architecture programs and students. We also offer free licenses for architectural research projects.
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                    <div class="faq-question">
+                        Can we collaborate with structural and MEP engineers?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely. Our platform supports multi-disciplinary coordination. You can invite structural and MEP engineers to collaborate on the same BIM model with appropriate access controls.
+                    </div>
+                </div>
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                    <div class="faq-question">
+                        What's included in the 30-day free trial for architects?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        The free trial includes full access to all features in your chosen plan, 10GB of BIM storage, and support from our architecture specialist team. No credit card required.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: Money Back Guarantee with BG Image -->
+    <section class="section-light">
+        <div class="container">
+            <div class="guarantee-section" data-aos="zoom-in">
+                <div class="guarantee-badge">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 style="font-size:2.5rem; margin-bottom:1rem;">30-Day Money-Back Guarantee for Architects</h2>
+                <p style="font-size:1.2rem; max-width:600px; margin:0 auto 2rem;">Try any Stackly architecture plan risk-free. If you're not completely satisfied, get a full refund within 30 days.</p>
+                <a href="404.html" class="btn-outline-light">Start Your Free Trial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+        // Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // Scroll Animation Script 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+//=================================================================================
+
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true,
+            anchorPlacement: 'top-bottom',
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+
+        // Billing toggle functionality
+        const toggleOptions = document.querySelectorAll('.toggle-option');
+        toggleOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                toggleOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (this.classList.contains('active')) {
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                } else {
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+
+        // ROI Calculator with continuous change
+        const teamSize = document.getElementById('teamSize');
+        const projectsCount = document.getElementById('projectsCount');
+        const teamSizeValue = document.getElementById('teamSizeValue');
+        const projectsValue = document.getElementById('projectsValue');
+        const roiAmount = document.getElementById('roiAmount');
+
+        function calculateROI() {
+            const team = parseInt(teamSize.value);
+            const projects = parseInt(projectsCount.value);
+            const savings = (team * projects * 300).toLocaleString();
+            roiAmount.textContent = '$' + savings;
+        }
+
+        teamSize.addEventListener('input', calculateROI);
+        projectsCount.addEventListener('input', calculateROI);
+        calculateROI();
+
+        // Continuous change for ROI
+        const roiValues = [45000, 52000, 48000, 63000, 58000, 72000, 68000, 75000, 81000];
+        let roiIndex = 0;
+        
+        setInterval(() => {
+            roiIndex = (roiIndex + 1) % roiValues.length;
+            const team = parseInt(teamSize.value);
+            const projects = parseInt(projectsCount.value);
+            if (team === 10 && projects === 15) {
+                roiAmount.textContent = '$' + roiValues[roiIndex].toLocaleString();
+            }
+        }, 2000);
+
+        // Add hover effects to all images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.4s ease';
+            });
+        });
+    </script>
+</body>
+</html>

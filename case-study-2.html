@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Commercial Tower - Architecture Software Case Study</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-light {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #0e3b3b;
+            color: white;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #0e3b3b;
+            border-color: #9fd4d4;
+        }
+        
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-light:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #9fd4d4;
+        }
+        
+        .btn-secondary:before {
+            background: #0e3b3b;
+        }
+        
+        .btn-outline-light:before {
+            background: white;
+        }
+        
+        .btn-primary:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #0e3b3b;
+        }
+        
+        .btn-outline-light:hover {
+            color: #0e3b3b;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-light:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(159, 212, 212, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-title span {
+            color: #0e3b3b;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #9fd4d4;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* ===== COMMERCIAL TOWER - ARCHITECTURE SOFTWARE FOCUS ===== */
+        
+        /* SECTION 1: Panoramic Hero - Commercial Tower - FIXED FOR HEADER */
+.commercial-hero {
+    min-height: 100vh;
+    position: relative;
+    background: #0a1f1f;
+    color: white;
+    padding: 8rem 0 0; /* Added top padding for fixed header */
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.hero-panorama {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-panorama img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+    transition: transform 8s ease;
+}
+
+.commercial-hero:hover .hero-panorama img {
+    transform: scale(1.1);
+}
+
+.hero-overlay-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 0 4rem 4rem; /* Reduced bottom margin */
+    padding: 2.5rem;
+    background: rgba(14, 59, 59, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 40px 40px 40px 0;
+    border-left: 6px solid #9fd4d4;
+    transform: translateY(0);
+    transition: transform 0.5s ease;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: #9fd4d4;
+    color: #0e3b3b;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.hero-overlay-content h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.hero-overlay-content h1 span {
+    color: #9fd4d4;
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 400;
+}
+
+.hero-software-stats {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-stat {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+}
+
+.hero-stat .number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #9fd4d4;
+    line-height: 1;
+}
+
+.hero-stat .label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* ===== MOBILE RESPONSIVE FIXES ===== */
+@media screen and (max-width: 900px) {
+    .commercial-hero {
+        padding: 10rem 0 0; /* More padding for tablets */
+        align-items: center; /* Center content vertically */
+    }
+    
+    .hero-overlay-content {
+        margin: 0 2rem 3rem 2rem; /* Adjust margins for tablets */
+        max-width: 90%;
+    }
+    
+    .hero-overlay-content h1 {
+        font-size: 3.2rem;
+    }
+    
+    .hero-overlay-content h1 span {
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .commercial-hero {
+        padding: 12rem 0 0; /* Even more padding */
+    }
+    
+    .hero-overlay-content {
+        margin: 0 2rem 2.5rem 2rem;
+    }
+    
+    .hero-overlay-content h1 {
+        font-size: 2.8rem;
+    }
+    
+    .hero-overlay-content h1 span {
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .commercial-hero {
+        padding: 14rem 0 0; /* Huge padding for mobile */
+        align-items: center;
+    }
+    
+    .hero-overlay-content {
+        margin: 0 1.5rem 2rem 1.5rem;
+        padding: 1.8rem;
+    }
+    
+    .hero-overlay-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-overlay-content h1 span {
+        font-size: 1.5rem;
+    }
+    
+    .hero-software-stats {
+        gap: 1rem;
+        justify-content: center;
+    }
+    
+    .hero-stat {
+        padding: 0.8rem 1rem;
+        min-width: 100px;
+    }
+    
+    .hero-stat .number {
+        font-size: 1.8rem;
+    }
+    
+    .hero-stat .label {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .commercial-hero {
+        padding: 16rem 0 0; /* Maximum padding */
+    }
+    
+    .hero-overlay-content {
+        margin: 0 1rem 1.5rem 1rem;
+        padding: 1.5rem;
+    }
+    
+    .hero-overlay-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-overlay-content h1 span {
+        font-size: 1.3rem;
+    }
+    
+    .hero-software-stats {
+        flex-direction: column;
+        gap: 0.8rem;
+        width: 100%;
+    }
+    
+    .hero-stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        padding: 0.8rem 1.2rem;
+        width: 100%;
+    }
+    
+    .hero-stat .number {
+        font-size: 1.5rem;
+        min-width: 60px;
+    }
+    
+    .hero-stat .label {
+        font-size: 0.85rem;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .commercial-hero {
+        padding: 18rem 0 0; /* Extreme padding */
+    }
+    
+    .hero-overlay-content {
+        padding: 1.2rem;
+    }
+    
+    .hero-overlay-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-overlay-content h1 span {
+        font-size: 1.1rem;
+    }
+    
+    .hero-stat .number {
+        font-size: 1.3rem;
+    }
+    
+    .hero-stat .label {
+        font-size: 0.75rem;
+    }
+}
+
+        /* SECTION 2: Generative Design & Optimization */
+        .generative-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+        
+        .generative-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        
+        .generative-image {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 50px rgba(14,59,59,0.2);
+        }
+        
+        .generative-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        
+        .generative-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .generative-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .gen-stat {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .gen-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0e3b3b;
+        }
+        
+        .gen-stat .label {
+            font-size: 0.9rem;
+            color: #1d4a4a;
+        }
+
+        /* SECTION 3: Structural Analysis Software */
+        .structural-section {
+            background: #0e3b3b;
+            color: white;
+        }
+        
+        .structural-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .structural-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+        }
+        
+        .structural-card:hover {
+            transform: translateY(-15px);
+            border-color: #9fd4d4;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: #9fd4d4;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon i {
+            font-size: 2rem;
+            color: #0e3b3b;
+        }
+        
+        .structural-card .metric {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #9fd4d4;
+            margin-top: 1rem;
+        }
+
+        /* SECTION 4: MEP Coordination & Clash Detection */
+        .mep-section {
+            background: #f0f4f0;
+        }
+        
+        .mep-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        .mep-visual {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.2);
+        }
+        
+        .mep-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .mep-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #9fd4d4;
+            color: #0e3b3b;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+        
+        .mep-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .mep-stat {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .mep-stat .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0e3b3b;
+        }
+
+        /* SECTION 5: Digital Twin & Facility Management */
+        .digital-twin-section {
+            background: linear-gradient(135deg, #0e3b3b, #1d4a4a);
+            color: white;
+        }
+        
+        .twin-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+        
+        .twin-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .twin-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.4s ease;
+        }
+        
+        .twin-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .twin-item i {
+            font-size: 2.5rem;
+            color: #9fd4d4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .twin-item span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #9fd4d4;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 900px) {
+            .hero-overlay-content {
+                margin: 0 2rem 3rem 2rem;
+            }
+            
+            .generative-grid,
+            .structural-grid,
+            .mep-showcase,
+            .twin-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-overlay-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-overlay-content h1 span {
+                font-size: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .hero-overlay-content {
+                margin: 0 1rem 2rem 1rem;
+                padding: 1.5rem;
+            }
+            
+            .hero-overlay-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-overlay-content h1 span {
+                font-size: 1.6rem;
+            }
+            
+            .hero-software-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .generative-stats,
+            .structural-grid,
+            .mep-stats,
+            .twin-preview {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn-primary, .btn-secondary, .btn-outline-light {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .hero-overlay-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-overlay-content h1 span {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div> 
+
+    <!-- SECTION 1: Panoramic Hero - Commercial Tower Software Stats -->
+    <section class="commercial-hero">
+        <div class="hero-panorama">
+            <img src="A25.webp" alt="Commercial Tower">
+        </div>
+        <div class="hero-overlay-content" data-aos="fade-up">
+            <span class="hero-badge">STACKLY BIM CASE STUDY</span>
+            <h1>One Financial Center <span>Commercial Tower BIM Workflow</span></h1>
+            <p>How Stackly's integrated BIM platform enabled 45-story commercial tower delivery with 75% fewer coordination errors and 50% faster documentation across 12 consultant teams.</p>
+            <div class="hero-software-stats">
+                <div class="hero-stat">
+                    <div class="number">50%</div>
+                    <div class="label">Faster Documentation</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">75%</div>
+                    <div class="label">Fewer Errors</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">12</div>
+                    <div class="label">Consultant Teams</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Generative Design & Optimization -->
+    <section class="generative-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">GENERATIVE DESIGN</span>
+            <h2 class="section-title" data-aos="fade-left">AI-Powered <span>Form Optimization</span></h2>
+            
+            <div class="generative-grid">
+                <div class="generative-image" data-aos="fade-right">
+                    <img src="A20.webp" alt="Generative Design">
+                </div>
+                
+                <div class="generative-content" data-aos="fade-left">
+                    <p style="font-size:1.2rem; margin-bottom:1.5rem;">Stackly's generative design engine analyzed 500+ massing options to optimize floor plate efficiency, solar orientation, and structural performance simultaneously.</p>
+                    
+                    <div class="generative-stats">
+                        <div class="gen-stat">
+                            <div class="number">500+</div>
+                            <div class="label">Design Options</div>
+                        </div>
+                        <div class="gen-stat">
+                            <div class="number">15%</div>
+                            <div class="label">More Rentable Area</div>
+                        </div>
+                        <div class="gen-stat">
+                            <div class="number">8 hrs</div>
+                            <div class="label">Analysis Time</div>
+                        </div>
+                        <div class="gen-stat">
+                            <div class="number">92%</div>
+                            <div class="label">Solar Efficiency</div>
+                        </div>
+                    </div>
+                    
+                    <a href="404.html" class="btn-secondary">View Optimization Report</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Structural Analysis Software -->
+    <section class="structural-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">STRUCTURAL BIM</span>
+            <h2 class="section-title" data-aos="fade-left">Integrated <ul>Structural Analysis</ul></h2>
+            
+            <div class="structural-grid">
+                <div class="structural-card" data-aos="flip-left">
+                    <div class="card-icon">
+                        <i class="fas fa-weight-hanging"></i>
+                    </div>
+                    <h3>Load Analysis</h3>
+                    <p>Automated structural load calculations integrated with architectural BIM model.</p>
+                    <div class="metric">1,200+ load points</div>
+                </div>
+                
+                <div class="structural-card" data-aos="flip-up" data-aos-delay="200">
+                    <div class="card-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3>Wind Simulation</h3>
+                    <p>Computational fluid dynamics (CFD) analysis for wind loads on tower facade.</p>
+                    <div class="metric">45th floor peak</div>
+                </div>
+                
+                <div class="structural-card" data-aos="flip-down" data-aos-delay="400">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Material Optimization</h3>
+                    <p>Structural steel optimization reduced material costs by 18%.</p>
+                    <div class="metric">2,500 tons steel</div>
+                </div>
+                
+                <div class="structural-card" data-aos="flip-right" data-aos-delay="600">
+                    <div class="card-icon">
+                        <i class="fas fa-ruler"></i>
+                    </div>
+                    <h3>Deflection Analysis</h3>
+                    <p>Real-time deflection monitoring and code compliance checking.</p>
+                    <div class="metric">L/400 ratio</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: MEP Coordination & Clash Detection -->
+    <section class="mep-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">MEP COORDINATION</span>
+            <h2 class="section-title" data-aos="fade-left">Zero <span>Clash Coordination</span></h2>
+            
+            <div class="mep-showcase">
+                <div class="mep-visual" data-aos="fade-right">
+                    <img src="A15.webp" alt="MEP Coordination">
+                    <div class="mep-badge">284 Clashes Found</div>
+                </div>
+                
+                <div class="mep-content" data-aos="fade-left">
+                    <p>Stackly's automated clash detection identified 284 potential conflicts between HVAC, electrical, plumbing, and structural systems before construction began.</p>
+                    
+                    <div class="mep-stats">
+                        <div class="mep-stat">
+                            <div class="number">284</div>
+                            <div>Clashes Detected</div>
+                        </div>
+                        <div class="mep-stat">
+                            <div class="number">100%</div>
+                            <div>Resolved</div>
+                        </div>
+                        <div class="mep-stat">
+                            <div class="number">$2.4M</div>
+                            <div>Saved in Rework</div>
+                        </div>
+                        <div class="mep-stat">
+                            <div class="number">3 weeks</div>
+                            <div>Coordination Time</div>
+                        </div>
+                    </div>
+                    
+                    <a href="404.html" class="btn-secondary">View Clash Report</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: Digital Twin & Facility Management -->
+    <section class="digital-twin-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">DIGITAL TWIN</span>
+            <h2 class="section-title" data-aos="fade-left">Smart Building "Lifecycle Management"</h2>
+            
+            <div class="twin-showcase">
+                <div class="twin-preview" data-aos="fade-right">
+                    <div class="twin-item">
+                        <i class="fas fa-microchip"></i>
+                        <span>2,500+</span>
+                        <p>IoT Sensors</p>
+                    </div>
+                    <div class="twin-item">
+                        <i class="fas fa-bolt"></i>
+                        <span>32%</span>
+                        <p>Energy Savings</p>
+                    </div>
+                    <div class="twin-item">
+                        <i class="fas fa-temperature-high"></i>
+                        <span>24/7</span>
+                        <p>HVAC Monitoring</p>
+                    </div>
+                    <div class="twin-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>10yr</span>
+                        <p>Maintenance Schedule</p>
+                    </div>
+                </div>
+                
+                <div class="twin-content" data-aos="fade-left">
+                    <p style="font-size:1.2rem; margin-bottom:2rem;">Stackly's digital twin platform connects the as-built BIM model with real-time sensor data for intelligent facility management.</p>
+                    
+                    <div style="background:rgba(255,255,255,0.1); padding:2rem; border-radius:20px;">
+                        <div style="font-size:3rem; font-weight:800; color:#9fd4d4;">$850k</div>
+                        <p>Annual Operating Savings</p>
+                        <div style="font-size:2rem; font-weight:800; color:#9fd4d4; margin-top:1rem;">32%</div>
+                        <p>Energy Reduction</p>
+                    </div>
+                    
+                    <div class="button-group" style="justify-content:flex-start; margin-top:2rem;">
+                        <a href="404.html" class="btn-outline-light">View Digital Twin Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        //=================================================================================
+// Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer1.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // Scroll Animation Script 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+//=================================================================================
+
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true,
+            anchorPlacement: 'top-bottom',
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+    </script>
+</body>
+</html>

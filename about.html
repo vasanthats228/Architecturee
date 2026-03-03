@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • About Us - Architecture Software Company</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Section Badge */
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(44, 62, 80, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            color: #2c3e50;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-badge.light {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffd700;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1e2f4f;
+        }
+
+        .section-title.light {
+            color: white;
+        }
+
+        .section-title span {
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title.light span {
+            color: #ffd700;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #ffd700;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-gold, .btn-outline-light, .btn-gold, .btn-dark {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #2c3e50;
+            color: white;
+            border-color: #ffd700;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #2c3e50;
+            border-color: #2c3e50;
+        }
+
+        .btn-outline-gold {
+            background: transparent;
+            color: #ffd700;
+            border-color: #ffd700;
+        }
+
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-gold {
+            background: #ffd700;
+            color: #2c3e50;
+            border-color: #2c3e50;
+        }
+
+        .btn-dark {
+            background: #2c3e50;
+            color: white;
+            border-color: white;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-gold:before, .btn-outline-light:before, .btn-gold:before, .btn-dark:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #ffd700;
+        }
+        
+        .btn-secondary:before {
+            background: #2c3e50;
+        }
+
+        .btn-outline-gold:before {
+            background: #ffd700;
+        }
+
+        .btn-outline-light:before {
+            background: white;
+        }
+
+        .btn-gold:before {
+            background: #2c3e50;
+        }
+
+        .btn-dark:before {
+            background: #ffd700;
+        }
+        
+        .btn-primary:hover {
+            color: #2c3e50;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ffd700;
+        }
+
+        .btn-outline-gold:hover {
+            color: #2c3e50;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #2c3e50;
+        }
+
+        .btn-outline-light:hover {
+            color: #2c3e50;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+
+        .btn-gold:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: white;
+        }
+
+        .btn-dark:hover {
+            color: #2c3e50;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ffd700;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-gold:hover:before, .btn-outline-light:hover:before, .btn-gold:hover:before, .btn-dark:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* ===== SECTION 1: CINEMATIC VIDEO HERO ===== */
+        .about-hero {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 8rem 2rem;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.5);
+        }
+
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44,62,80,0.8), rgba(0,0,0,0.7));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+        }
+
+        .hero-content h1 span {
+            color: #ffd700;
+            display: inline-block;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,215,0,0.3);
+            transition: all 0.4s ease;
+        }
+
+        .hero-stat:hover {
+            transform: scale(1.1) translateY(-10px);
+            border-color: #ffd700;
+        }
+
+        .hero-stat .number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .hero-stat .label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* ===== SECTION 2: FOUNDERS STORY WITH POLAROID ===== */
+        .story-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content h2 span {
+            color: #ffd700;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+            color: #4a5568;
+        }
+
+        .founder-polaroid {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .polaroid-card {
+            background: white;
+            padding: 1rem 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(44,62,80,0.1);
+            transform: rotate(-3deg);
+            transition: all 0.5s ease;
+            width: 200px;
+        }
+
+        .polaroid-card:nth-child(2) {
+            transform: rotate(5deg) translateY(30px);
+        }
+
+        .polaroid-card:hover {
+            transform: rotate(0deg) scale(1.1) translateY(-20px);
+            z-index: 10;
+            box-shadow: 0 30px 60px rgba(44,62,80,0.2);
+        }
+
+        .polaroid-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.5s ease;
+        }
+
+        .polaroid-card:hover img {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .polaroid-card .name {
+            font-weight: 800;
+            margin-top: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .polaroid-card .role {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        .story-video {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(44,62,80,0.2);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .story-video video {
+            width: 100%;
+            display: block;
+        }
+
+        .video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44,62,80,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .story-video:hover .video-play-overlay {
+            opacity: 1;
+        }
+
+        .video-play-button {
+            width: 80px;
+            height: 80px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            font-size: 2rem;
+            transform: scale(0.9);
+            transition: all 0.4s ease;
+        }
+
+        .story-video:hover .video-play-button {
+            transform: scale(1);
+        }
+
+        /* ===== SECTION 3: TIMELINE JOURNEY ===== */
+        .timeline-section {
+            background: #2c3e50;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-section .section-badge {
+            background: rgba(255,255,255,0.15);
+            color: #ffd700;
+        }
+
+        .timeline-section .section-title {
+            color: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 4rem auto 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: #ffd700;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255,215,0,0.3);
+            position: relative;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05) translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 25px;
+            height: 25px;
+            background: #ffd700;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -55px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -55px;
+        }
+
+        .timeline-year {
+            color: #ffd700;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== SECTION 4: TEAM SHOWCASE ===== */
+        .team-section {
+            background: #ffffff;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(44,62,80,0.08);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(44,62,80,0.1);
+            transform-style: preserve-3d;
+        }
+
+        .team-member:hover {
+            transform: translateY(-20px) scale(1.02) rotateY(5deg);
+            box-shadow: 0 30px 60px rgba(44,62,80,0.15);
+            border-color: #ffd700;
+        }
+
+        .member-image {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .team-member:hover .member-image img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .member-social {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: linear-gradient(to top, rgba(44,62,80,0.9), transparent);
+            transition: bottom 0.4s ease;
+        }
+
+        .team-member:hover .member-social {
+            bottom: 0;
+        }
+
+        .member-social a {
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .member-social a:hover {
+            color: #ffd700;
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        .member-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .member-info h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+        }
+
+        .member-info .role {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .member-info .expertise {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== SECTION 5: OFFICE CULTURE VIDEO ===== */
+        .culture-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            padding: 0;
+        }
+
+        .culture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .culture-video {
+            height: 100%;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .culture-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .culture-video::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(44,62,80,0.5));
+        }
+
+        .culture-content {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .culture-content h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .culture-content h2 span {
+            color: #ffd700;
+        }
+
+        .culture-content p {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        .culture-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .culture-stat {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(44,62,80,0.05);
+            transition: all 0.4s ease;
+        }
+
+        .culture-stat:hover {
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(44,62,80,0.1);
+        }
+
+        .culture-stat .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        /* ===== SECTION 6: OFFICES AROUND WORLD ===== */
+        .offices-section {
+            background: #2c3e50;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offices-section .section-badge {
+            background: rgba(255,255,255,0.15);
+            color: #ffd700;
+        }
+
+        .offices-section .section-title {
+            color: white;
+        }
+
+        .offices-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .office-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .office-card:hover {
+            transform: translateY(-15px) scale(1.05) rotateY(5deg);
+            border-color: #ffd700;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .office-card i {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .office-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .office-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .office-card:hover .office-image img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        /* ===== SECTION 7: CLIENTS SHOWCASE ===== */
+        .clients-section {
+            background: #ffffff;
+        }
+
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .client-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(44,62,80,0.05);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(44,62,80,0.1);
+        }
+
+        .client-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: #ffd700;
+            box-shadow: 0 20px 40px rgba(44,62,80,0.1);
+        }
+
+        .client-card i {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .client-card:hover i {
+            color: #ffd700;
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .client-card span {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .client-card .projects {
+            color: #ffd700;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== SECTION 8: AWARDS & RECOGNITION ===== */
+        .awards-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .award-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(44,62,80,0.05);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.8s ease;
+        }
+
+        .award-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(44,62,80,0.15);
+        }
+
+        .award-card:hover::before {
+            transform: rotate(45deg) translate(20%, 20%);
+        }
+
+        .award-icon {
+            width: 80px;
+            height: 80px;
+            background: #2c3e50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: all 0.8s ease;
+        }
+
+        .award-card:hover .award-icon {
+            transform: rotateY(360deg);
+            background: #ffd700;
+        }
+
+        .award-icon i {
+            font-size: 2.5rem;
+            color: #ffd700;
+            transition: all 0.8s ease;
+        }
+
+        .award-card:hover .award-icon i {
+            color: #2c3e50;
+        }
+
+        /* ===== SECTION 9: VIDEO TESTIMONIALS ===== */
+        .testimonials-section {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .testimonials-section .section-badge {
+            background: rgba(255,255,255,0.15);
+            color: #ffd700;
+        }
+
+        .testimonials-section .section-title {
+            color: white;
+        }
+
+        .video-testimonials {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .video-testimonial {
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.2);
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .video-testimonial:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #ffd700;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .video-preview {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .video-testimonial:hover .video-preview img {
+            transform: scale(1.1);
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            transition: all 0.5s ease;
+            opacity: 0.9;
+        }
+
+        .video-preview:hover .play-button {
+            transform: translate(-50%, -50%) scale(1.2);
+            background: white;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .video-player.playing {
+            display: block;
+        }
+
+        .video-preview.playing {
+            display: none;
+        }
+
+        .testimonial-content {
+            padding: 2rem;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info strong {
+            color: white;
+        }
+
+        .author-info p {
+            color: #ffd700 !important;
+            margin: 0;
+        }
+
+        /* ===== SECTION 10: CTA WITH VIDEO BACKGROUND ===== */
+        .cta-video-section {
+            position: relative;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+            padding: 8rem 2rem;
+        }
+
+        .cta-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.4);
+            transition: transform 10s ease;
+        }
+
+        .cta-video-section:hover .cta-bg-video {
+            transform: scale(1.1);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-content h2 span {
+            color: #ffd700;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .cta-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,215,0,0.3);
+            transition: all 0.4s ease;
+        }
+
+        .cta-stat:hover {
+            transform: scale(1.1) translateY(-10px);
+            border-color: #ffd700;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .cta-stat .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .cta-stat p {
+            color: white;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media screen and (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .story-grid,
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid,
+            .offices-grid,
+            .awards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .clients-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .video-testimonials {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-content::after {
+                left: -45px !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .team-grid,
+            .offices-grid,
+            .awards-grid,
+            .clients-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .culture-content {
+                padding: 2rem;
+            }
+
+            .cta-stats {
+                flex-direction: column;
+            }
+
+            .cta-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .story-content h2 {
+                font-size: 2rem;
+            }
+
+            .polaroid-card {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div>
+
+    <!-- SECTION 1: CINEMATIC VIDEO HERO - ARCHITECTURE SOFTWARE COMPANY -->
+    <section class="about-hero">
+        <video class="hero-video-bg" autoplay muted loop playsinline poster="A15.webp">
+            <source src="vid1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-video-overlay"></div>
+        <div class="hero-content">
+            <span class="section-badge light" style="background:rgba(255,255,255,0.15); color:#ffd700;" data-aos="fade-down">ABOUT STACKLY</span>
+            <h1 data-aos="fade-up" data-aos-delay="100">We Build <span>Architecture</span> Software</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Empowering architects worldwide with intelligent BIM tools since 2018. Trusted by 12M+ architects across 85+ countries.</p>
+            <div class="hero-stats">
+                <div class="hero-stat" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="number">12M+</div>
+                    <div class="label">Architects</div>
+                </div>
+                <div class="hero-stat" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="number">85+</div>
+                    <div class="label">Countries</div>
+                </div>
+                <div class="hero-stat" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="number">2.5B</div>
+                    <div class="label">BIM Models</div>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="600">
+                <a href="4042.html" class="btn-gold">Start Free Trial</a>
+                <a href="4042.html" class="btn-outline-light">Watch Demo</a>
+                <a href="4042.html" class="btn-outline-gold">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: FOUNDERS STORY - ARCHITECTURE SOFTWARE BEGINNINGS -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-content">
+                    <span class="section-badge" data-aos="fade-right">OUR STORY</span>
+                    <h2 data-aos="fade-right" data-aos-delay="100">From <span>Architects</span> to Software Creators</h2>
+                    <p data-aos="fade-right" data-aos-delay="200">Founded in 2018 by three practicing architects frustrated with clunky BIM software, Stackly began as a mission to create tools that actually understand how architects work.</p>
+                    <p data-aos="fade-right" data-aos-delay="300">Sarah, Michael, and Elena met at Foster + Partners, where they spent years wishing for better software. Today, their vision serves over 12 million architects worldwide.</p>
+                    <div class="founder-polaroid">
+                        <div class="polaroid-card" data-aos="flip-left" data-aos-delay="400">
+                            <img src="A16.webp" alt="Sarah Chen - Architect turned CEO">
+                            <div class="name">Sarah Chen</div>
+                            <div class="role">CEO, Architect</div>
+                        </div>
+                        <div class="polaroid-card" data-aos="flip-right" data-aos-delay="500">
+                            <img src="A17.webp" alt="Michael Kim - BIM Expert">
+                            <div class="name">Michael Kim</div>
+                            <div class="role">CTO, BIM Specialist</div>
+                        </div>
+                    </div>
+                    <div class="button-group" style="justify-content: flex-start;" data-aos="fade-up" data-aos-delay="600">
+                        <a href="4042.html" class="btn-primary">Meet the Team</a>
+                        <a href="4042.html" class="btn-secondary">Our Journey</a>
+                    </div>
+                </div>
+                <div class="story-video" data-aos="fade-left" data-aos-delay="200" onclick="playVideo(this)">
+                    <video class="story-video-element" poster="A19.webp">
+                        <source src="vid1.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-play-overlay">
+                        <div class="video-play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: TIMELINE JOURNEY - ARCHITECTURE SOFTWARE MILESTONES -->
+    <section class="timeline-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">OUR JOURNEY</span>
+            <h2 class="section-title light" data-aos="fade-left" data-aos-delay="100">Architecture <span>Software</span> Milestones</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2018</div>
+                        <h3>Stackly Founded</h3>
+                        <p>Launched first BIM modeling platform built by architects, for architects.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020</div>
+                        <h3>Cloud BIM Collaboration</h3>
+                        <p>Introduced real-time cloud collaboration, reaching 1M architects globally.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <h3>Generative AI for Architecture</h3>
+                        <p>Launched AI-powered generative design tools for complex geometries.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <h3>Global Architecture Community</h3>
+                        <p>12M+ architects across 85+ countries using Stackly daily.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="600">
+                <a href="4042.html" class="btn-outline-light">View Full History</a>
+                <a href="4042.html" class="btn-outline-gold">Download Timeline</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: TEAM SHOWCASE - ARCHITECTURE SOFTWARE EXPERTS -->
+    <section class="team-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">LEADERSHIP</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">The <span>Architects</span> Behind the Software</h2>
+            
+            <div class="team-grid">
+                <div class="team-member" data-aos="flip-left" data-aos-delay="200">
+                    <div class="member-image">
+                        <img src="A21.webp" alt="Sarah Chen - Architect and CEO">
+                        <div class="member-social">
+                            <a href="4042.html"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="4042.html"><i class="fab fa-twitter"></i></a>
+                            <a href="4042.html"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Sarah Chen</h3>
+                        <p class="role">CEO & Co-Founder</p>
+                        <p class="expertise">Former Principal at Foster + Partners, RIBA</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="flip-up" data-aos-delay="300">
+                    <div class="member-image">
+                        <img src="A22.webp" alt="Michael Kim - BIM Expert">
+                        <div class="member-social">
+                            <a href="4042.html"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="4042.html"><i class="fab fa-twitter"></i></a>
+                            <a href="4042.html"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Michael Kim</h3>
+                        <p class="role">CTO & Co-Founder</p>
+                        <p class="expertise">BIM Specialist, Ex-Google AI</p>
+                    </div>
+                </div>
+                <div class="team-member" data-aos="flip-right" data-aos-delay="400">
+                    <div class="member-image">
+                        <img src="A24.webp" alt="Elena Rodriguez - Design Technologist">
+                        <div class="member-social">
+                            <a href="4042.html"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="4042.html"><i class="fab fa-twitter"></i></a>
+                            <a href="4042.html"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Elena Rodriguez</h3>
+                        <p class="role">Head of Product</p>
+                        <p class="expertise">Architect, Harvard GSD, Computational Design</p>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="500">
+                <a href="4042.html" class="btn-primary">View All Team</a>
+                <a href="4042.html" class="btn-secondary">Join Our Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: OFFICE CULTURE VIDEO - WHERE ARCHITECTS BUILD SOFTWARE -->
+    <section class="culture-section">
+        <div class="culture-grid">
+            <div class="culture-video" data-aos="fade-right">
+                <video autoplay muted loop playsinline poster="A25.webp">
+                    <source src="vid1.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="culture-content" data-aos="fade-left">
+                <span class="section-badge">OUR CULTURE</span>
+                <h2>Where <span>Architects</span> Build Software</h2>
+                <p>45% of our team are licensed architects who still practice design. We build tools we wish we had, with input from the world's leading architecture firms.</p>
+                <div class="culture-stats">
+                    <div class="culture-stat" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="number">45%</div>
+                        <p>Licensed Architects</p>
+                    </div>
+                    <div class="culture-stat" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="number">12</div>
+                        <p>Countries Represented</p>
+                    </div>
+                </div>
+                <div class="button-group" style="justify-content: flex-start;" data-aos="fade-up" data-aos-delay="400">
+                    <a href="4042.html" class="btn-gold">Life at Stackly</a>
+                    <a href="4042.html" class="btn-primary">Open Positions</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: OFFICES AROUND WORLD - GLOBAL ARCHITECTURE PRESENCE -->
+    <section class="offices-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">GLOBAL PRESENCE</span>
+            <h2 class="section-title light" data-aos="fade-left" data-aos-delay="100">Serving <span>Architects</span> Worldwide</h2>
+            
+            <div class="offices-grid">
+                <div class="office-card" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>San Francisco</h3>
+                    <div class="office-image">
+                        <img src="A26.webp" alt="San Francisco Architecture Hub">
+                    </div>
+                    <p>Global Headquarters</p>
+                    <a href="4042.html" class="btn-outline-gold" style="margin-top:1rem; padding:0.5rem 1.5rem;">Visit</a>
+                </div>
+                <div class="office-card" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>London</h3>
+                    <div class="office-image">
+                        <img src="A27.webp" alt="London Architecture Office">
+                    </div>
+                    <p>European HQ</p>
+                    <a href="4042.html" class="btn-outline-gold" style="margin-top:1rem; padding:0.5rem 1.5rem;">Visit</a>
+                </div>
+                <div class="office-card" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Singapore</h3>
+                    <div class="office-image">
+                        <img src="A28.webp" alt="Singapore Architecture Hub">
+                    </div>
+                    <p>Asia Pacific</p>
+                    <a href="4042.html" class="btn-outline-gold" style="margin-top:1rem; padding:0.5rem 1.5rem;">Visit</a>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="500">
+                <a href="4042.html" class="btn-outline-light">View All Locations</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: CLIENTS SHOWCASE - LEADING ARCHITECTURE FIRMS -->
+    <section class="clients-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">TRUSTED BY</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Leading <span>Architecture</span> Firms</h2>
+            
+            <div class="clients-grid">
+                <div class="client-card" data-aos="flip-left" data-aos-delay="200">
+                    <i class="fas fa-building"></i>
+                    <span>Foster + Partners</span>
+                    <span class="projects">250+ projects</span>
+                </div>
+                <div class="client-card" data-aos="flip-left" data-aos-delay="300">
+                    <i class="fas fa-draw-polygon"></i>
+                    <span>Zaha Hadid</span>
+                    <span class="projects">180+ projects</span>
+                </div>
+                <div class="client-card" data-aos="flip-left" data-aos-delay="400">
+                    <i class="fas fa-cube"></i>
+                    <span>SOM</span>
+                    <span class="projects">320+ projects</span>
+                </div>
+                <div class="client-card" data-aos="flip-left" data-aos-delay="500">
+                    <i class="fas fa-archway"></i>
+                    <span>Gensler</span>
+                    <span class="projects">400+ projects</span>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="600">
+                <a href="4042.html" class="btn-primary">View All Clients</a>
+                <a href="4042.html" class="btn-secondary">Read Case Studies</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: AWARDS & RECOGNITION - ARCHITECTURE SOFTWARE -->
+    <section class="awards-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">ACCOLADES</span>
+            <h2 class="section-title" data-aos="fade-left" data-aos-delay="100">Awards & <span>Recognition</span></h2>
+            
+            <div class="awards-grid">
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="award-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Best BIM Software 2024</h3>
+                    <p>AIA Technology in Architecture Awards</p>
+                </div>
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="award-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>Innovation in Architecture</h3>
+                    <p>RIBA Journal Architecture Awards</p>
+                </div>
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="award-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Top Rated Platform</h3>
+                    <p>Architizer A+ Product Awards</p>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="500">
+                <a href="4042.html" class="btn-primary">View All Awards</a>
+                <a href="4042.html" class="btn-secondary">Press Kit</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: VIDEO TESTIMONIALS - ARCHITECTS SPEAK -->
+    <section class="testimonials-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">TESTIMONIALS</span>
+            <h2 class="section-title light" data-aos="fade-left" data-aos-delay="100">What <span>Architects</span> Say</h2>
+            
+            <div class="video-testimonials">
+                <div class="video-testimonial" data-aos="fade-right" data-aos-delay="200" onclick="playVideo(this)">
+                    <div class="video-preview">
+                        <img src="A21.webp" alt="Norman Foster Interview">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <video class="video-player" style="display:none;">
+                        <source src="vid2.mp4" type="video/mp4">
+                    </video>
+                    <div class="testimonial-content">
+                        <p>"Stackly transformed our BIM workflow. The cloud collaboration is seamless across our 12 international offices."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <img src="A18.webp" alt="Norman Foster">
+                            </div>
+                            <div class="author-info">
+                                <strong>Norman Foster</strong>
+                                <p>Founder, Foster + Partners</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-testimonial" data-aos="fade-left" data-aos-delay="300" onclick="playVideo(this)">
+                    <div class="video-preview">
+                        <img src="A10.webp" alt="Patrik Schumacher Interview">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <video class="video-player" style="display:none;">
+                        <source src="vid1.mp4" type="video/mp4">
+                    </video>
+                    <div class="testimonial-content">
+                        <p>"The generative design tools helped us explore complex geometries we never thought possible. Game changer for ZHA."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <img src="A1.webp" alt="Patrik Schumacher">
+                            </div>
+                            <div class="author-info">
+                                <strong>Patrik Schumacher</strong>
+                                <p>Principal, Zaha Hadid Architects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="400">
+                <a href="4042.html" class="btn-outline-light">Watch All Testimonials</a>
+                <a href="4042.html" class="btn-outline-gold">Submit Your Story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: CTA WITH VIDEO BACKGROUND -->
+    <section class="cta-video-section">
+        <video class="cta-bg-video" autoplay muted loop playsinline poster="A22.webp">
+            <source src="vid2.mp4" type="video/mp4">
+        </video>
+        <div class="cta-content">
+            <h2 data-aos="fade-down">Join the <span>Architecture</span> Community</h2>
+            <p data-aos="fade-up" data-aos-delay="100">12,000+ architecture firms already use Stackly to design a better world.</p>
+            <div class="cta-stats">
+                <div class="cta-stat" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="number">12M+</div>
+                    <p>Architects</p>
+                </div>
+                <div class="cta-stat" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="number">2.5B</div>
+                    <p>BIM Models</p>
+                </div>
+            </div>
+            <div class="button-group" data-aos="fade-up" data-aos-delay="400">
+                <a href="4042.html" class="btn-gold">Start Free Trial</a>
+                <a href="4042.html" class="btn-outline-light">Contact Sales</a>
+                <a href="4042.html" class="btn-outline-gold">Watch Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+                //=================================================================================
+// Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header2.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer2.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // Scroll Animation Script 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+//=================================================================================
+
+        AOS.init({
+            duration: 1200,
+            once: false,        // Set to false to allow animations on both scroll up and down
+            mirror: true,       // Elements animate out when scrolling past them and animate in when scrolling back up
+            anchorPlacement: 'top-bottom', // When the top of the element hits the bottom of the window
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+
+        // Video Play Function
+        function playVideo(element) {
+            const preview = element.querySelector('.video-preview');
+            const video = element.querySelector('.video-player');
+            const playButton = element.querySelector('.play-button');
+            
+            if (preview && video) {
+                preview.style.display = 'none';
+                video.style.display = 'block';
+                video.play();
+                
+                video.onended = function() {
+                    preview.style.display = 'block';
+                    video.style.display = 'none';
+                };
+            }
+        }
+
+        // Story Video Play Function
+        document.querySelectorAll('.story-video').forEach(videoContainer => {
+            videoContainer.addEventListener('click', function() {
+                const video = this.querySelector('video');
+                const overlay = this.querySelector('.video-play-overlay');
+                
+                if (video.paused) {
+                    video.play();
+                    overlay.style.opacity = '0';
+                } else {
+                    video.pause();
+                    overlay.style.opacity = '1';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

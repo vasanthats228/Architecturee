@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Stackly • Architecture Software Services</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e2f4f;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Section Badge */
+        .section-badge {
+            display: inline-block;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: rgba(44, 62, 80, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            color: #2c3e50;
+            backdrop-filter: blur(5px);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #1e2f4f;
+        }
+
+        .section-title span {
+            color: #2c3e50;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #ffd700;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        /* Button Styles */
+        .btn-primary, .btn-secondary, .btn-outline-gold {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 2px solid;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-align: center;
+            min-width: 160px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #2c3e50;
+            color: white;
+            border-color: #ffd700;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #2c3e50;
+            border-color: #2c3e50;
+        }
+
+        .btn-outline-gold {
+            background: transparent;
+            color: #ffd700;
+            border-color: #ffd700;
+        }
+        
+        .btn-primary:before, .btn-secondary:before, .btn-outline-gold:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:before {
+            background: #ffd700;
+        }
+        
+        .btn-secondary:before {
+            background: #2c3e50;
+        }
+
+        .btn-outline-gold:before {
+            background: #ffd700;
+        }
+        
+        .btn-primary:hover {
+            color: #2c3e50;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ffd700;
+        }
+
+        .btn-outline-gold:hover {
+            color: #2c3e50;
+            transform: translateY(-5px) scale(1.02);
+            border-color: #2c3e50;
+        }
+        
+        .btn-primary:hover:before, .btn-secondary:hover:before, .btn-outline-gold:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* ===== SECTION 1: CINEMATIC HERO ===== */
+        .services-hero {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(rgba(44,62,80,0.8), rgba(44,62,80,0.8)), url('A1.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 8rem 2rem;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+        }
+
+        .hero-content h1 span {
+            color: #ffd700;
+            display: inline-block;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+            50% { text-shadow: 0 0 40px rgba(255,215,0,0.8); }
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-stats-mini {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .hero-stat-item {
+            text-align: center;
+            animation: floatSlow 6s ease-in-out infinite;
+        }
+
+        .hero-stat-item:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .hero-stat-item:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .hero-stat-item .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .hero-stat-item .label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* ===== SECTION 2: BIM SERVICES COLLAGE ===== */
+        .bim-collage-section {
+            background: #ffffff;
+        }
+
+        .collage-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .collage-images {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .collage-img {
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(44,62,80,0.15);
+            transition: all 0.5s ease;
+            animation: floatSlow 8s ease-in-out infinite;
+        }
+
+        .collage-img:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .collage-img:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        .collage-img.large {
+            grid-column: span 2;
+            height: 300px;
+        }
+
+        .collage-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .collage-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 40px 80px rgba(44,62,80,0.2);
+        }
+
+        .collage-img:hover img {
+            transform: scale(1.1);
+        }
+
+        .collage-text {
+            padding-left: 2rem;
+        }
+
+        .collage-text h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .collage-text .highlight {
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-features-mini {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .service-feature-mini {
+            text-align: center;
+        }
+
+        .service-feature-mini i {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== SECTION 3: BIM MODELING SERVICE ===== */
+        .bim-modeling-section {
+            background: linear-gradient(135deg, #2c3e50, #1a2a3a);
+            color: white;
+            padding: 0;
+        }
+
+        .bim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .bim-content {
+            padding: 6rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bim-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .bim-content h2 span {
+            color: #ffd700;
+        }
+
+        .bim-content p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .bim-highlights {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .bim-highlight-item {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .bim-highlight-item:hover {
+            transform: scale(1.1);
+        }
+
+        .bim-highlight-item i {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .bim-image {
+            height: 100%;
+            min-height: 600px;
+            background: url('A21.webp');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 10s ease;
+        }
+
+        .bim-image:hover {
+            transform: scale(1.05);
+        }
+
+        .bim-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #2c3e50, transparent);
+        }
+
+        /* ===== SECTION 4: CLOUD COLLABORATION SERVICE ===== */
+        .cloud-section {
+            background: #ffffff;
+        }
+
+        .cloud-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .cloud-image {
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(44,62,80,0.2);
+            transition: all 0.5s ease;
+        }
+
+        .cloud-image:hover {
+            transform: perspective(1000px) rotateY(-5deg);
+            box-shadow: -30px 30px 60px rgba(44,62,80,0.3);
+        }
+
+        .cloud-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .cloud-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .cloud-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .cloud-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .cloud-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .cloud-features li:hover {
+            transform: translateX(10px);
+        }
+
+        .cloud-features i {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        /* ===== SECTION 5: GENERATIVE DESIGN SERVICE ===== */
+        .generative-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .generative-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .generative-content {
+            padding-right: 2rem;
+        }
+
+        .generative-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .generative-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .generative-stat {
+            text-align: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(44,62,80,0.05);
+            transition: all 0.4s ease;
+        }
+
+        .generative-stat:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(44,62,80,0.1);
+        }
+
+        .generative-stat .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .generative-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .generative-img {
+            border-radius: 20px;
+            overflow: hidden;
+            height: 200px;
+            transition: all 0.5s ease;
+        }
+
+        .generative-img:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .generative-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .generative-img:hover img {
+            transform: scale(1.2);
+        }
+
+        /* ===== SECTION 6: DOCUMENTATION SERVICE ===== */
+        .documentation-section {
+            background: #2c3e50;
+            color: white;
+            padding: 0;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .doc-image {
+            height: 100%;
+            min-height: 500px;
+            background: url('A22.webp');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .doc-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #2c3e50);
+        }
+
+        .doc-content {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .doc-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .doc-content h3 span {
+            color: #ffd700;
+        }
+
+        .doc-metrics {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .doc-metric {
+            text-align: center;
+        }
+
+        .doc-metric .number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffd700;
+            line-height: 1;
+        }
+
+        /* ===== SECTION 7: VR/AR SERVICES ===== */
+        .vr-section {
+            background: #ffffff;
+        }
+
+        .vr-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .vr-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .vr-preview {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(44,62,80,0.2);
+        }
+
+        .vr-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .vr-preview:hover img {
+            transform: scale(1.1);
+        }
+
+        .vr-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44,62,80,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .vr-preview:hover .vr-overlay {
+            opacity: 1;
+        }
+
+        .vr-overlay i {
+            font-size: 4rem;
+            color: #ffd700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ===== SECTION 8: SUSTAINABILITY SERVICES ===== */
+        .sustainability-section {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .sustainability-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sustainability-card {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(44,62,80,0.05);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(44,62,80,0.1);
+        }
+
+        .sustainability-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(44,62,80,0.15);
+            border-color: #ffd700;
+        }
+
+        .sustainability-card i {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .sustainability-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        /* ===== SECTION 9: PROJECT GALLERY ===== */
+        .gallery-section {
+            background: #2c3e50;
+            color: white;
+        }
+
+        .gallery-section .section-badge {
+            background: rgba(255,255,255,0.1);
+            color: #ffd700;
+        }
+
+        .gallery-section .section-title {
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 250px;
+            cursor: pointer;
+        }
+
+        .gallery-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            height: 516px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(44,62,80,0.9), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        .gallery-caption h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .gallery-caption p {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        /* ===== SECTION 10: SUPPORT SERVICES ===== */
+        .support-section {
+            background: #ffffff;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .support-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(44,62,80,0.05);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(44,62,80,0.1);
+        }
+
+        .support-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            border-color: #ffd700;
+            box-shadow: 0 30px 60px rgba(44,62,80,0.15);
+        }
+
+        .support-card i {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .support-card .badge {
+            background: #2c3e50;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== SECTION 11: CTA ===== */
+        .cta-section {
+            background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.9)), url('A25.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-content h2 span {
+            color: #ffd700;
+        }
+
+        .floating-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .floating-icons i {
+            font-size: 3rem;
+            color: #ffd700;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icons i:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .floating-icons i:nth-child(3) {
+            animation-delay: 2s;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media screen and (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+
+            .collage-layout,
+            .bim-grid,
+            .cloud-grid,
+            .generative-layout,
+            .doc-grid,
+            .vr-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .bim-content {
+                padding: 4rem 2rem;
+            }
+
+            .bim-image {
+                min-height: 400px;
+            }
+
+            .sustainability-grid,
+            .support-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-item.large {
+                grid-column: auto;
+                grid-row: auto;
+                height: 250px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats-mini {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .collage-images {
+                grid-template-columns: 1fr;
+            }
+
+            .collage-img.large {
+                height: 200px;
+            }
+
+            .bim-highlights,
+            .generative-stats,
+            .doc-metrics {
+                flex-direction: column;
+            }
+
+            .sustainability-grid,
+            .support-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-features-mini {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .collage-text h2 {
+                font-size: 2rem;
+            }
+
+            .bim-content h2 {
+                font-size: 2rem;
+            }
+
+            .cta-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- YOUR HEADER (header.html) WILL GO HERE -->
+    <div id="header-placeholder"></div> 
+
+    <!-- SECTION 1: CINEMATIC HERO - ARCHITECTURE SOFTWARE -->
+    <section class="services-hero">
+        <div class="hero-content" data-aos="fade-up">
+            <span class="section-badge" style="background:rgba(255,215,0,0.2); color:#ffd700;">ARCHITECTURE SOFTWARE SERVICES</span>
+            <h1>Digital Tools for <span>Architectural</span> Excellence</h1>
+            <p>Complete suite of professional software services for architecture firms: BIM modeling, cloud collaboration, generative design, and automated documentation.</p>
+            <div class="hero-stats-mini">
+                <div class="hero-stat-item">
+                    <div class="number">12M+</div>
+                    <div class="label">Architects</div>
+                </div>
+                <div class="hero-stat-item">
+                    <div class="number">2.5B</div>
+                    <div class="label">BIM Models</div>
+                </div>
+                <div class="hero-stat-item">
+                    <div class="number">85+</div>
+                    <div class="label">Countries</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: BIM SERVICES OVERVIEW -->
+    <section class="bim-collage-section">
+        <div class="container">
+            <div class="collage-layout">
+                <div class="collage-images" data-aos="fade-right">
+                    <div class="collage-img large">
+                        <img src="A24.webp" alt="BIM Modeling">
+                    </div>
+                    <div class="collage-img">
+                        <img src="A25.webp" alt="Cloud Collaboration">
+                    </div>
+                    <div class="collage-img">
+                        <img src="A26.webp" alt="Generative Design">
+                    </div>
+                </div>
+                <div class="collage-text" data-aos="fade-left">
+                    <span class="highlight">✦ COMPLETE BIM ECOSYSTEM ✦</span>
+                    <h2>Intelligent Modeling for Modern Architecture</h2>
+                    <p>Our BIM services provide architects with parametric modeling tools that streamline design, documentation, and coordination across all project phases.</p>
+                    <div class="service-features-mini">
+                        <div class="service-feature-mini">
+                            <i class="fas fa-cube"></i>
+                            <p>Parametric</p>
+                        </div>
+                        <div class="service-feature-mini">
+                            <i class="fas fa-sync-alt"></i>
+                            <p>Real-time</p>
+                        </div>
+                        <div class="service-feature-mini">
+                            <i class="fas fa-chart-line"></i>
+                            <p>Analytics</p>
+                        </div>
+                    </div>
+                    <a href="4042.html" class="btn-primary">Explore BIM Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: BIM MODELING SERVICE -->
+    <section class="bim-modeling-section">
+        <div class="bim-grid">
+            <div class="bim-content" data-aos="fade-right">
+                <span class="section-badge" style="background:rgba(255,215,0,0.2); color:#ffd700;">FLAGSHIP SERVICE</span>
+                <h2>Professional <span>BIM Modeling</span> Platform</h2>
+                <p>Create intelligent 3D building models with parametric components that automatically update across all views. Used by top architecture firms worldwide.</p>
+                <div class="bim-highlights">
+                    <div class="bim-highlight-item">
+                        <i class="fas fa-cube"></i>
+                        <p>Parametric Components</p>
+                    </div>
+                    <div class="bim-highlight-item">
+                        <i class="fas fa-draw-polygon"></i>
+                        <p>Automated Documentation</p>
+                    </div>
+                    <div class="bim-highlight-item">
+                        <i class="fas fa-people-arrows"></i>
+                        <p>Multi-Disciplinary</p>
+                    </div>
+                </div>
+                <a href="4042.html" class="btn-outline-gold">Learn More</a>
+            </div>
+            <div class="bim-image" data-aos="fade-left">
+                <!-- Background image set in CSS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: CLOUD COLLABORATION SERVICE -->
+    <section class="cloud-section">
+        <div class="container">
+            <div class="cloud-grid">
+                <div class="cloud-image" data-aos="fade-right">
+                    <img src="A27.webp" alt="Cloud Collaboration">
+                </div>
+                <div class="cloud-content" data-aos="fade-left">
+                    <span class="section-badge">CLOUD SERVICE</span>
+                    <h3>Real-Time <span>Team Collaboration</span></h3>
+                    <p>Our cloud platform enables architects, engineers, and consultants to work simultaneously on the same BIM model from anywhere in the world.</p>
+                    <ul class="cloud-features">
+                        <li><i class="fas fa-check-circle"></i> Live synchronization across 50+ users</li>
+                        <li><i class="fas fa-check-circle"></i> Version control with complete history</li>
+                        <li><i class="fas fa-check-circle"></i> Enterprise-grade security & encryption</li>
+                        <li><i class="fas fa-check-circle"></i> Mobile access for on-site reviews</li>
+                    </ul>
+                    <a href="4042.html" class="btn-secondary">Explore Cloud Features</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: GENERATIVE DESIGN SERVICE -->
+    <section class="generative-section">
+        <div class="container">
+            <div class="generative-layout">
+                <div class="generative-content" data-aos="fade-right">
+                    <span class="section-badge">AI-POWERED</span>
+                    <h3>Generative Design & <span>Optimization</span></h3>
+                    <p>Harness artificial intelligence to explore thousands of design alternatives. Our generative design tools optimize for site constraints, sunlight, program requirements, and sustainability goals.</p>
+                    <div class="generative-stats">
+                        <div class="generative-stat">
+                            <div class="number">500+</div>
+                            <p>Options per hour</p>
+                        </div>
+                        <div class="generative-stat">
+                            <div class="number">40%</div>
+                            <p>Faster iterations</p>
+                        </div>
+                    </div>
+                    <a href="4042.html" class="btn-primary">Try Generative Design</a>
+                </div>
+                <div class="generative-image-grid" data-aos="fade-left">
+                    <div class="generative-img">
+                        <img src="A28.webp" alt="AI Design">
+                    </div>
+                    <div class="generative-img">
+                        <img src="A18.webp" alt="AI Optimization">
+                    </div>
+                    <div class="generative-img">
+                        <img src="A17.webp" alt="AI Analysis">
+                    </div>
+                    <div class="generative-img">
+                        <img src="A16.webp" alt="AI Results">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: DOCUMENTATION SERVICE -->
+    <section class="documentation-section">
+        <div class="doc-grid">
+            <div class="doc-image" data-aos="fade-right">
+                <!-- Background image set in CSS -->
+            </div>
+            <div class="doc-content" data-aos="fade-left">
+                <span class="section-badge" style="background:rgba(255,215,0,0.2); color:#ffd700;">DOCUMENTATION</span>
+                <h3>Automated <span>Construction Documents</span></h3>
+                <p>Generate complete drawing sets, schedules, and specifications directly from your BIM model. Eliminate manual drafting errors and save up to 60% of documentation time.</p>
+                <div class="doc-metrics">
+                    <div class="doc-metric">
+                        <div class="number">60%</div>
+                        <p>Time Saved</p>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="number">100%</div>
+                        <p>Consistency</p>
+                    </div>
+                    <div class="doc-metric">
+                        <div class="number">0</div>
+                        <p>Manual Errors</p>
+                    </div>
+                </div>
+                <a href="4042.html" class="btn-outline-gold">View Documentation Features</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: VR/AR SERVICES -->
+    <section class="vr-section">
+        <div class="container">
+            <div class="vr-showcase">
+                <div class="vr-content" data-aos="fade-right">
+                    <span class="section-badge">IMMERSIVE TECH</span>
+                    <h3>VR/AR <span>Design Reviews</span></h3>
+                    <p>Experience your designs in virtual reality before they're built. Our VR services allow clients to walk through spaces, while AR overlays BIM models onto construction sites.</p>
+                    <ul class="cloud-features">
+                        <li><i class="fas fa-check-circle"></i> Immersive client presentations</li>
+                        <li><i class="fas fa-check-circle"></i> On-site AR model viewing</li>
+                        <li><i class="fas fa-check-circle"></i> Real-time design iterations</li>
+                    </ul>
+                    <a href="4042.html" class="btn-secondary">Explore VR Services</a>
+                </div>
+                <div class="vr-preview" data-aos="fade-left">
+                    <img src="A14.webp" alt="VR Architecture">
+                    <div class="vr-overlay">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: SUSTAINABILITY SERVICES -->
+    <section class="sustainability-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">SUSTAINABILITY</span>
+            <h2 class="section-title" data-aos="fade-left">Green <span>Architecture</span> Tools</h2>
+            
+            <div class="sustainability-grid">
+                <div class="sustainability-card" data-aos="flip-left">
+                    <i class="fas fa-sun"></i>
+                    <h3>Solar Analysis</h3>
+                    <div class="card-image">
+                        <img src="A13.webp" alt="Solar Analysis">
+                    </div>
+                    <p>Optimize building orientation and shading for maximum energy efficiency.</p>
+                </div>
+                <div class="sustainability-card" data-aos="flip-up" data-aos-delay="200">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Carbon Tracking</h3>
+                    <div class="card-image">
+                        <img src="A7.webp" alt="Carbon Analysis">
+                    </div>
+                    <p>Real-time embodied carbon calculations for material selection.</p>
+                </div>
+                <div class="sustainability-card" data-aos="flip-right" data-aos-delay="400">
+                    <i class="fas fa-wind"></i>
+                    <h3>Energy Modeling</h3>
+                    <div class="card-image">
+                        <img src="A12.webp" alt="Energy Analysis">
+                    </div>
+                    <p>Comprehensive energy performance analysis for LEED certification.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: PROJECT GALLERY -->
+    <section class="gallery-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">PORTFOLIO</span>
+            <h2 class="section-title" data-aos="fade-left">Projects "Built" with Our Software</h2>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item large" data-aos="fade-right">
+                    <img src="A21.webp" alt="The Gherkin">
+                    <div class="gallery-caption">
+                        <h4>The Gherkin, London</h4>
+                        <p>Foster + Partners • BIM Modeling</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-up">
+                    <img src="A29.webp" alt="Beijing Airport">
+                    <div class="gallery-caption">
+                        <h4>Beijing Daxing</h4>
+                        <p>ZHA • Generative Design</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-down">
+                    <img src="A17.webp" alt="One World Trade">
+                    <div class="gallery-caption">
+                        <h4>One World Trade</h4>
+                        <p>SOM • Cloud Collaboration</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="fade-left">
+                    <img src="A9.webp" alt="Shanghai Tower">
+                    <div class="gallery-caption">
+                        <h4>Shanghai Tower</h4>
+                        <p>Gensler • Documentation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: SUPPORT SERVICES -->
+    <section class="support-section">
+        <div class="container">
+            <span class="section-badge" data-aos="fade-right">SUPPORT</span>
+            <h2 class="section-title" data-aos="fade-left">Architect <span>Support</span> Services</h2>
+            
+            <div class="support-grid">
+                <div class="support-card" data-aos="zoom-in">
+                    <i class="fas fa-headset"></i>
+                    <span class="badge">24/7</span>
+                    <h3>Technical Support</h3>
+                    <p>Round-the-clock assistance for critical project needs</p>
+                </div>
+                <div class="support-card" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span class="badge">ONLINE</span>
+                    <h3>Training Programs</h3>
+                    <p>Comprehensive BIM training for your entire team</p>
+                </div>
+                <div class="support-card" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fas fa-tools"></i>
+                    <span class="badge">CUSTOM</span>
+                    <h3>Implementation</h3>
+                    <p>Custom software setup and workflow integration</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Ready to Transform <span>Your Practice?</span></h2>
+                <p>Join 12,000+ architecture firms already using Stackly's professional software services.</p>
+                
+                <div class="floating-icons">
+                    <i class="fas fa-cube"></i>
+                    <i class="fas fa-people-arrows"></i>
+                    <i class="fas fa-brain"></i>
+                </div>
+                
+                <div class="button-group">
+                    <a href="4042.html" class="btn-primary">Start Free Trial</a>
+                    <a href="4042.html" class="btn-secondary" style="color:white; border-color:white;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YOUR FOOTER (footer.html) WILL GO HERE -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        //=================================================================================
+// Header and Footer Loader with Hamburger Menu Fix
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header2.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Header file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                    
+                    // Initialize header interactions after header is loaded
+                    setTimeout(initHeaderInteractions, 100);
+                })
+                .catch(error => {
+                    console.warn('Header could not be loaded:', error);
+                    document.getElementById('header-placeholder').innerHTML = 
+                        '<header style="background: #6c5ce7; color: white; padding: 20px; text-align: center;">Header Not Found</header>';
+                });
+
+            // Load footer
+            fetch('footer2.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Footer file not found');
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.warn('Footer could not be loaded:', error);
+                    document.getElementById('footer-placeholder').innerHTML = 
+                        '<footer style="background: #1a1a2e; color: white; padding: 40px; text-align: center;">Footer Not Found</footer>';
+                });
+        });
+
+        // Initialize header interactions (hamburger menu, dropdown for + symbols)
+        function initHeaderInteractions() {
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            console.log('Header initialized - menu toggle:', menuToggle, 'nav menu:', navMenu);
+            
+            // Mobile menu toggle
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    
+                    // Prevent body scroll when menu is open
+                    if (navMenu.classList.contains('active')) {
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        document.body.style.overflow = 'auto';
+                        // Close all dropdowns when closing menu
+                        closeAllDropdowns();
+                    }
+                });
+            }
+            
+            // ===== DROPDOWN FUNCTIONALITY FOR + SYMBOLS =====
+            function closeAllDropdowns(except = null) {
+                document.querySelectorAll('.nav-item.dropdown').forEach(d => {
+                    if (d !== except) d.classList.remove('open');
+                });
+            }
+            
+            // Handle clicks on + icons (both desktop and mobile)
+            document.addEventListener('click', function(e) {
+                // Check if clicked element is a plus icon
+                const isPlusIcon = e.target.classList.contains('fa-plus') || 
+                                   (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'));
+                
+                if (isPlusIcon) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Plus icon clicked');
+                    
+                    const parentItem = e.target.closest('.nav-item.dropdown');
+                    if (parentItem) {
+                        const isOpen = parentItem.classList.contains('open');
+                        closeAllDropdowns(isOpen ? parentItem : null);
+                        if (!isOpen) {
+                            parentItem.classList.add('open');
+                        } else {
+                            parentItem.classList.remove('open');
+                        }
+                    }
+                    return;
+                }
+                
+                // If click is on dropdown content, don't close
+                if (e.target.closest('.dropdown-content')) {
+                    return;
+                }
+                
+                // If click is on nav-link but not on plus icon
+                if (e.target.closest('.nav-link') && !e.target.closest('i')) {
+                    closeAllDropdowns();
+                    return;
+                }
+                
+                // Click outside any dropdown
+                if (!e.target.closest('.nav-item.dropdown')) {
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Prevent clicks inside dropdown from closing
+            document.querySelectorAll('.dropdown-content').forEach(c => {
+                c.addEventListener('click', e => e.stopPropagation());
+            });
+            
+            // Close mobile menu when clicking on any link (except plus icons)
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Don't close if clicking on plus icon
+                    if (e.target.classList.contains('fa-plus') || 
+                        (e.target.parentElement && e.target.parentElement.classList.contains('fa-plus'))) {
+                        return;
+                    }
+                    
+                    if (window.innerWidth <= 768) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        closeAllDropdowns();
+                    }
+                });
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    if (menuToggle) menuToggle.classList.remove('active');
+                    if (navMenu) navMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    closeAllDropdowns();
+                }
+            });
+            
+            // Escape key
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllDropdowns();
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        if (menuToggle) menuToggle.classList.remove('active');
+                        if (navMenu) navMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        }
+
+        // Scroll Animation Script 
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+//=================================================================================
+
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true,
+            anchorPlacement: 'top-bottom',
+            offset: 50,
+            easing: 'ease-out-cubic'
+        });
+    </script>
+</body>
+</html>
